@@ -2,7 +2,8 @@
 const express = require('express');
 const router = express.Router();
 const bodyParser = require('body-parser');
-const axios = require('axios');
+require('dotenv').config();
+// const axios = require('axios');
 const Lyft = require('lyft-node');
 
 
@@ -10,10 +11,8 @@ router.get('/', (req, res) => {
   res.render('index');
 });
 
-
 router.get('/rideEstimate', (req, res) => {
-  const lyft = new Lyft('yIE8J-p1h3Z8', 'ivqP7ZT6JJLbMWWuX2HiYmm4QGoHVW_s');
-
+  const lyft = new Lyft(process.env.LYFT_CLIENT_ID, process.env.LYFT_CLIENT_SECRET);
   const query = {
     start: {
       latitude: req.query.start_lat,
@@ -29,26 +28,9 @@ router.get('/rideEstimate', (req, res) => {
   lyft.getRideEstimates(query)
     .then((result) => {
       console.log(result);
-  })
-
-  .catch((error) => {
+  }).catch((error) => {
     console.log(error);
   });
-
-
-
-
-    // axios.request({
-    //   url: "https://api.lyft.com/v1/cost",
-    //   method: "post",
-    //   data: data
-    // })
-    // .then((response) => {
-    //   console.log(response);
-    // })
-    // .catch((error) => {
-    //   console.log(error);
-    // });
 });
 
 
