@@ -1,11 +1,13 @@
 {
-  "name": "expense-manager",
+  "name": "moneymile",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
     "axios": "^0.18.0",
     "babel-cli": "^6.26.0",
     "babel-preset-es2015": "^6.24.1",
+    "dotenv": "^5.0.1",
+    "dotenv-webpack": "^1.5.5",
     "ejs": "^2.5.9",
     "mongoose": "^5.0.15",
     "nodemon": "^1.17.3",
