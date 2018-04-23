@@ -28,6 +28,9 @@ Our project will provide users with a map overlay displaying possible distances 
 - **Frontend:** React/Javascript
 
 ## UX
+### Wireframe
+![LoginPage](https://i.imgur.com/GVRbdna.png)
+
 ### Frontend Interface
 - We will first implement calls to Lyft to gather ride request data to construct a distance matrix using [insert what we using here]
   - Array of valid destination lat/long → google.maps.geometry.encoding → Google Maps Distance Matrix API
