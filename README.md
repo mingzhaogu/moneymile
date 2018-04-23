@@ -43,6 +43,8 @@ Our project will provide users with a map overlay displaying possible distances 
 - We will be using the pricing data to construct an algorithm used to create markers which will be utilized to construct a distance matrix using [insert what we using here]
 - We will be using Lyft API for user credentials to establish currentUser
 
+## Project Flowchart
+![](https://i.imgur.com/ycITzwL.png)
 
 ## Timeline
 ### Things Accomplished Over the Weekend
