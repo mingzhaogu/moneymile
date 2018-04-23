@@ -1,6 +1,6 @@
 import React from 'react';
 
-import MapStyle from 'map_style';
+import MapStyle from './map_style';
 
 class Map extends React.Component {
   constructor(props) {
@@ -10,7 +10,6 @@ class Map extends React.Component {
   }
 
   componentDidMount() {
-    debugger
     this.initializeMap();
   }
 
@@ -21,24 +20,39 @@ class Map extends React.Component {
       styles: MapStyle
     }
 
-    // this.map = new google.maps.Map(this.refs.renderedMap, mapOptions)
-    this.map = new google.maps.Map(
-      document.getElementById("map-container"),
-      mapOptions
-    )
+    this.map = new google.maps.Map(this.refs.renderedMap, mapOptions);
+    const infoWindow = new google.maps.InfoWindow;
+
+    // GET USER'S LOCATION -- MAY REFACTOR LATER:
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        this.userLocation = {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude
+        };
+
+        infoWindow.setPosition(this.userLocation);
+        infoWindow.setContent('Location found.');
+        infoWindow.open(this.map);
+        this.map.setCenter(this.userLocation)
+      }, (error) => {
+        // should we set a default center if error returns?
+        console.log(error)
+      });
+    } else {
+      // should be same thing as our error callback
+      console.log("Browser doesn't support geolocation.")
+    }
   }
 
   render() {
     return (
       <React.Fragment>
-        <h1>hiiasdfasdfasdfiiii</h1>
         <div ref="renderedMap" id="map-container"></div>
-        <h1>hiiasdfasdfasdfiiii</h1>
       </React.Fragment>
     )
   }
 
 }
-// <div ref="renderedMap" id="map-container" style={{height: 500 + 'px', width: 500 + 'px'}}></div>
 
 export default Map;

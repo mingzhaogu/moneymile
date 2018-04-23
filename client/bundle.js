@@ -26190,7 +26190,7 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _map_style = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"map_style\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+var _map_style = __webpack_require__(106);
 
 var _map_style2 = _interopRequireDefault(_map_style);
 
@@ -26218,19 +26218,42 @@ var Map = function (_React$Component) {
   _createClass(Map, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
-      debugger;
       this.initializeMap();
     }
   }, {
     key: 'initializeMap',
     value: function initializeMap() {
+      var _this2 = this;
+
       var mapOptions = {
         center: { lat: 37.773972, lng: -122.431297 },
         zoom: 13,
         styles: _map_style2.default
+      };
 
-        // this.map = new google.maps.Map(this.refs.renderedMap, mapOptions)
-      };this.map = new google.maps.Map(document.getElementById("map-container"), mapOptions);
+      this.map = new google.maps.Map(this.refs.renderedMap, mapOptions);
+      var infoWindow = new google.maps.InfoWindow();
+
+      // GET USER'S LOCATION -- MAY REFACTOR LATER:
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function (position) {
+          _this2.userLocation = {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude
+          };
+
+          infoWindow.setPosition(_this2.userLocation);
+          infoWindow.setContent('Location found.');
+          infoWindow.open(_this2.map);
+          _this2.map.setCenter(_this2.userLocation);
+        }, function (error) {
+          // should we set a default center if error returns?
+          console.log(error);
+        });
+      } else {
+        // should be same thing as our error callback
+        console.log("Browser doesn't support geolocation.");
+      }
     }
   }, {
     key: 'render',
@@ -26238,24 +26261,13 @@ var Map = function (_React$Component) {
       return _react2.default.createElement(
         _react2.default.Fragment,
         null,
-        _react2.default.createElement(
-          'h1',
-          null,
-          'hiiasdfasdfasdfiiii'
-        ),
-        _react2.default.createElement('div', { ref: 'renderedMap', id: 'map-container' }),
-        _react2.default.createElement(
-          'h1',
-          null,
-          'hiiasdfasdfasdfiiii'
-        )
+        _react2.default.createElement('div', { ref: 'renderedMap', id: 'map-container' })
       );
     }
   }]);
 
   return Map;
 }(_react2.default.Component);
-// <div ref="renderedMap" id="map-container" style={{height: 500 + 'px', width: 500 + 'px'}}></div>
 
 exports.default = Map;
 
@@ -26668,6 +26680,42 @@ var App = function (_React$Component) {
 }(_react2.default.Component);
 
 exports.default = App;
+
+/***/ }),
+/* 106 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var mapStyle = [{
+  featureType: 'road',
+  elementType: 'all',
+  stylers: [{
+    visibility: 'on'
+  }, {
+    lightness: 100
+  }, {
+    gamma: 9.99
+  }]
+}, {
+  featureType: 'road',
+  elementType: 'labels',
+  stylers: [{
+    visibility: 'off'
+  }]
+}, {
+  featureType: 'poi',
+  elementType: 'labels',
+  stylers: [{
+    visibility: 'off'
+  }]
+}];
+
+exports.default = mapStyle;
 
 /***/ })
 /******/ ]);
