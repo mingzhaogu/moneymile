@@ -10,6 +10,5 @@ app.set('views', path.join(__dirname, '../client'));
 app.use(express.static(path.join(__dirname, '../client')));
 app.use(bodyParser.json({limit: '50mb'}));
 app.use(bodyParser.urlencoded({limit: '50mb', extended: false}));
-// mongoose.connect('mongodb://andre123:andre123@ds253889.mlab.com:53889/expenses');
 app.use('/', router);
 module.exports=app;
