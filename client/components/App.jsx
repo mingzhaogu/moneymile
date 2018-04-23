@@ -2,6 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
 
+import Map from './map/map_component';
+
 export default class App extends React.Component {
   constructor() {
     super();
@@ -27,7 +29,10 @@ export default class App extends React.Component {
 
   render() {
     return (
-      <div id="map"></div>
+      <React.Fragment>
+        <h1>hiiiiii</h1>
+        <Map />
+      </React.Fragment>
     );
   }
 }
