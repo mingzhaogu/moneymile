@@ -1,5 +1,3 @@
-@import 'reset.css';
-
 .App {
   text-align: center;
 }
@@ -98,5 +96,3 @@ fieldset{
 .closebtn{
    float:right;
  }
-
-@import 'map.css';
