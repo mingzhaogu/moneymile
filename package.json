@@ -1,0 +1,25 @@
+{
+  "name": "expense-manager",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "axios": "^0.18.0",
+    "babel-cli": "^6.26.0",
+    "babel-preset-es2015": "^6.24.1",
+    "ejs": "^2.5.9",
+    "mongoose": "^5.0.15",
+    "nodemon": "^1.17.3",
+    "react": "^16.3.2",
+    "react-bootstrap": "^0.32.1",
+    "react-dom": "^16.3.2",
+    "react-modal": "^3.4.2",
+    "react-router-dom": "^4.2.2",
+    "react-scripts": "1.1.4"
+  },
+  "scripts": {
+    "webpack": "webpack",
+    "build": "webpack --watch",
+    "nodemon": "nodemon --exec babel-node -- bin/www",
+    "start": "npm run webpack && nodemon --exec babel-node -- bin/www"
+  }
+}
