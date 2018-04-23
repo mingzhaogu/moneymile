@@ -25342,7 +25342,6 @@ var App = function (_React$Component) {
           "scope": "public"
         }
       }).then(function (res) {
-        console.log("yIE8J-p1h3Z8");
         console.log(res);
       });
     }
