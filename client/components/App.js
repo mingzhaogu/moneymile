@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
+import InputForm from './input_form';
 
 export default class App extends React.Component {
   constructor() {
@@ -21,13 +22,16 @@ export default class App extends React.Component {
         "scope": "public"
       }
     }).then(function(res) {
-      console.log(res);
+      // console.log(res);
     });
   }
 
   render() {
     return (
-      <div id="map"></div>
+      <div id="map">
+        <InputForm />
+      </div>
+
     );
   }
 }
