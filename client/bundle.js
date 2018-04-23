@@ -25324,6 +25324,25 @@ var App = function (_React$Component) {
   }
 
   _createClass(App, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      _axios2.default.request({
+        url: "/oauth/token",
+        method: "post",
+        baseURL: "https://api.lyft.com/",
+        auth: {
+          username: "yIE8J-p1h3Z8",
+          password: "UU0fo4sCkO6QS5EIZebKXW19xDo1jro4"
+        },
+        data: {
+          "grant_type": "client_credentials",
+          "scope": "public"
+        }
+      }).then(function (res) {
+        console.log(res);
+      });
+    }
+  }, {
     key: 'render',
     value: function render() {
       return _react2.default.createElement(

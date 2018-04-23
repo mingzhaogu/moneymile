@@ -27,7 +27,7 @@ export default class App extends React.Component {
 
   render() {
     return (
-      <div>Check</div>
+      <div id="map"></div>
     );
   }
 }

@@ -1,14 +1,10 @@
 //server/routes/routes.js
-var express = require('express');
-var router = express.Router();
-var bodyParser = require('body-parser');
+const express = require('express');
+const router = express.Router();
+const bodyParser = require('body-parser');
 
-
-
-router.get('/', function(req, res){
+router.get('/', (req, res) => {
   res.render('index');
 });
-
-
 
 module.exports = router;
