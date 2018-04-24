@@ -26,18 +26,18 @@ input[type="submit"] { */
   text-align: center;
 }
 
-input[type="number"],
-input[type="text"] {
+.dollar-input,
+.address-input {
   border-bottom: 3px solid rgba(255, 255, 255, 1);
   font-size: 16px;
   color: rgba(51, 51, 51, 1);
 }
 
-input[type="number"] {
+.dollar-input {
   width: 50%;
 }
 
-input[type="submit"] {
+.submit-button {
   background-color: transparent;
   padding: none;
   margin-top: 10px;
@@ -49,9 +49,8 @@ input[type="submit"] {
 }
 
 @media (min-width: 340px) {
-  .user-input-form {
+  form {
     font-size: 22px;
-    /* font-size: 24px; */
   }
 
   .dollar-input,
@@ -59,14 +58,18 @@ input[type="submit"] {
     font-size: 18px;
   }
 
-  .dollar-input-submitted,
-  .address-input-submitted {
-    font-size: 16px;
+  .user-submitted-form {
+    font-size: 14px;
+  }
+
+  #submitted.dollar-input,
+  #submitted.address-input {
+    font-size: 14px;
   }
 }
 
 @media (min-width: 370px) {
-  .user-input-form {
+  form {
     font-size: 24px;
   }
 
@@ -75,8 +78,12 @@ input[type="submit"] {
     font-size: 20px;
   }
 
-  .dollar-input-submitted,
-  .address-input-submitted {
-    font-size: 16px;
+  .user-submitted-form {
+    font-size: 14px;
+  }
+
+  #submitted.dollar-input,
+  #submitted.address-input {
+    font-size: 14px;
   }
 }

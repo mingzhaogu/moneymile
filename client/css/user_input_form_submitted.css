@@ -1,22 +1,20 @@
 .user-submitted-form {
-  font-size: 16px;
+  margin-top: 2vh;
+  padding: 10px;
+  font-size: 14px;
   width: 90%;
 }
 
-#submitted.dollar-input-submitted,
-#submitted.address-input-submitted,
-#submitted.submit-button-submitted {
-  width: 90%;
+#submitted.dollar-input,
+#submitted.address-input,
+#submitted.submit-button {
+  width: 95%;
 }
 
-/* .dollar-input-submitted,
-.address-input-submitted {
-} */
-
-#submitted.dollar-input-submitted {
-  width: 10%;
+#submitted.dollar-input {
+  width: 12%;
 }
 
-#submitted.submit-button-submitted {
-  margin-top: 10px;
+#submitted.submit-button {
+  margin-top: 5px;
 }
