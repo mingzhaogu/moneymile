@@ -26708,11 +26708,6 @@ var App = function (_React$Component) {
       return _react2.default.createElement(
         _react2.default.Fragment,
         null,
-        _react2.default.createElement(
-          'h1',
-          null,
-          'hiiiiii'
-        ),
         _react2.default.createElement(_map_component2.default, null)
       );
     }

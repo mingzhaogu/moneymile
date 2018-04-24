@@ -30,7 +30,6 @@ export default class App extends React.Component {
   render() {
     return (
       <React.Fragment>
-        <h1>hiiiiii</h1>
         <Map />
       </React.Fragment>
     );
