@@ -13,7 +13,9 @@
   z-index: 1;
 }
 
-.dollar-input, .address-input, .submit-button {
+.dollar-input,
+.address-input,
+.submit-button {
   width: 85%;
   background-color: inherit;
   border: none;

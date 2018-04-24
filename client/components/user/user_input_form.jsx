@@ -34,17 +34,18 @@ class UserInputForm extends React.Component {
   render() {
     if (!this.props.currentAddress) return null;
 
-    let formName;
+    let submitted;
     let formClassName;
     if (this.state.formSubmitted) {
-      formName = "-submitted";
+      submitted = "-submitted";
       formClassName = "user-submitted-form"
     } else {
+      submitted = "";
       formClassName = "user-input-form"
     }
 
     return (
-      <form className={formName}
+      <form className={formClassName}
         onSubmit={this.submitForm}>
         <p className={`question${submitted}`}>
           WHERE CAN I GO WITH $
