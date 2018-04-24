@@ -36,7 +36,13 @@ class Map extends React.Component {
     const mapOptions = {
       center: center,
       zoom: 13,
-      styles: MapStyle
+      zoomControl: false,
+      mapTypeControl: false,
+      scaleControl: false,
+      streetViewControl: false,
+      rotateControl: false,
+      fullscreenControl: false,
+      styles: MapStyle,
     };
 
     this.map = new google.maps.Map(this.refs.renderedMap, mapOptions);
