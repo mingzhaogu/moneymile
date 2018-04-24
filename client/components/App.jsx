@@ -4,6 +4,7 @@ import axios from 'axios';
 
 import Map from './map/map_component';
 
+
 export default class App extends React.Component {
   constructor(props) {
     super(props);

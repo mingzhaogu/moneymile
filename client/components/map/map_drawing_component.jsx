@@ -3,7 +3,18 @@ import React from 'react';
 import UserInputForm from '../user/user_input_form';
 import MapStyle from './map_style';
 
-class Map extends React.Component {
+const coordArray = [
+  { lat: 37.800212, lng: -122.410818 },
+  { lat: 37.803670, lng: -122.421761 },
+  { lat: 37.798273, lng: -122.432508 },
+  { lat: 37.788403, lng: -122.430319 },
+  { lat: 37.785705, lng: -122.422075 },
+  { lat: 37.787366, lng: -122.408385 },
+  { lat: 37.794222, lng: -122.402910 },
+  { lat: 37.800596, lng: -122.407895 }
+]
+
+class MapDrawing extends React.Component {
   constructor(props) {
     super(props);
     this.directionsServiceObject = new google.maps.DirectionsService();
@@ -18,11 +29,13 @@ class Map extends React.Component {
     this.initializeMap = this.initializeMap.bind(this);
     this.centerMap = this.centerMap.bind(this);
     this.parseAddressToLatLng = this.parseAddressToLatLng.bind(this);
+    this.drawBoundaries = this.drawBoundaries.bind(this);
   }
 
   componentDidMount() {
     this.initializeMap();
-    this.getUserLocation();
+    // this.getUserLocation();
+    this.drawBoundaries();
   }
 
   componentDidUpdate() {
@@ -46,12 +59,30 @@ class Map extends React.Component {
     };
 
     this.map = new google.maps.Map(this.refs.renderedMap, mapOptions);
+
+
   }
 
   centerMap(locationLatLng) {
     this.setState({
       userLocation: locationLatLng
     })
+  }
+
+  drawBoundaries(){
+    const bermudaTriangle = new google.maps.Polygon({
+         paths: coordArray,
+         strokeColor: '#FF0000',
+         strokeOpacity: 0.8,
+         strokeWeight: 3,
+         fillColor: '#FF0000',
+         fillOpacity: 0.35
+       });
+    const bounds = new google.maps.LatLngBounds();
+    coordArray.forEach((coord) => bounds.extend(coord))
+    this.map.fitBounds(bounds);
+    bermudaTriangle.setMap(this.map);
+
   }
 
   parseAddressToLatLng(address) {
@@ -116,10 +147,9 @@ class Map extends React.Component {
     return (
       <div className="map-component">
         <div ref="renderedMap" id="map-container" />
-        {form}
       </div>
     );
   }
 }
 
-export default Map;
+export default MapDrawing;
