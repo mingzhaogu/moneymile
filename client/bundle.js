@@ -25286,7 +25286,7 @@ exports.default = Routes;
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-
+/* WEBPACK VAR INJECTION */(function(process) {
 
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -25335,8 +25335,8 @@ var App = function (_React$Component) {
         method: "post",
         baseURL: "https://api.lyft.com/",
         auth: {
-          username: "yIE8J-p1h3Z8",
-          password: "ivqP7ZT6JJLbMWWuX2HiYmm4QGoHVW_s"
+          username: process.env.LYFT_CLIENT_ID,
+          password: process.env.LYFT_CLIENT_SECRET
         },
         data: {
           "grant_type": "client_credentials",
@@ -25361,6 +25361,13 @@ var App = function (_React$Component) {
 }(_react2.default.Component);
 
 exports.default = App;
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
+
+/***/ }),
+/* 82 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(83);
 
 /***/ }),
 /* 82 */
