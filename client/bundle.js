@@ -26212,6 +26212,13 @@ var Map = function (_React$Component) {
 
     _this.directionsServiceObject = new google.maps.DirectionsService();
     _this.directionsRenderer = new google.maps.DirectionsRenderer();
+    _this.getUserLocation = _this.getUserLocation.bind(_this);
+    _this.initializeMap = _this.initializeMap.bind(_this);
+    _this.state = {
+      userLocation: 'a',
+      userAddress: 'b'
+    };
+    window.state = _this.state;
     return _this;
   }
 
@@ -26223,8 +26230,6 @@ var Map = function (_React$Component) {
   }, {
     key: 'initializeMap',
     value: function initializeMap() {
-      var _this2 = this;
-
       var mapOptions = {
         center: { lat: 37.773972, lng: -122.431297 },
         zoom: 13,
@@ -26233,31 +26238,68 @@ var Map = function (_React$Component) {
 
       this.map = new google.maps.Map(this.refs.renderedMap, mapOptions);
       var infoWindow = new google.maps.InfoWindow();
-
+      this.getUserLocation();
+      console.log(this.state.userLocation);
+      // let positionCoordinates =
       // GET USER'S LOCATION -- MAY REFACTOR LATER:
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(function (position) {
-          _this2.userLocation = {
-            lat: position.coords.latitude,
-            lng: position.coords.longitude
-          };
+      // let location;
+      // if (navigator.geolocation) {
+      //   location = navigator.geolocation.getCurrentPosition((position) => {
+      //     this.userLocation = {
+      //       lat: position.coords.latitude,
+      //       lng: position.coords.longitude
+      //     };
+      //     window.position = position;
+      //
+      //     infoWindow.setPosition(this.userLocation);
+      //     infoWindow.setContent('Location found.');
+      //     infoWindow.open(this.map);
+      //     this.map.setCenter(this.userLocation)
+      //   }, (error) => {
+      //     // should we set a default center if error returns?
+      //     console.log(error)
+      //   });
+      // } else {
+      //   // should be same thing as our error callback
+      //   console.log("Browser doesn't support geolocation.")
+      // }
+    }
+  }, {
+    key: 'getUserLocation',
+    value: function getUserLocation() {
+      var _this2 = this;
 
-          infoWindow.setPosition(_this2.userLocation);
-          infoWindow.setContent('Location found.');
-          infoWindow.open(_this2.map);
-          _this2.map.setCenter(_this2.userLocation);
-        }, function (error) {
-          // should we set a default center if error returns?
-          console.log(error);
+      console.log('start');
+      var successCallback = function successCallback(position) {
+        var parsedLocation = {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude
+        };
+        var geocoder = new google.maps.Geocoder();
+        _this2.setState({ userLocation: parsedLocation });
+        geocoder.geocode({ location: parsedLocation }, function (results, status) {
+          //include componentRestrictions? Restrict to areas lyft operates?
+          if (status === 'OK') {
+            console.log(results[0].formatted_address);
+          } else {
+            console.log('did not work');
+          }
         });
-      } else {
-        // should be same thing as our error callback
-        console.log("Browser doesn't support geolocation.");
+        console.log(_this2.state.userLocation);
+      };
+
+      function errorCallback(error) {
+        console.log(error);
       }
+      navigator.geolocation.getCurrentPosition(successCallback, errorCallback, {
+        timeout: 10000
+      });
     }
   }, {
     key: 'render',
     value: function render() {
+      // if (this.state.userLocation === 'a') return null;
+
       return _react2.default.createElement(
         _react2.default.Fragment,
         null,
