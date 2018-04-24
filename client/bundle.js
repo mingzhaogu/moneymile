@@ -25369,6 +25369,12 @@ exports.default = App;
 module.exports = __webpack_require__(83);
 
 /***/ }),
+/* 82 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(83);
+
+/***/ }),
 /* 83 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -26336,6 +26342,11 @@ var Map = function (_React$Component) {
       };
 
       this.map = new google.maps.Map(this.refs.renderedMap, mapOptions);
+      this.marker = new google.maps.Marker({
+        position: center,
+        map: this.map
+        // title: 'Hello World!'
+      });
     }
   }, {
     key: 'centerMap',
@@ -26461,7 +26472,8 @@ var UserInputForm = function (_React$Component) {
     console.log("addressinput", addressInput);
     _this.state = {
       dollarInput: "",
-      addressInput: addressInput
+      addressInput: addressInput,
+      formSubmitted: false
     };
 
     _this.updateAddress = _this.updateAddress.bind(_this);
@@ -26474,6 +26486,7 @@ var UserInputForm = function (_React$Component) {
     key: "submitForm",
     value: function submitForm(e) {
       e.preventDefault();
+      this.setState({ formSubmitted: true });
       this.props.parseAddressToLatLng(this.state.addressInput);
     }
   }, {
@@ -26495,44 +26508,40 @@ var UserInputForm = function (_React$Component) {
     value: function render() {
       if (!this.props.currentAddress) return null;
 
+      var formName = void 0;
+      var formClassName = void 0;
+      if (this.state.formSubmitted) {
+        formName = "-submitted";
+        formClassName = "user-submitted-form";
+      } else {
+        formClassName = "user-input-form";
+      }
+
       return _react2.default.createElement(
         "form",
-        { className: "user-input-form",
-          onSubmit: this.submitForm
-        },
-        _react2.default.createElement(
-          "h1",
-          null,
-          "WHERE CAN I"
-        ),
-        _react2.default.createElement(
-          "h1",
-          null,
-          "GO WITH"
-        ),
+        { className: formName,
+          onSubmit: this.submitForm },
         _react2.default.createElement(
           "p",
-          null,
-          "$",
+          { className: "question" + submitted },
+          "WHERE CAN I GO WITH $",
           _react2.default.createElement("input", { type: "number",
+            className: "dollar-input" + submitted,
             value: this.state.dollarInput,
-            onChange: this.updateInput("dollarInput") })
-        ),
-        _react2.default.createElement(
-          "h1",
-          null,
-          "FROM"
-        ),
-        _react2.default.createElement(
-          "p",
-          null,
+            onChange: this.updateInput("dollarInput")
+          }),
+          "\xA0FROM\xA0",
           _react2.default.createElement("input", { type: "text",
+            className: "address-input" + submitted,
             value: this.state.addressInput,
             onChange: this.updateInput("addressInput")
           }),
           "?"
         ),
-        _react2.default.createElement("input", { type: "submit", value: "ask moneymile" })
+        _react2.default.createElement("input", { type: "submit",
+          className: "submit-button" + submitted,
+          value: "ask moneymile"
+        })
       );
     }
   }]);

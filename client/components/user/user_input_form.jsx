@@ -8,7 +8,8 @@ class UserInputForm extends React.Component {
     console.log("addressinput", addressInput);
     this.state = {
       dollarInput: "",
-      addressInput: addressInput
+      addressInput: addressInput,
+      formSubmitted: false
     }
 
     this.updateAddress = this.updateAddress.bind(this);
@@ -18,6 +19,7 @@ class UserInputForm extends React.Component {
 
   submitForm(e) {
     e.preventDefault();
+    this.setState({ formSubmitted: true });
     this.props.parseAddressToLatLng(this.state.addressInput);
   }
 
@@ -32,28 +34,41 @@ class UserInputForm extends React.Component {
   render() {
     if (!this.props.currentAddress) return null;
 
+    let formName;
+    let formClassName;
+    if (this.state.formSubmitted) {
+      formName = "-submitted";
+      formClassName = "user-submitted-form"
+    } else {
+      formClassName = "user-input-form"
+    }
+
     return (
-      <form className="user-input-form"
-        onSubmit={this.submitForm}
-      >
-        <h1>WHERE CAN I</h1>
-        <h1>GO WITH</h1>
-        <p>$
+      <form className={formName}
+        onSubmit={this.submitForm}>
+        <p className={`question${submitted}`}>
+          WHERE CAN I GO WITH $
           <input type="number"
+            className={`dollar-input${submitted}`}
             value={this.state.dollarInput}
-            onChange={this.updateInput("dollarInput")} />
-        </p>
-        <h1>FROM</h1>
-        <p>
+            onChange={this.updateInput("dollarInput")}
+          />
+          &nbsp;FROM&nbsp;
           <input type="text"
+            className={`address-input${submitted}`}
             value={this.state.addressInput}
             onChange={this.updateInput("addressInput")}
-          />?
+          />
+          ?
         </p>
-        <input type="submit" value="ask moneymile"/>
+        <input type="submit"
+          className={`submit-button${submitted}`}
+          value="ask moneymile"
+        />
       </form>
     )
   }
+
 }
 
 export default UserInputForm;

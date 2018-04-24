@@ -42,10 +42,15 @@ class Map extends React.Component {
       streetViewControl: false,
       rotateControl: false,
       fullscreenControl: false,
-      styles: MapStyle,
+      styles: MapStyle
     };
 
     this.map = new google.maps.Map(this.refs.renderedMap, mapOptions);
+    this.marker = new google.maps.Marker({
+          position: center,
+          map: this.map,
+          // title: 'Hello World!'
+        });
   }
 
   centerMap(locationLatLng) {
