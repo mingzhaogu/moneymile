@@ -9,6 +9,7 @@
     "dotenv": "^5.0.1",
     "dotenv-webpack": "^1.5.5",
     "ejs": "^2.5.9",
+    "lyft-node": "0.0.5",
     "mongoose": "^5.0.15",
     "nodemon": "^1.17.3",
     "react": "^16.3.2",

@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
+import InputForm from './input_form';
 
 import Map from './map/map_component';
 
@@ -29,9 +30,15 @@ export default class App extends React.Component {
 
   render() {
     return (
+<<<<<<< HEAD:client/components/App.jsx
       <React.Fragment>
         <Map />
       </React.Fragment>
+=======
+      <div id="map">
+        <InputForm />
+      </div>
+>>>>>>> master:client/components/App.js
     );
   }
 }
