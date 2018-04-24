@@ -1,0 +1,64 @@
+.user-input-form-submitted {
+  margin-top: 5vh;
+  padding: 15px;
+  font-family: "Titan One";
+  font-size: 20px;
+  position: absolute;
+  height: auto;
+  width: 75%;
+  max-width: 600px;
+  background-color: rgba(62, 195, 0, 0.85);
+  border: 1px solid white;
+  text-align: center;
+  z-index: 1;
+}
+
+input {
+  width: 85%;
+  background-color: inherit;
+  border: none;
+  font-family: "Titan One";
+  text-align: center;
+}
+
+input[type="text"], input[type="number"] {
+  border-bottom: 3px solid rgba(255, 255, 255, 1);
+  font-size: 16px;
+  color: rgba(51, 51, 51, 1);
+}
+
+input[type="number"] {
+  width: 50%;
+}
+
+input[type="submit"] {
+  background-color: transparent;
+  padding: none;
+  margin-top: 10px;
+  border-bottom: rgba(62, 195, 0, 1);
+  font-size: inherit;
+  color: rgba(51, 51, 51, 1);
+  color: green;
+  cursor: pointer;
+}
+
+@media (min-width: 340px) {
+  .user-input-form {
+    font-size: 22px;
+    /* font-size: 24px; */
+  }
+
+  input[type="text"], input[type="number"] {
+    font-size: 18px;
+  }
+}
+
+@media (min-width: 370px) {
+  .user-input-form {
+    font-size: 24px;
+  }
+
+  input[type="text"], input[type="number"] {
+    font-size: 20px;
+  }
+}
