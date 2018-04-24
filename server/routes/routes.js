@@ -29,7 +29,7 @@ router.get('/rideEstimate', (req, res) =>  {
 
   lyft.getRideEstimates(query)
   .then((result) => {
-    console.log(result);
+    res.send(result);
   })
   .catch((error) => {
     console.log(error);
