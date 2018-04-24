@@ -1,14 +1,14 @@
 import React from 'react';
 
-import UserInputForm from '../input_form';
+import UserInputForm from '../user/user_input_form';
 import MapStyle from './map_style';
-
 
 class Map extends React.Component {
   constructor(props) {
     super(props);
     this.directionsServiceObject = new google.maps.DirectionsService();
     this.directionsRenderer = new google.maps.DirectionsRenderer();
+
     this.state = {
       userLocation: null,
       userAddress: null,
@@ -16,6 +16,8 @@ class Map extends React.Component {
 
     this.getUserLocation = this.getUserLocation.bind(this);
     this.initializeMap = this.initializeMap.bind(this);
+    this.centerMap = this.centerMap.bind(this);
+    this.parseAddressToLatLng = this.parseAddressToLatLng.bind(this);
   }
 
   componentDidMount() {
@@ -38,6 +40,29 @@ class Map extends React.Component {
     };
 
     this.map = new google.maps.Map(this.refs.renderedMap, mapOptions);
+  }
+
+  centerMap(locationLatLng) {
+    this.setState({
+      userLocation: locationLatLng
+    })
+  }
+
+  parseAddressToLatLng(address) {
+    const geocoder = new google.maps.Geocoder;
+    geocoder.geocode({ address: address }, (results, status) => {
+      //include componentRestrictions? Restrict to areas lyft operates?
+      if (status === 'OK') {
+        const addressLatLng = {
+          lat: results[0].geometry.location.lat(),
+          lng: results[0].geometry.location.lng()
+        }
+        console.log("addy", addressLatLng);
+        this.centerMap(addressLatLng)
+      } else {
+        console.log('did not work')
+      }
+    });
   }
 
   getUserLocation() {
@@ -76,7 +101,10 @@ class Map extends React.Component {
   render() {
     let form;
     if (this.state.userAddress) {
-      form = <UserInputForm currentAddress={this.state.userAddress}/>
+      form = <UserInputForm
+                currentAddress={this.state.userAddress}
+                parseAddressToLatLng={this.parseAddressToLatLng}
+              />
     }
 
     return (

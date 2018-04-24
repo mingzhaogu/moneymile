@@ -26267,9 +26267,9 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _input_form = __webpack_require__(102);
+var _user_input_form = __webpack_require__(104);
 
-var _input_form2 = _interopRequireDefault(_input_form);
+var _user_input_form2 = _interopRequireDefault(_user_input_form);
 
 var _map_style = __webpack_require__(103);
 
@@ -26293,6 +26293,7 @@ var Map = function (_React$Component) {
 
     _this.directionsServiceObject = new google.maps.DirectionsService();
     _this.directionsRenderer = new google.maps.DirectionsRenderer();
+
     _this.state = {
       userLocation: null,
       userAddress: null
@@ -26300,6 +26301,8 @@ var Map = function (_React$Component) {
 
     _this.getUserLocation = _this.getUserLocation.bind(_this);
     _this.initializeMap = _this.initializeMap.bind(_this);
+    _this.centerMap = _this.centerMap.bind(_this);
+    _this.parseAddressToLatLng = _this.parseAddressToLatLng.bind(_this);
     return _this;
   }
 
@@ -26329,23 +26332,50 @@ var Map = function (_React$Component) {
       this.map = new google.maps.Map(this.refs.renderedMap, mapOptions);
     }
   }, {
+    key: 'centerMap',
+    value: function centerMap(locationLatLng) {
+      this.setState({
+        userLocation: locationLatLng
+      });
+    }
+  }, {
+    key: 'parseAddressToLatLng',
+    value: function parseAddressToLatLng(address) {
+      var _this2 = this;
+
+      var geocoder = new google.maps.Geocoder();
+      geocoder.geocode({ address: address }, function (results, status) {
+        //include componentRestrictions? Restrict to areas lyft operates?
+        if (status === 'OK') {
+          var addressLatLng = {
+            lat: results[0].geometry.location.lat(),
+            lng: results[0].geometry.location.lng()
+          };
+          console.log("addy", addressLatLng);
+          _this2.centerMap(addressLatLng);
+        } else {
+          console.log('did not work');
+        }
+      });
+    }
+  }, {
     key: 'getUserLocation',
     value: function getUserLocation() {
-      var _this2 = this;
+      var _this3 = this;
 
       var successCallback = function successCallback(position) {
         var parsedLocation = {
           lat: position.coords.latitude,
           lng: position.coords.longitude
         };
-        _this2.setState({ userLocation: parsedLocation });
+        _this3.setState({ userLocation: parsedLocation });
 
         var geocoder = new google.maps.Geocoder();
-        _this2.setState({ userLocation: parsedLocation });
+        _this3.setState({ userLocation: parsedLocation });
         geocoder.geocode({ location: parsedLocation }, function (results, status) {
           //include componentRestrictions? Restrict to areas lyft operates?
           if (status === 'OK') {
-            _this2.setState({ userAddress: results[0].formatted_address }, console.log("should have recentered"));
+            _this3.setState({ userAddress: results[0].formatted_address }, console.log("should have recentered"));
           } else {
             console.log('did not work');
           }
@@ -26366,7 +26396,10 @@ var Map = function (_React$Component) {
     value: function render() {
       var form = void 0;
       if (this.state.userAddress) {
-        form = _react2.default.createElement(_input_form2.default, { currentAddress: this.state.userAddress });
+        form = _react2.default.createElement(_user_input_form2.default, {
+          currentAddress: this.state.userAddress,
+          parseAddressToLatLng: this.parseAddressToLatLng
+        });
       }
 
       return _react2.default.createElement(
@@ -26384,107 +26417,7 @@ var Map = function (_React$Component) {
 exports.default = Map;
 
 /***/ }),
-/* 102 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _react = __webpack_require__(0);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _reactDom = __webpack_require__(16);
-
-var _reactDom2 = _interopRequireDefault(_reactDom);
-
-var _axios = __webpack_require__(36);
-
-var _axios2 = _interopRequireDefault(_axios);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var InputForm = function (_React$Component) {
-  _inherits(InputForm, _React$Component);
-
-  function InputForm() {
-    _classCallCheck(this, InputForm);
-
-    var _this = _possibleConstructorReturn(this, (InputForm.__proto__ || Object.getPrototypeOf(InputForm)).call(this));
-
-    _this.state = {
-      start_lat: '',
-      start_lng: '',
-      end_lat: '',
-      end_lng: '',
-      ride_type: ''
-    };
-    _this.rideEstimate = _this.rideEstimate.bind(_this);
-    return _this;
-  }
-
-  _createClass(InputForm, [{
-    key: 'rideEstimate',
-    value: function rideEstimate() {
-      _axios2.default.get('/rideEstimate', {
-        params: {
-          start_lat: 37.7987837,
-          start_lng: -122.4013864,
-          end_lat: 37.7988899,
-          end_lng: -122.403466,
-          ride_type: 'lyft'
-        }
-      }).then(function (res) {
-        console.log(res);
-      });
-    }
-  }, {
-    key: 'render',
-    value: function render() {
-      this.rideEstimate();
-      return _react2.default.createElement(
-        _react2.default.Fragment,
-        null,
-        _react2.default.createElement(
-          'h2',
-          null,
-          'app academy!'
-        )
-      );
-    }
-  }]);
-
-  return InputForm;
-}(_react2.default.Component);
-// <div className="input-form-container">
-//   <form className="input-form">
-//     <label htmlFor="money-input" className="money-prompt">
-//       {'HOW FAR CAN I TRAVEL WITH $'}
-//     </label>
-//     <input className="money-input" type="number" />
-//     <label htmlFor="location-input" className="location-prompt">
-//       {'FROM'}
-//     </label>
-//     <input classNAme="location-input" type="number"></input>
-//   </form>
-// </div>
-
-
-exports.default = InputForm;
-
-/***/ }),
+/* 102 */,
 /* 103 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -26519,6 +26452,86 @@ var mapStyle = [{
 }];
 
 exports.default = mapStyle;
+
+/***/ }),
+/* 104 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var UserInputForm = function (_React$Component) {
+  _inherits(UserInputForm, _React$Component);
+
+  function UserInputForm(props) {
+    _classCallCheck(this, UserInputForm);
+
+    var _this = _possibleConstructorReturn(this, (UserInputForm.__proto__ || Object.getPrototypeOf(UserInputForm)).call(this, props));
+
+    var addressInput = _this.props.currentAddress;
+    console.log("addressinput", addressInput);
+    _this.state = {
+      dollarInput: "",
+      addressInput: addressInput
+    };
+
+    _this.updateAddress = _this.updateAddress.bind(_this);
+    _this.submitForm = _this.submitForm.bind(_this);
+    return _this;
+  }
+
+  _createClass(UserInputForm, [{
+    key: "submitForm",
+    value: function submitForm(e) {
+      e.preventDefault();
+      this.props.parseAddressToLatLng(this.state.addressInput);
+    }
+  }, {
+    key: "updateAddress",
+    value: function updateAddress(e) {
+      this.setState({ addressInput: e.target.value });
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      if (!this.props.currentAddress) return null;
+
+      return _react2.default.createElement(
+        "form",
+        { className: "user-input-form",
+          onSubmit: this.submitForm
+        },
+        _react2.default.createElement("input", { type: "text",
+          value: this.state.addressInput,
+          onChange: this.updateAddress
+        }),
+        _react2.default.createElement("input", { type: "submit" })
+      );
+    }
+  }]);
+
+  return UserInputForm;
+}(_react2.default.Component);
+
+exports.default = UserInputForm;
 
 /***/ })
 /******/ ]);
