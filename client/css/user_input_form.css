@@ -1,4 +1,4 @@
-.user-input-form {
+form {
   margin-top: 5vh;
   padding: 15px;
   font-family: "Titan One";
@@ -16,6 +16,9 @@
 .dollar-input,
 .address-input,
 .submit-button {
+/* input[type="number"],
+input[type="text"],
+input[type="submit"] { */
   width: 85%;
   background-color: inherit;
   border: none;
@@ -23,17 +26,18 @@
   text-align: center;
 }
 
-.dollar-input, .address-input, {
+input[type="number"],
+input[type="text"] {
   border-bottom: 3px solid rgba(255, 255, 255, 1);
   font-size: 16px;
   color: rgba(51, 51, 51, 1);
 }
 
-.dollar-input {
+input[type="number"] {
   width: 50%;
 }
 
-.submit-button {
+input[type="submit"] {
   background-color: transparent;
   padding: none;
   margin-top: 10px;
@@ -50,8 +54,14 @@
     /* font-size: 24px; */
   }
 
-  .dollar-input, .address-input, {
+  .dollar-input,
+  .address-input {
     font-size: 18px;
+  }
+
+  .dollar-input-submitted,
+  .address-input-submitted {
+    font-size: 16px;
   }
 }
 
@@ -60,7 +70,13 @@
     font-size: 24px;
   }
 
-  .dollar-input, .address-input, {
+  .dollar-input,
+  .address-input {
     font-size: 20px;
+  }
+
+  .dollar-input-submitted,
+  .address-input-submitted {
+    font-size: 16px;
   }
 }

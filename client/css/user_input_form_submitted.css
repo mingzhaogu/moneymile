@@ -1,69 +1,22 @@
-.user-input-form-submitted {
-  margin-top: 5vh;
-  padding: 15px;
-  font-family: "Titan One";
-  font-size: 20px;
-  position: absolute;
-  height: auto;
-  width: 75%;
-  max-width: 600px;
-  background-color: rgba(62, 195, 0, 0.85);
-  border: 1px solid white;
-  text-align: center;
-  z-index: 1;
-}
-
-.dollar-input-submitted,
-.address-input-submitted,
-.submit-button-submitted {
-  width: 85%;
-  background-color: inherit;
-  border: none;
-  font-family: "Titan One";
-  text-align: center;
-}
-
-.dollar-input-submitted,
-.address-input-submitted {
-  border-bottom: 3px solid rgba(255, 255, 255, 1);
+.user-submitted-form {
   font-size: 16px;
-  color: rgba(51, 51, 51, 1);
+  width: 90%;
 }
 
-.dollar-input-submitted {
-  width: 50%;
+#submitted.dollar-input-submitted,
+#submitted.address-input-submitted,
+#submitted.submit-button-submitted {
+  width: 90%;
 }
 
-.submit-button-submitted {
-  background-color: transparent;
-  padding: none;
+/* .dollar-input-submitted,
+.address-input-submitted {
+} */
+
+#submitted.dollar-input-submitted {
+  width: 10%;
+}
+
+#submitted.submit-button-submitted {
   margin-top: 10px;
-  border-bottom: rgba(62, 195, 0, 1);
-  font-size: inherit;
-  color: rgba(51, 51, 51, 1);
-  color: green;
-  cursor: pointer;
-}
-
-@media (min-width: 340px) {
-  .user-input-form {
-    font-size: 22px;
-    /* font-size: 24px; */
-  }
-
-  .dollar-input-submitted,
-  .address-input-submitted {
-    font-size: 18px;
-  }
-}
-
-@media (min-width: 370px) {
-  .user-input-form {
-    font-size: 24px;
-  }
-
-  .dollar-input-submitted,
-  .address-input-submitted {
-    font-size: 20px;
-  }
 }
