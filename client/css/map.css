@@ -1,14 +1,56 @@
 /* DON'T FORGET TO DO MEDIA QUERIES!!! MOBILEFIRST */
 
+.map-component {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
+  position: relative;
+}
+
 #map-container {
-  height: 500px;
-  width: 500px;
-  /* height: 100vh;
-  width: 100vw; */
+  height: 100%;
+  width: 100%;
 }
 
 .user-input-form {
-  height: 400px;
-  width: 400px;
-  border: 1px solid blue;
+  padding: 15px;
+  font-family: "Titan One";
+  font-size: 36px;
+  position: absolute;
+  height: auto;
+  width: 75%;
+  max-width: 600px;
+  background-color: rgba(62, 195, 0, 0.85);
+  border: 1px solid white;
+  text-align: center;
+  /* padding-top: 35%; */
+  /* justify-content: center; */
+  /* align-items: center; */
+  z-index: 1;
+}
+
+input {
+  width: 85%;
+  background-color: inherit;
+  border: none;
+  font-family: "Titan One";
+  text-align: center;
+}
+
+input[type="text"], input[type="number"] {
+  border-bottom: 3px solid rgba(255, 255, 255, 1);
+  font-size: 20px;
+  color: rgba(51, 51, 51, 1);
+}
+
+input[type="submit"] {
+  background-color: transparent;
+  margin-top: 10px;
+  border-bottom: rgba(62, 195, 0, 1);
+  font-size: inherit;
+  color: rgba(51, 51, 51, 1);
+  color: green;
+  cursor: pointer;
 }

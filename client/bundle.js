@@ -26403,8 +26403,8 @@ var Map = function (_React$Component) {
       }
 
       return _react2.default.createElement(
-        _react2.default.Fragment,
-        null,
+        'div',
+        { className: 'map-component' },
         _react2.default.createElement('div', { ref: 'renderedMap', id: 'map-container' }),
         form
       );
@@ -26472,6 +26472,8 @@ var _react2 = _interopRequireDefault(_react);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -26494,6 +26496,7 @@ var UserInputForm = function (_React$Component) {
     };
 
     _this.updateAddress = _this.updateAddress.bind(_this);
+    _this.updateInput = _this.updateInput.bind(_this);
     _this.submitForm = _this.submitForm.bind(_this);
     return _this;
   }
@@ -26503,6 +26506,15 @@ var UserInputForm = function (_React$Component) {
     value: function submitForm(e) {
       e.preventDefault();
       this.props.parseAddressToLatLng(this.state.addressInput);
+    }
+  }, {
+    key: "updateInput",
+    value: function updateInput(field) {
+      var _this2 = this;
+
+      return function (e) {
+        _this2.setState(_defineProperty({}, field, e.target.value));
+      };
     }
   }, {
     key: "updateAddress",
@@ -26519,11 +26531,39 @@ var UserInputForm = function (_React$Component) {
         { className: "user-input-form",
           onSubmit: this.submitForm
         },
-        _react2.default.createElement("input", { type: "text",
-          value: this.state.addressInput,
-          onChange: this.updateAddress
-        }),
-        _react2.default.createElement("input", { type: "submit" })
+        _react2.default.createElement(
+          "h1",
+          null,
+          "WHERE CAN I"
+        ),
+        _react2.default.createElement(
+          "h1",
+          null,
+          "GO WITH"
+        ),
+        _react2.default.createElement(
+          "p",
+          null,
+          "$",
+          _react2.default.createElement("input", { type: "number",
+            value: this.state.dollarInput,
+            onChange: this.updateInput("dollarInput") })
+        ),
+        _react2.default.createElement(
+          "h1",
+          null,
+          "FROM"
+        ),
+        _react2.default.createElement(
+          "p",
+          null,
+          _react2.default.createElement("input", { type: "text",
+            value: this.state.addressInput,
+            onChange: this.updateInput("addressInput")
+          }),
+          "?"
+        ),
+        _react2.default.createElement("input", { type: "submit", value: "ask moneymile" })
       );
     }
   }]);

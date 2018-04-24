@@ -12,12 +12,17 @@ class UserInputForm extends React.Component {
     }
 
     this.updateAddress = this.updateAddress.bind(this);
+    this.updateInput = this.updateInput.bind(this);
     this.submitForm = this.submitForm.bind(this);
   }
 
   submitForm(e) {
     e.preventDefault();
     this.props.parseAddressToLatLng(this.state.addressInput);
+  }
+
+  updateInput(field) {
+    return (e) => { this.setState({ [field]: e.target.value }) }
   }
 
   updateAddress(e) {
@@ -31,13 +36,21 @@ class UserInputForm extends React.Component {
       <form className="user-input-form"
         onSubmit={this.submitForm}
       >
-
-        <input type="text"
-          value={this.state.addressInput}
-          onChange={this.updateAddress}
-        />
-
-        <input type="submit" />
+        <h1>WHERE CAN I</h1>
+        <h1>GO WITH</h1>
+        <p>$
+          <input type="number"
+            value={this.state.dollarInput}
+            onChange={this.updateInput("dollarInput")} />
+        </p>
+        <h1>FROM</h1>
+        <p>
+          <input type="text"
+            value={this.state.addressInput}
+            onChange={this.updateInput("addressInput")}
+          />?
+        </p>
+        <input type="submit" value="ask moneymile"/>
       </form>
     )
   }

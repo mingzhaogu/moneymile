@@ -22,3 +22,7 @@ time, mark, audio, video {
 *, *:before, *:after {
   box-sizing: border-box;
 }
+
+button:focus {
+	outline:0;
+}

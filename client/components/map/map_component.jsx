@@ -108,10 +108,10 @@ class Map extends React.Component {
     }
 
     return (
-      <React.Fragment>
+      <div className="map-component">
         <div ref="renderedMap" id="map-container" />
         {form}
-      </React.Fragment>
+      </div>
     );
   }
 }
