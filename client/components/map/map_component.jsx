@@ -1,6 +1,7 @@
 import React from 'react';
 
 import MapStyle from './map_style';
+import InputForm from '../input_form';
 
 class Map extends React.Component {
   constructor(props) {
@@ -90,6 +91,7 @@ class Map extends React.Component {
     return (
       <React.Fragment>
         <div ref="renderedMap" id="map-container" />
+        <InputForm />
       </React.Fragment>
     );
   }

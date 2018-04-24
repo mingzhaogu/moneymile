@@ -10,7 +10,10 @@ router.get('/', (req, res) => {
 });
 
 router.get('/rideEstimate', (req, res) =>  {
-  const lyft = new Lyft(process.env.LYFT_CLIENT_ID, process.env.LYFT_CLIENT_SECRET);
+  const lyft = new Lyft(
+    process.env.LYFT_CLIENT_ID,
+    process.env.LYFT_CLIENT_SECRET
+  );
 
   const query = {
     start: {
@@ -21,7 +24,7 @@ router.get('/rideEstimate', (req, res) =>  {
       latitude: req.query.end_lat,
       longitude: req.query.end_lng,
     },
-      rideType: req.query.ride_type,
+    rideType: req.query.ride_type
   };
 
   lyft.getRideEstimates(query)
