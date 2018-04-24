@@ -31,24 +31,30 @@
     width:100px;
     text-align:center;
 }
+
 .desc-col {
  width:300px;
  text-align:left;
 }
+
 table {
     counter-reset: tableCount;
 }
+
 .counterCell:before {
     content: counter(tableCount);
     counter-increment: tableCount;
 }
+
 .counterCell {
  text-align: center;
  width:50px;
 }
+
 .button-center {
  text-align: center;
 }
+
 .Modal {
    position: relative;
    top: 250px;
@@ -60,7 +66,8 @@ table {
    border: 1px solid #000;
    border-radius: 4px;
    padding: 20px;
- }
+}
+
 .Overlay {
    position: fixed;
    top: 0;
@@ -69,19 +76,23 @@ table {
    bottom: 0;
    background-color: rebeccapurple;
  }
+
 .button-center {
   text-align: center;
- }
+}
+
 label{
  display:inline-block;
  width:200px;
  margin-right:30px;
  text-align:right;
  }
+
 fieldset{
  border:none;
  margin:0px auto;
  }
+
 .closebtn{
    float:right;
  }

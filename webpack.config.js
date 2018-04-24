@@ -32,5 +32,10 @@ module.exports = {
   ],
   node: {
     fs: 'empty'
+  },
+  resolve: {
+    extensions: [".js", ".jsx", "*"]
   }
 };
+
+// 4/23 : added resolve extensions to read diff files
