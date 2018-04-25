@@ -1,4 +1,5 @@
 import React from 'react';
+import async from 'async';
 
 import UserInputForm from '../user/user_input_form';
 import MapStyle from './map_style';
@@ -18,6 +19,7 @@ class Map extends React.Component {
     this.initializeMap = this.initializeMap.bind(this);
     this.centerMap = this.centerMap.bind(this);
     this.parseAddressToLatLng = this.parseAddressToLatLng.bind(this);
+    this.drawBoundaries = this.drawBoundaries.bind(this);
   }
 
   componentDidMount() {
@@ -30,7 +32,7 @@ class Map extends React.Component {
   }
 
   initializeMap() {
-    const sfCenter = { lat: 37.773972, lng: -122.431297 }
+    const sfCenter = { lat: 37.773972, lng: -122.431297 };
     const center = this.state.userLocation || sfCenter;
 
     const mapOptions = {
@@ -56,25 +58,10 @@ class Map extends React.Component {
   centerMap(locationLatLng) {
     this.setState({
       userLocation: locationLatLng
-    })
-  }
-
-  parseAddressToLatLng(address) {
-    const geocoder = new google.maps.Geocoder;
-    geocoder.geocode({ address: address }, (results, status) => {
-      //include componentRestrictions? Restrict to areas lyft operates?
-      if (status === 'OK') {
-        const addressLatLng = {
-          lat: results[0].geometry.location.lat(),
-          lng: results[0].geometry.location.lng()
-        }
-        console.log("addy", addressLatLng);
-        this.centerMap(addressLatLng)
-      } else {
-        console.log('did not work')
-      }
     });
   }
+
+  
 
   getUserLocation() {
     const successCallback = position => {
@@ -82,31 +69,58 @@ class Map extends React.Component {
         lat: position.coords.latitude,
         lng: position.coords.longitude
       };
-      this.setState({userLocation: parsedLocation})
+      this.setState({ userLocation: parsedLocation });
 
       const geocoder = new google.maps.Geocoder;
-      this.setState({ userLocation: parsedLocation });
       geocoder.geocode({ location: parsedLocation }, (results, status) => {
-        //include componentRestrictions? Restrict to areas lyft operates?
         if (status === 'OK') {
-          this.setState(
-            { userAddress: results[0].formatted_address },
-            console.log("should have recentered")
-          )
-        } else {
-          console.log('did not work')
+          this.setState({ userAddress: results[0].formatted_address });
         }
       });
     };
 
-    function errorCallback(error) {
-      console.log(error);
-    }
+    const errorCallback = error => {
+      console.log("Can't get user location, using default SF location");
+      const parsedLocation = this.marker.position;
+      this.setState({userLocation: parsedLocation});
+
+      const geocoder = new google.maps.Geocoder;
+      geocoder.geocode({ location: parsedLocation }, (results, status) => {
+        if (status === 'OK') {
+          this.setState({ userAddress: results[0].formatted_address });
+        }
+      });
+    };
 
     navigator.geolocation.getCurrentPosition(successCallback, errorCallback, {
-      timeout: 10000,
+      timeout: 5000,
       enableHighAccuracy: true
     });
+  }
+
+  drawBoundaries(boundaries) {
+    const boundariesArray = Object.values(boundaries);
+
+    boundariesArray.forEach((boundary, index) => {
+      new google.maps.Marker({
+        position: boundary,
+        map: this.map,
+        title: `${index}`
+      });
+    });
+
+    const bermudaTriangle = new google.maps.Polygon({
+         paths: boundariesArray,
+         strokeColor: '#FF0000',
+         strokeOpacity: 0.8,
+         strokeWeight: 3,
+         fillColor: '#FF0000',
+         fillOpacity: 0.35
+       });
+    const bounds = new google.maps.LatLngBounds();
+    boundariesArray.forEach((coord) => bounds.extend(coord));
+    this.map.fitBounds(bounds);
+    bermudaTriangle.setMap(this.map);
   }
 
   render() {
@@ -115,6 +129,7 @@ class Map extends React.Component {
       form = <UserInputForm
                 currentAddress={this.state.userAddress}
                 parseAddressToLatLng={this.parseAddressToLatLng}
+                drawBoundaries={this.drawBoundaries}
               />;
     }
 

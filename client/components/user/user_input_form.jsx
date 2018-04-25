@@ -7,7 +7,7 @@ class UserInputForm extends React.Component {
     super(props);
 
     const addressInput = this.props.currentAddress;
-    console.log("addressinput", addressInput);
+    console.log("addressinput: ", addressInput);
     this.state = {
       dollarInput: "",
       addressInput: addressInput,
@@ -25,7 +25,26 @@ class UserInputForm extends React.Component {
   submitForm(e) {
     e.preventDefault();
     this.setState({ formSubmitted: true }, () => {
+      this.parseAddressToLatLng(this.state.addressInput);
       this.getBoundaries();
+    });
+  }
+
+  parseAddressToLatLng(address) {
+    const geocoder = new google.maps.Geocoder;
+    geocoder.geocode({ address: address }, (results, status) => {
+      //include componentRestrictions? Restrict to areas lyft operates?
+      if (status === 'OK') {
+        const addressLatLng = {
+          lat: results[0].geometry.location.lat(),
+          lng: results[0].geometry.location.lng()
+        };
+        console.log("addy", addressLatLng);
+        this.setState({ addressLatLng });
+        this.centerMap(addressLatLng);
+      } else {
+        console.log('did not work');
+      }
     });
   }
 
@@ -33,19 +52,19 @@ class UserInputForm extends React.Component {
     const stdDev = 2;
     const amount = 15;
     const defaultRadiusInMeters = 32000;
-    const currentLatLng = new google.maps.LatLng({lat: 37.7987837, lng: -122.4013864});
+    const currentLatLng = this.state.addressLatLng;
     const directions = [0, 45, 90, 135, 180, 225, 270, 315];
     const googleGeometry = google.maps.geometry.spherical;
 
-    async.each(directions, (direction, callback) => {
+    console.log(currentLatLng);
+    async.eachOf(directions, (direction, index, callback) => {
       const endLatLng = new googleGeometry.computeOffset(currentLatLng, defaultRadiusInMeters, direction);
-      console.log(endLatLng);
-      this.rideEstimate(currentLatLng, endLatLng, amount, stdDev, callback);
+      this.rideEstimate(currentLatLng, endLatLng, amount, stdDev, index);
       callback(null);
     });
   }
 
-  async rideEstimate(start, end, amount, stdDev, completed, callback) {
+  async rideEstimate(start, end, amount, stdDev, index) {
     let result;
     await axios.get('/rideEstimate', {
       params: {
@@ -62,11 +81,14 @@ class UserInputForm extends React.Component {
     if (result.data) {
       let estimate = result.data.cost_estimates[0].estimated_cost_cents_max / 100;
       if (estimate < (amount + stdDev) && estimate > (amount - stdDev)) {
-        console.log(end.lat());
-        console.log(end.lng());
-        console.log(estimate);
-        this.setState({ boundaries: [...this.state.boundaries, end] },
-        () => console.log(this.state.boundaries));
+        let newBoundaries = Object.assign({}, this.state.boundaries);
+        newBoundaries[index] = end;
+        this.setState({ boundaries: newBoundaries },
+        () => {
+          console.log(this.state.boundaries);
+          if (Object.keys(this.state.boundaries).length == 8)
+            this.props.drawBoundaries(this.state.boundaries);
+        });
       } else {
         let deltaLat = Math.abs(end.lat()) - Math.abs(start.lat());
         let deltaLng = Math.abs(end.lng()) - Math.abs(start.lng());
@@ -78,7 +100,7 @@ class UserInputForm extends React.Component {
         // console.log('deltalng' + deltaLng);
         // console.log('ratio' + ratio);
         // console.log('newEnd' + newEnd);
-        this.rideEstimate(start, newEnd, amount, stdDev);
+        this.rideEstimate(start, newEnd, amount, stdDev, index);
       }
     }
   }

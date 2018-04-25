@@ -66,7 +66,7 @@ class MapDrawing extends React.Component {
   centerMap(locationLatLng) {
     this.setState({
       userLocation: locationLatLng
-    })
+    });
   }
 
   drawBoundaries(){
@@ -79,10 +79,9 @@ class MapDrawing extends React.Component {
          fillOpacity: 0.35
        });
     const bounds = new google.maps.LatLngBounds();
-    coordArray.forEach((coord) => bounds.extend(coord))
+    coordArray.forEach((coord) => bounds.extend(coord));
     this.map.fitBounds(bounds);
     bermudaTriangle.setMap(this.map);
-
   }
 
   parseAddressToLatLng(address) {
@@ -93,11 +92,11 @@ class MapDrawing extends React.Component {
         const addressLatLng = {
           lat: results[0].geometry.location.lat(),
           lng: results[0].geometry.location.lng()
-        }
+        };
         console.log("addy", addressLatLng);
-        this.centerMap(addressLatLng)
+        this.centerMap(addressLatLng);
       } else {
-        console.log('did not work')
+        console.log('did not work');
       }
     });
   }
@@ -108,7 +107,7 @@ class MapDrawing extends React.Component {
         lat: position.coords.latitude,
         lng: position.coords.longitude
       };
-      this.setState({userLocation: parsedLocation})
+      this.setState({userLocation: parsedLocation});
 
       const geocoder = new google.maps.Geocoder;
       this.setState({ userLocation: parsedLocation });
@@ -118,9 +117,9 @@ class MapDrawing extends React.Component {
           this.setState(
             { userAddress: results[0].formatted_address },
             console.log("should have recentered")
-          )
+          );
         } else {
-          console.log('did not work')
+          console.log('did not work');
         }
       });
     };
@@ -141,7 +140,7 @@ class MapDrawing extends React.Component {
       form = <UserInputForm
                 currentAddress={this.state.userAddress}
                 parseAddressToLatLng={this.parseAddressToLatLng}
-              />
+              />;
     }
 
     return (
