@@ -26,6 +26,7 @@ export default class InputForm extends React.Component {
 
     async.each(directions, (direction, callback) => {
       const endLatLng = new googleGeometry.computeOffset(currentLatLng, defaultRadiusInMeters, direction);
+      console.log(endLatLng);
       this.rideEstimate(currentLatLng, endLatLng, amount, stdDev, callback);
       callback(null);
     });

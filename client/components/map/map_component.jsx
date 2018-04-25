@@ -115,7 +115,7 @@ class Map extends React.Component {
       form = <UserInputForm
                 currentAddress={this.state.userAddress}
                 parseAddressToLatLng={this.parseAddressToLatLng}
-              />
+              />;
     }
 
     return (
