@@ -25,7 +25,7 @@ class UserInputForm extends React.Component {
   submitForm(e) {
     e.preventDefault();
     this.setState({ formSubmitted: true }, () => {
-      this.getBoundaries();
+      // this.getBoundaries();
     });
   }
 
@@ -97,32 +97,41 @@ class UserInputForm extends React.Component {
     let formName;
     let formClassName;
     if (this.state.formSubmitted) {
-      formName = "-submitted";
+      formName = "submitted";
       formClassName = "user-submitted-form";
     } else {
+      formName = "";
       formClassName = "user-input-form";
     }
 
     return (
       <form className={formClassName}
         onSubmit={this.submitForm}>
-        <p className={`question${formName}`}>
+
+        <p className="user-input-form">
           WHERE CAN I GO WITH $
+
           <input type="number"
-            className={`dollar-input${formName}`}
+            id={this.formName}
+            className={`dollar-input`}
             value={this.state.dollarInput}
             onChange={this.updateInput("dollarInput")}
           />
+
           &nbsp;FROM&nbsp;
+
           <input type="text"
-            className={`address-input${formName}`}
+            id={this.formName}
+            className={`address-input`}
             value={this.state.addressInput}
             onChange={this.updateInput("addressInput")}
           />
+
           ?
         </p>
         <input type="submit"
-          className={`submit-button${formName}`}
+          id={this.formName}
+          className={`submit-button`}
           value="ask moneymile"
         />
       </form>
