@@ -69,8 +69,8 @@ class UserInputForm extends React.Component {
 
     async.eachOf(directions, (direction, index, callback) => {
       const endLatLng = new googleGeometry.computeOffset(currentLatLng, defaultRadiusInMeters, direction);
-      this.landOrWater(endLatLng.lat(), endLatLng.lng(), res => console.log(res))
-      this.rideEstimate(currentLatLng, endLatLng, amount, stdDev, index, direction);
+      // this.landOrWater(endLatLng.lat(), endLatLng.lng(), res => console.log(res))
+      this.rideEstimate(currentLatLng, endLatLng, amount, stdDev, index, direction, []);
       callback(null);
     });
   }
@@ -99,7 +99,7 @@ class UserInputForm extends React.Component {
       }
   }
 
-  async rideEstimate(start, end, amount, stdDev, index, direction) {
+  async rideEstimate(start, end, amount, stdDev, index, direction, history) {
     let result;
     await axios.get('/rideEstimate', {
       params: {
@@ -113,12 +113,17 @@ class UserInputForm extends React.Component {
     .then(res => {result = res})
     .catch(errors => console.log(errors))
 
-    console.log("end: ", end.lat(), end.lng());
+    console.log(result);
     this.props.newMarker(end);
     if (result.data) {
-      let estimate = result.data.cost_estimates[0].estimated_cost_cents_max / 100;
-      console.log("estimate: ", estimate);
-      if (estimate < (amount + stdDev) && estimate > (amount - stdDev)) {
+      let primetimeString = result.data.cost_estimates[0].primetime_percentage;
+      let primtimePercentage = parseFloat(primetimeString) / 100.0;
+      let baseCost = result.data.cost_estimates[0].estimated_cost_cents_max / 100;
+      let estimate = (primtimePercentage * baseCost) + baseCost;
+
+      // let estimate = result.data.cost_estimates[0].estimated_cost_cents_max / 100;
+      if ((estimate < (amount + stdDev) && estimate > (amount - stdDev)) ||
+          history.length > 15) {
         let newBoundaries = Object.assign({}, this.state.boundaries);
         newBoundaries[index] = end;
         this.setState({ boundaries: newBoundaries },
@@ -131,7 +136,8 @@ class UserInputForm extends React.Component {
         const googleGeometry = google.maps.geometry.spherical;
         const newDistance = googleGeometry.computeDistanceBetween(start, end);
         const newEnd = new googleGeometry.computeOffset(start, ratio * newDistance, direction);
-        this.rideEstimate(start, newEnd, amount, stdDev, index, direction);
+        history.push(newEnd);
+        this.rideEstimate(start, newEnd, amount, stdDev, index, direction, history);
       }
     }
   }
