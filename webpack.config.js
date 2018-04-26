@@ -1,4 +1,3 @@
-//webpack.config.js
 const path = require('path');
 const webpack = require('webpack');
 const Dotenv = require('dotenv-webpack');
@@ -37,5 +36,3 @@ module.exports = {
     extensions: [".js", ".jsx", "*"]
   }
 };
-
-// 4/23 : added resolve extensions to read diff files
