@@ -1,5 +1,5 @@
 form {
-  margin-top: 7.5vh;
+  margin-top: 10vh;
   padding: 10px;
   font-family: "Yantramanav";
   font-size: 20px;
@@ -15,13 +15,13 @@ form {
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
-  box-shadow: 5px 5px 4px 0px rgba(0, 0, 0, 0.5);
+  box-shadow: 5px 5px 4px 0px rgba(0, 0, 0, 0.5), inset 0 1px 3px 0 rgba(0,0,0,0.50);
 }
 
 .dollar-input-div,
 .address-input-div {
   display: flex;
-  font-size: 12px;
+  font-size: 9px;
   background-color: rbga(86, 68, 101, 0.21);
   border: 1px solid rgba(255, 255, 255, 0.24);
   border-radius: 6px;

@@ -21,11 +21,13 @@ class Map extends React.Component {
     this.initializeMap = this.initializeMap.bind(this);
     this.centerMap = this.centerMap.bind(this);
     this.parseAddressToLatLng = this.parseAddressToLatLng.bind(this);
+    this.drawBoundaries = this.drawBoundaries.bind(this);
+    this.newMarker = this.newMarker.bind(this);
   }
 
   componentDidMount() {
     this.initializeMap();
-    this.setState({ status: "Fetching Current Location..."})
+    this.setState({ status: "FETCHING CURRENT LOCATION..."})
     this.getUserLocation();
   }
 
@@ -104,7 +106,11 @@ class Map extends React.Component {
 
     const errorCallback = (error) => {
       console.log(error);
-      this.setState({ status: `Couldn't find current location.. &#9785`})
+      // this.setState({ status: `Couldn't find current location.. &#9785`})
+      this.setState({ status: "SORRY, COULDN'T FIND YOU..."});
+      setTimeout(function(){
+        this.setState({userAddress: " "});
+      }.bind(this), 3000);
     }
 
     navigator.geolocation.getCurrentPosition(successCallback, errorCallback, {
@@ -113,12 +119,54 @@ class Map extends React.Component {
     });
   }
 
+  newMarker(pos) {
+    new google.maps.Marker({
+      position: pos,
+      map: this.map,
+      title: `${pos.lat()}, ${pos.lng()}`
+    });
+  }
+
+  drawBoundaries(boundaries) {
+    let boundariesArray = [];
+
+    for (let i = 0; i < 18; i++) {
+      boundariesArray.push(i);
+    }
+
+    boundariesArray = boundariesArray.map(index => boundaries[index]);
+
+    boundariesArray.forEach((boundary, index) => {
+      new google.maps.Marker({
+        position: boundary,
+        map: this.map,
+        title: `${index}`
+      });
+    });
+
+    const bermudaTriangle = new google.maps.Polygon({
+         paths: boundariesArray,
+         strokeColor: '#FF0000',
+         strokeOpacity: 0.8,
+         strokeWeight: 3,
+         fillColor: '#FF0000',
+         fillOpacity: 0.35
+       });
+    const bounds = new google.maps.LatLngBounds();
+    boundariesArray.forEach((coord) => bounds.extend(coord));
+    this.map.fitBounds(bounds);
+    bermudaTriangle.setMap(this.map);
+  }
+
   render() {
     let form;
     if (this.state.userAddress) {
       form = <UserInputForm
                 currentAddress={this.state.userAddress}
                 parseAddressToLatLng={this.parseAddressToLatLng}
+                drawBoundaries={this.drawBoundaries}
+                newMarker={this.newMarker}
+                map={this.map}
               />;
     } else {
       form = <FetchLocationForm currentStatus={this.state.status} />
