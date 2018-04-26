@@ -13,6 +13,7 @@ class FetchLocationForm extends React.Component {
       <React.Fragment>
         <NavBar />
         <form className="fetch-location-form">
+          <img className="fetch-location-img" src="https://i.imgur.com/P0CmA6f.png" />
           {status}
         </form>
       </React.Fragment>

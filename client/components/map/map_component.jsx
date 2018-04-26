@@ -25,7 +25,7 @@ class Map extends React.Component {
 
   componentDidMount() {
     this.initializeMap();
-    this.setState({ status: "Fetching Current Location..."})
+    this.setState({ status: "FETCHING CURRENT LOCATION..."})
     this.getUserLocation();
   }
 
@@ -104,7 +104,11 @@ class Map extends React.Component {
 
     const errorCallback = (error) => {
       console.log(error);
-      this.setState({ status: `Couldn't find current location.. &#9785`})
+      // this.setState({ status: `Couldn't find current location.. &#9785`})
+      this.setState({ status: "SORRY, COULDN'T FIND YOU..."});
+      setTimeout(function(){
+        this.setState({userAddress: " "});
+      }.bind(this), 3000);
     }
 
     navigator.geolocation.getCurrentPosition(successCallback, errorCallback, {

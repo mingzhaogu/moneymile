@@ -4,10 +4,18 @@
   justify-content: space-between;
   height: 5vh;
   width: 100vw;
-  background-color: rgba(0, 0, 0, 0.35);
-  background-color: purple;
+  background-color: rgba(0, 0, 0, 0.8);
+  box-shadow: 5px 5px 4px 0px rgba(0, 0, 0, 0.5);
+  /* background-color: purple; */
   color: #FFFFFF;
   position: absolute;
   font-style: "Anton";
   /* z-index: 2; */
+}
+
+.logo {
+  height: 28px;
+  width: auto;
+  float: left;
+  padding-left: 10px;
 }
