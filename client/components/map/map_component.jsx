@@ -18,9 +18,10 @@ class Map extends React.Component {
     this.getUserLocation = this.getUserLocation.bind(this);
     this.initializeMap = this.initializeMap.bind(this);
     this.centerMap = this.centerMap.bind(this);
-    // this.parseAddressToLatLng = this.parseAddressToLatLng.bind(this);
     this.drawBoundaries = this.drawBoundaries.bind(this);
     this.newMarker = this.newMarker.bind(this);
+    this.landOrWater = this.landOrWater.bind(this);
+    this.snapToNearestRoad = this.snapToNearestRoad.bind(this);
   }
 
   componentDidMount() {
@@ -112,7 +113,11 @@ class Map extends React.Component {
       boundariesArray.push(i);
     }
 
-    boundariesArray = boundariesArray.map(index => boundaries[index]);
+    boundariesArray = boundariesArray.map(index => {
+      const boundaryLatLng = boundaries[index];
+      this.landOrWater(boundaryLatLng, res => console.log(`${index}`, res));
+      return boundaryLatLng;
+    });
 
     boundariesArray.forEach((boundary, index) => {
       new google.maps.Marker({
@@ -134,6 +139,45 @@ class Map extends React.Component {
     boundariesArray.forEach((coord) => bounds.extend(coord));
     this.map.fitBounds(bounds);
     bermudaTriangle.setMap(this.map);
+  }
+
+  landOrWater(position, callback) {
+    const mapUrl = `http://maps.googleapis.com/maps/api/staticmap?center=${position.lat()},${position.lng()}&zoom=${this.map.getZoom()}&size=1x1&maptype=roadmap`
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d');
+    let result;
+
+    const image = new Image();
+    image.crossOrigin = "Anonymous";
+    image.src = mapUrl;
+
+    image.onload = () => {
+        canvas.width = image.width;
+        canvas.height = image.height;
+        canvas.getContext('2d').drawImage(image, 0, 0, image.width, image.height);
+        const pixelData = canvas.getContext('2d').getImageData(0, 0, 1, 1).data;
+        if (pixelData[0] > 160 && pixelData[0] < 181 && pixelData[1] > 190 && pixelData[1] < 210) {
+          result = "water";
+        } else {
+          result = "land";
+        }
+        callback(result);
+    };
+  }
+
+  snapToNearestRoad(position) {
+    const directionsService = new google.maps.DirectionsService();
+    const request = {
+        origin: position,
+        destination: position,
+        travelMode: google.maps.DirectionsTravelMode.DRIVING
+    };
+
+    directionsService.route(request, (response, status) => {
+      if (status == google.maps.DirectionsStatus.OK) {
+        position: response.routes[0].legs[0].start_location,
+      }
+    });
   }
 
   render() {
