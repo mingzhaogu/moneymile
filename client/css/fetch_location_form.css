@@ -1,85 +1,13 @@
 .fetch-location-form {
-  margin-top: 5vh;
-  padding: 15px;
-  font-family: "Titan One";
+  margin-top: 7.5vh;
+  padding: 10px;
+  font-family: "Yantramanav";
   font-size: 20px;
   position: absolute;
   height: auto;
   width: 90vw;
-  background-color: rgba(62, 195, 0, 0.85);
+  background-color: rgba(12, 7, 17, 0.7);
   border: 1px solid white;
   text-align: center;
   z-index: 1;
 }
-
-/* .dollar-input,
-.address-input,
-.submit-button {
-  width: 85%;
-  background-color: inherit;
-  border: none;
-  font-family: "Titan One";
-  text-align: center;
-}
-
-.dollar-input,
-.address-input {
-  border-bottom: 3px solid rgba(255, 255, 255, 1);
-  font-size: 16px;
-  color: rgba(51, 51, 51, 1);
-}
-
-.dollar-input {
-  width: 50%;
-}
-
-.submit-button {
-  background-color: transparent;
-  padding: none;
-  margin-top: 10px;
-  border-bottom: rgba(62, 195, 0, 1);
-  font-size: inherit;
-  color: rgba(51, 51, 51, 1);
-  color: green;
-  cursor: pointer;
-}
-
-@media (min-width: 340px) {
-  form {
-    font-size: 22px;
-  }
-
-  .dollar-input,
-  .address-input {
-    font-size: 18px;
-  }
-
-  .user-submitted-form {
-    font-size: 14px;
-  }
-
-  #submitted.dollar-input,
-  #submitted.address-input {
-    font-size: 14px;
-  }
-}
-
-@media (min-width: 370px) {
-  form {
-    font-size: 24px;
-  }
-
-  .dollar-input,
-  .address-input {
-    font-size: 20px;
-  }
-
-  .user-submitted-form {
-    font-size: 14px;
-  }
-
-  #submitted.dollar-input,
-  #submitted.address-input {
-    font-size: 14px;
-  }
-} */

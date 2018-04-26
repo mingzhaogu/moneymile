@@ -18,14 +18,17 @@
   margin: 5px;
 }
 
+#submitted.dollar-input-div {
+  width: 35%;
+}
+
 #submitted.address-input,
 #submitted.dollar-input {
-  /* border: none; */
+  font-size: 12px;
   width: 100%;
   overflow: hidden;
 }
 
 #submitted.submit {
   width: 8vw;
-  float: right;
 }

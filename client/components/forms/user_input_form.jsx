@@ -144,8 +144,8 @@ class UserInputForm extends React.Component {
 
           <button
             id={formName}
-            className="submit"d
-            onClick={this.submitForm}>o</button>
+            className="submit"
+            onClick={this.submitForm}>GO</button>
         </form>
       </React.Fragment>
     );

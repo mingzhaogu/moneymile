@@ -1,7 +1,7 @@
 form {
   margin-top: 7.5vh;
   padding: 10px;
-  font-family: "Titan One";
+  font-family: "Yantramanav";
   font-size: 20px;
   color: #FFFFFF;
   position: absolute;
@@ -15,6 +15,7 @@ form {
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
+  box-shadow: 5px 5px 4px 0px rgba(0, 0, 0, 0.5);
 }
 
 .dollar-input-div,
@@ -54,7 +55,7 @@ form {
   background-color: transparent;
   width: 100%;
   border: none;
-  font-family: "Titan One";
+  /* font-family: "Yantramanav"; */
   text-align: center;
 }
 

@@ -25,7 +25,7 @@ class Map extends React.Component {
 
   componentDidMount() {
     this.initializeMap();
-    this.setState({ status: "Fetching Current Location."})
+    this.setState({ status: "Fetching Current Location..."})
     this.getUserLocation();
   }
 
@@ -53,7 +53,6 @@ class Map extends React.Component {
     this.marker = new google.maps.Marker({
           position: center,
           map: this.map,
-          // title: 'Hello World!'
         });
   }
 
