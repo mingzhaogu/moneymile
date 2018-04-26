@@ -15,7 +15,8 @@ class UserInputForm extends React.Component {
       dollarInput: "",
       addressInput: addressInput,
       formSubmitted: false,
-      boundaries: []
+      boundaries: [],
+      rideType: "lyft"
     };
 
     this.updateAddress = this.updateAddress.bind(this);
@@ -23,6 +24,7 @@ class UserInputForm extends React.Component {
     this.submitForm = this.submitForm.bind(this);
     this.rideEstimate = this.rideEstimate.bind(this);
     this.getBoundaries = this.getBoundaries.bind(this);
+    this.getRideType = this.getRideType.bind(this);
   }
 
   submitForm(e) {
@@ -37,7 +39,8 @@ class UserInputForm extends React.Component {
     const amount = 15;
     const defaultRadiusInMeters = 32000;
     const currentLatLng = new google.maps.LatLng({lat: 37.7987837, lng: -122.4013864});
-    const directions = [0, 45, 90, 135, 180, 225, 270, 315];
+    // const directions = [0, 45, 90, 135, 180, 225, 270, 315];
+    const directions = [0];
     const googleGeometry = google.maps.geometry.spherical;
 
     async.each(directions, (direction, callback) => {
@@ -48,6 +51,10 @@ class UserInputForm extends React.Component {
     });
   }
 
+  getRideType(type) {
+    this.setState({ rideType: type }, () => { this.getBoundaries() })
+  }
+
   async rideEstimate(start, end, amount, stdDev, completed, callback) {
     let result;
     await axios.get('/rideEstimate', {
@@ -56,7 +63,7 @@ class UserInputForm extends React.Component {
         start_lng: start.lng(),
         end_lat: end.lat(),
         end_lng: end.lng(),
-        ride_type: 'lyft'
+        ride_type: this.state.rideType
       }
     })
     .then(res => {result = res})
@@ -104,7 +111,9 @@ class UserInputForm extends React.Component {
     if (this.state.formSubmitted) {
       formName = "submitted";
       formClassName = "user-submitted-form";
-      rideSelection = <UserRideSelection />
+      rideSelection = <UserRideSelection
+        activeType={this.state.rideType}
+        getRideType={this.getRideType}/>
     } else {
       navBar = <NavBar />
       formName = "";
