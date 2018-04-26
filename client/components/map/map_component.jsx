@@ -144,6 +144,7 @@ class Map extends React.Component {
                 parseAddressToLatLng={this.parseAddressToLatLng}
                 drawBoundaries={this.drawBoundaries}
                 newMarker={this.newMarker}
+                map={this.map}
               />;
     }
 
