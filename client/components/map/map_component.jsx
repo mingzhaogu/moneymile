@@ -18,8 +18,9 @@ class Map extends React.Component {
     this.getUserLocation = this.getUserLocation.bind(this);
     this.initializeMap = this.initializeMap.bind(this);
     this.centerMap = this.centerMap.bind(this);
-    this.parseAddressToLatLng = this.parseAddressToLatLng.bind(this);
+    // this.parseAddressToLatLng = this.parseAddressToLatLng.bind(this);
     this.drawBoundaries = this.drawBoundaries.bind(this);
+    this.newMarker = this.newMarker.bind(this);
   }
 
   componentDidMount() {
@@ -61,8 +62,6 @@ class Map extends React.Component {
     });
   }
 
-  
-
   getUserLocation() {
     const successCallback = position => {
       const parsedLocation = {
@@ -98,8 +97,22 @@ class Map extends React.Component {
     });
   }
 
+  newMarker(pos) {
+    new google.maps.Marker({
+      position: pos,
+      map: this.map,
+      title: `${pos.lat()}, ${pos.lng()}`
+    });
+  }
+
   drawBoundaries(boundaries) {
-    const boundariesArray = Object.values(boundaries);
+    let boundariesArray = [];
+
+    for (let i = 0; i < 18; i++) {
+      boundariesArray.push(i);
+    }
+
+    boundariesArray = boundariesArray.map(index => boundaries[index]);
 
     boundariesArray.forEach((boundary, index) => {
       new google.maps.Marker({
@@ -130,6 +143,7 @@ class Map extends React.Component {
                 currentAddress={this.state.userAddress}
                 parseAddressToLatLng={this.parseAddressToLatLng}
                 drawBoundaries={this.drawBoundaries}
+                newMarker={this.newMarker}
               />;
     }
 
