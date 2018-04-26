@@ -59,8 +59,6 @@ class MapDrawing extends React.Component {
     };
 
     this.map = new google.maps.Map(this.refs.renderedMap, mapOptions);
-
-
   }
 
   centerMap(locationLatLng) {

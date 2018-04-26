@@ -32,8 +32,9 @@ export default class App extends React.Component {
     return (
       <React.Fragment>
         <Map />
-        <InputForm />
       </React.Fragment>
     );
   }
 }
+
+// <InputForm />

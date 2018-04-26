@@ -1,8 +1,9 @@
 @import 'reset.css';
 @import 'App.css';
 @import 'map.css';
+@import 'nav_bar.css';
+@import 'fetch_location_form.css';
 @import 'user_input_form.css';
 @import 'user_input_form_submitted.css';
-
 
 /* do we need root/index.css? */

@@ -1,6 +1,8 @@
 import React from 'react';
+import NavBar from '../ui/nav';
 import axios from 'axios';
 import async from 'async';
+// import icon from '../../../public/moneymoney.png';
 
 class UserInputForm extends React.Component {
   constructor(props) {
@@ -25,7 +27,7 @@ class UserInputForm extends React.Component {
   submitForm(e) {
     e.preventDefault();
     this.setState({ formSubmitted: true }, () => {
-      this.getBoundaries();
+      // this.getBoundaries();
     });
   }
 
@@ -94,38 +96,58 @@ class UserInputForm extends React.Component {
   render() {
     if (!this.props.currentAddress) return null;
 
+    let navBar = <div></div>;
     let formName;
     let formClassName;
     if (this.state.formSubmitted) {
-      formName = "-submitted";
+      formName = "submitted";
       formClassName = "user-submitted-form";
     } else {
+      navBar = <NavBar />
+      formName = "";
       formClassName = "user-input-form";
     }
 
     return (
-      <form className={formClassName}
-        onSubmit={this.submitForm}>
-        <p className={`question${formName}`}>
-          WHERE CAN I GO WITH $
-          <input type="number"
-            className={`dollar-input${formName}`}
-            value={this.state.dollarInput}
-            onChange={this.updateInput("dollarInput")}
-          />
-          &nbsp;FROM&nbsp;
-          <input type="text"
-            className={`address-input${formName}`}
-            value={this.state.addressInput}
-            onChange={this.updateInput("addressInput")}
-          />
-          ?
-        </p>
-        <input type="submit"
-          className={`submit-button${formName}`}
-          value="ask moneymile"
-        />
-      </form>
+      <React.Fragment>
+        {navBar}
+        <form className={formClassName}
+          onSubmit={this.submitForm}>
+
+          <div id={formName}
+            className="question"
+          >WHERE CAN I GO WITH</div>
+
+          <div id={formName} className="dollar-input-div">
+            <img className="dollar-input-icon" src="https://i.imgur.com/lbwIy4B.png" />
+            <input type="number"
+              id={formName}
+              className={`dollar-input`}
+              value={this.state.dollarInput}
+              onChange={this.updateInput("dollarInput")}
+            />
+          </div>
+
+          <div id={formName}
+            className="question"
+          >&nbsp;FROM&nbsp;</div>
+
+          <div id={formName} className="address-input-div">
+            <img className="address-input-icon" src="https://i.imgur.com/UFHf4wX.png" />
+            <input type="text"
+              id={formName}
+              className={`address-input`}
+              value={this.state.addressInput}
+              onChange={this.updateInput("addressInput")}
+            />
+          </div>
+
+          <button
+            id={formName}
+            className="submit"
+            onClick={this.submitForm}>GO</button>
+        </form>
+      </React.Fragment>
     );
   }
 

@@ -1,20 +1,34 @@
 .user-submitted-form {
-  margin-top: 2vh;
-  padding: 10px;
-  font-size: 14px;
-  width: 90%;
+  margin-top: 0vh;
+  padding: 0px;
+  font-size: 12px;
+  height: 8vh;
+  width: 100vw;
+  flex-direction: row;
+  border: none;
 }
 
-#submitted.dollar-input,
+#submitted.question {
+  display: none;
+}
+
+#submitted.address-input-div,
+#submitted.dollar-input-div,
+#submitted.submit {
+  margin: 5px;
+}
+
+#submitted.dollar-input-div {
+  width: 35%;
+}
+
 #submitted.address-input,
-#submitted.submit-button {
-  width: 95%;
-}
-
 #submitted.dollar-input {
-  width: 12%;
+  font-size: 12px;
+  width: 100%;
+  overflow: hidden;
 }
 
-#submitted.submit-button {
-  margin-top: 5px;
+#submitted.submit {
+  width: 8vw;
 }

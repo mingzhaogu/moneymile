@@ -1,6 +1,8 @@
 import React from 'react';
 
-import UserInputForm from '../user/user_input_form';
+import NavBar from '../ui/nav';
+import UserInputForm from '../forms/user_input_form';
+import FetchLocationForm from '../forms/fetch_location';
 import MapStyle from './map_style';
 
 class Map extends React.Component {
@@ -12,6 +14,7 @@ class Map extends React.Component {
     this.state = {
       userLocation: null,
       userAddress: null,
+      status: ''
     };
 
     this.getUserLocation = this.getUserLocation.bind(this);
@@ -22,6 +25,7 @@ class Map extends React.Component {
 
   componentDidMount() {
     this.initializeMap();
+    this.setState({ status: "Fetching Current Location..."})
     this.getUserLocation();
   }
 
@@ -49,7 +53,6 @@ class Map extends React.Component {
     this.marker = new google.maps.Marker({
           position: center,
           map: this.map,
-          // title: 'Hello World!'
         });
   }
 
@@ -77,7 +80,7 @@ class Map extends React.Component {
   }
 
   getUserLocation() {
-    const successCallback = position => {
+    const successCallback = (position) => {
       const parsedLocation = {
         lat: position.coords.latitude,
         lng: position.coords.longitude
@@ -99,8 +102,9 @@ class Map extends React.Component {
       });
     };
 
-    function errorCallback(error) {
+    const errorCallback = (error) => {
       console.log(error);
+      this.setState({ status: `Couldn't find current location.. &#9785`})
     }
 
     navigator.geolocation.getCurrentPosition(successCallback, errorCallback, {
@@ -116,6 +120,8 @@ class Map extends React.Component {
                 currentAddress={this.state.userAddress}
                 parseAddressToLatLng={this.parseAddressToLatLng}
               />;
+    } else {
+      form = <FetchLocationForm currentStatus={this.state.status} />
     }
 
     return (
