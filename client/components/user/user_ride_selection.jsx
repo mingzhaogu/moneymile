@@ -5,30 +5,26 @@ class UserRideSelection extends React.Component {
     super(props);
     this.state = {
       selected: ["lyft"]
-    }
+    };
 
     this.updateType = this.updateType.bind(this);
   }
 
   updateType(type) {
-    const selectedRideTypes = this.state.selected
+    const selectedRideTypes = this.state.selected;
 
     return (e) => {
       if (this.state.selected.includes(type)) {
         e.target.classList.remove('selected');
         const index = selectedRideTypes.indexOf(type);
-        selectedRideTypes.splice(type, 1)
-        this.setState({
-          selected: selectedRideTypes
-        }, console.log("selected", this.state.selected))
+        selectedRideTypes.splice(index, 1);
+        this.setState({selected: selectedRideTypes});
       } else {
         e.target.classList.add('selected');
         selectedRideTypes.push(type);
-        this.setState({
-          selected: selectedRideTypes
-        }, console.log("selected", this.state.selected))
+        this.setState({selected: selectedRideTypes});
+        this.props.getRideType(type);
       }
-      this.props.getRideType(type)
     }
   }
 
@@ -37,12 +33,6 @@ class UserRideSelection extends React.Component {
   }
 
   render() {
-    // const lines = ["lyft", "lyft_plus"]
-    // lines.map((line, idx) => (
-    //   <li className=`${line}` onClick={this.updateType(line)}>
-    //     <p>test</p>
-    //   </li>
-    // ))
 
     return (
       <ul className="user_ride_selection">
