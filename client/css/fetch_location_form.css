@@ -1,12 +1,11 @@
-form {
+.fetch-location-form {
   margin-top: 5vh;
   padding: 15px;
   font-family: "Titan One";
   font-size: 20px;
   position: absolute;
   height: auto;
-  width: 75%;
-  max-width: 600px;
+  width: 90vw;
   background-color: rgba(62, 195, 0, 0.85);
   border: 1px solid white;
   text-align: center;

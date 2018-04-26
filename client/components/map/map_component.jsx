@@ -128,7 +128,6 @@ class Map extends React.Component {
     return (
       <div className="map-component">
         <div ref="renderedMap" id="map-container" />
-        <NavBar />
         {form}
       </div>
     );

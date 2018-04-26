@@ -1,27 +1,58 @@
 form {
   margin-top: 7.5vh;
-  padding: 15px;
+  padding: 10px;
   font-family: "Titan One";
   font-size: 20px;
   color: #FFFFFF;
   position: absolute;
   height: auto;
-  width: 75%;
-  max-width: 600px;
-  background-color: rgba(0, 0, 0, 0.35);
-  border: 1px solid white;
+  width: 85vw;
+  background-color: rgba(12, 7, 17, 0.7);
+  border-radius: 6px;
   text-align: center;
   z-index: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.dollar-input-div,
+.address-input-div {
+  display: flex;
+  font-size: 12px;
+  background-color: rbga(86, 68, 101, 0.21);
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  border-radius: 6px;
+}
+
+.dollar-input-div {
+  width: 50%;
+}
+
+.address-input-div {
+  width: 90%;
+}
+
+.dollar-input-icon,
+.address-input-icon,
+.dollar-input,
+.address-input {
+  margin: 5px;
+}
+
+.dollar-input-icon,
+.address-input-icon {
+  height: 20px;
+  width: 20px;
+  margin-right: 0px;
 }
 
 .dollar-input,
 .address-input,
-.submit-button {
-/* input[type="number"],
-input[type="text"],
-input[type="submit"] { */
-  width: 85%;
-  background-color: inherit;
+.submit {
+  background-color: transparent;
+  width: 100%;
   border: none;
   font-family: "Titan One";
   text-align: center;
@@ -29,28 +60,23 @@ input[type="submit"] { */
 
 .dollar-input,
 .address-input {
-  border-bottom: 3px solid rgba(255, 255, 255, 1);
   font-size: 16px;
-  /* color: rgba(51, 51, 51, 1); */
-  color: rgba(255, 255, 255, 0.8);
+  color: #FFFFFF;
 }
 
-.dollar-input {
-  width: 50%;
-}
-
-.submit-button {
+.submit {
   background-color: transparent;
   padding: none;
-  margin-top: 10px;
   border-bottom: rgba(62, 195, 0, 1);
   font-size: inherit;
   color: rgba(51, 51, 51, 1);
   color: green;
   cursor: pointer;
+  /* display: none; */
+  /* height: 10px; */
 }
 
-@media (min-width: 340px) {
+/* @media (min-width: 340px) {
   form {
     font-size: 22px;
   }
@@ -88,4 +114,4 @@ input[type="submit"] { */
   #submitted.address-input {
     font-size: 14px;
   }
-}
+} */

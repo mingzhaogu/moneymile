@@ -23,6 +23,6 @@ time, mark, audio, video {
   box-sizing: border-box;
 }
 
-button:focus {
+input:focus, button:focus {
 	outline:0;
 }

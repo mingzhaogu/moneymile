@@ -1,6 +1,5 @@
 import React from 'react';
-import axios from 'axios';
-import async from 'async';
+import NavBar from '../ui/nav';
 
 class FetchLocationForm extends React.Component {
   constructor(props) {
@@ -11,9 +10,12 @@ class FetchLocationForm extends React.Component {
     const status = this.props.currentStatus;
 
     return (
-      <form className="fetch-location-form">
-        {status}
-      </form>
+      <React.Fragment>
+        <NavBar />
+        <form className="fetch-location-form">
+          {status}
+        </form>
+      </React.Fragment>
     );
   }
 }
