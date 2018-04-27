@@ -52,11 +52,7 @@ form {
   margin-right: 0px;
 }
 
-.go-icon {
-  margin-top: 15px;
-  width: 24px;
-  height: 24px;
-}
+
 
 .dollar-input,
 .address-input,
@@ -75,15 +71,18 @@ form {
 }
 
 .submit {
-  background-color: transparent;
+  background-image: url('https://i.imgur.com/wIo7DEh.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
   padding: none;
   border-bottom: rgba(62, 195, 0, 1);
   font-size: inherit;
   color: rgba(51, 51, 51, 1);
-  color: green;
   cursor: pointer;
-  /* display: none; */
-  /* height: 10px; */
+  width: 30px;
+  height: 30px;
+  margin-top: 15px;
 }
 
 .input-error {

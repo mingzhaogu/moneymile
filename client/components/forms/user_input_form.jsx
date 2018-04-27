@@ -90,7 +90,6 @@ class UserInputForm extends React.Component {
   render() {
     if (!this.props.currentAddress) return null;
 
-    // validation for button and input fields
     const isEnabled = this.validate();
     const errors = this.validate(this.state.dollarInput, this.state.addressInput);
 
@@ -152,7 +151,7 @@ class UserInputForm extends React.Component {
             disabled={!isEnabled}
             className="submit"
             ref="btn"
-            onClick={this.submitForm}><img id={formName} className="go-icon" src="https://i.imgur.com/wIo7DEh.png" /></button>
+            onClick={this.submitForm}></button>
         </form>
         {rideSelection}
       </React.Fragment>
