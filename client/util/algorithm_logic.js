@@ -47,18 +47,30 @@ export const landOrWater = function (position, map, callback) {
 }
 
 export const snapToNearestRoad = async function (index, position, map, callback) {
-  const directionsService = new google.maps.DirectionsService();
-  const request = {
-    origin: position,
-    destination: position,
-    travelMode: google.maps.DirectionsTravelMode.DRIVING
-  };
+  // const directionsService = new google.maps.DirectionsService();
+  // const request = {
+  //   origin: position,
+  //   destination: position,
+  //   travelMode: google.maps.DirectionsTravelMode.DRIVING
+  // };
 
-  await directionsService.route(request, (response, status) => {
-    if (status == google.maps.DirectionsStatus.OK) {
-      position = response.routes[0].legs[0].start_location
-      console.log(position.lat(), position.lng());
+  await axios.get('/snapToRoad', {
+    params: {
+      origin: `${position.lat()},${position.lng()}`,
+      destination: `${position.lat()},${position.lng()}`
     }
+  })
+  .then(res => {result = res})
+  .catch(errors => console.log(errors))
+
+  // await directionsService.route(request, (response, status) => {
+  //   if (status == google.maps.DirectionsStatus.OK) {
+  //     console.log("preposition", position.lat(), position.lng());
+  //     position = response.routes[0].legs[0].start_location
+  //     console.log(position.lat(), position.lng());
+  //   } else {
+  //     console.log("return", response, status);
+  //   }
     // } else {
     //   new google.maps.Marker({
     //     position: position,
@@ -73,8 +85,8 @@ export const snapToNearestRoad = async function (index, position, map, callback)
     //   console.log("result not found");
     // }
 
-    callback(position)
-  });
+  //   callback(position)
+  // });
 }
 
 export const rideEstimate = async function(start, end, amount, stdDev, index, direction, history) {
