@@ -57,7 +57,7 @@ export const snapToNearestRoad = async function (index, position, map, callback)
   await directionsService.route(request, (response, status) => {
     if (status == google.maps.DirectionsStatus.OK) {
       position = response.routes[0].legs[0].start_location
-      // console.log(result.lat(), result.lng());
+      console.log(position.lat(), position.lng());
     }
     // } else {
     //   new google.maps.Marker({
