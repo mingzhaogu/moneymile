@@ -4,7 +4,7 @@ import axios from 'axios';
 export const getBoundaries = function() {
   const amount = parseInt(this.state.dollarInput);
   const stdDev = 2;
-  const defaultRadiusInMeters = 32000;
+  const defaultRadiusInMeters = 3000;
   const currentLatLng = this.state.addressLatLng;
   const rideType = this.state.rideType
   let directions = [];
