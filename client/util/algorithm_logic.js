@@ -56,23 +56,24 @@ export const snapToNearestRoad = async function (index, position, map, callback)
 
   await directionsService.route(request, (response, status) => {
     if (status == google.maps.DirectionsStatus.OK) {
-      const result = response.routes[0].legs[0].start_location
-      console.log("index", index);
-      console.log(result.lat(), result.lng());
-      callback(result)
-    } else {
-      new google.maps.Marker({
-        position: position,
-        map: map,
-        icon: {
-          url: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png',
-          scaledSize: new google.maps.Size(32, 32)
-        }
-      });
-      console.log("index", index);
-      console.log("position", position.lat(), position.lng());
-      console.log("result not found");
+      position = response.routes[0].legs[0].start_location
+      // console.log(result.lat(), result.lng());
     }
+    // } else {
+    //   new google.maps.Marker({
+    //     position: position,
+    //     map: map,
+    //     icon: {
+    //       url: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png',
+    //       scaledSize: new google.maps.Size(32, 32)
+    //     }
+    //   });
+    //   console.log("index", index);
+    //   console.log("position", position.lat(), position.lng());
+    //   console.log("result not found");
+    // }
+
+    callback(position)
   });
 }
 

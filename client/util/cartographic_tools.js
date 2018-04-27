@@ -17,7 +17,7 @@ export const drawBoundaries = function(start, boundaries, amount) {
     distance += newDistance;
     // TESTING END
 
-    snapToNearestRoad(index, boundary, this.map, 
+    snapToNearestRoad(index, boundary, this.map,
       (result) => {
         new google.maps.Marker({
           position: result,
@@ -28,6 +28,8 @@ export const drawBoundaries = function(start, boundaries, amount) {
             scaledSize: new google.maps.Size(32, 32)
           }
         });
+        console.log("markers", index, result.lat(), result.lng());
+        boundariesArray[index] = result;
       }
     )
   });
@@ -35,7 +37,7 @@ export const drawBoundaries = function(start, boundaries, amount) {
   // console.log('totaldistance', distance);
   // console.log('distance per point', distance / boundariesArray.length);
   // console.log('distance per dollar', distance / (boundariesArray.length * amount));
-
+  //
   // const bermudaTriangle = new google.maps.Polygon({
   //      paths: boundariesArray,
   //      strokeColor: '#FF0000',
