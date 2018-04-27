@@ -23,12 +23,12 @@ class UserInputForm extends React.Component {
     this.submitForm = this.submitForm.bind(this);
     this.centerMap = this.centerMap.bind(this);
     this.getRideType = this.getRideType.bind(this);
-    this.changeFormState = this.changeFormState.bind(this);
-
     this.parseAddressToLatLng = LatLongTool.parseAddressToLatLng.bind(this);
     this.getBoundaries = AlgorithmLogic.getBoundaries.bind(this);
     this.landOrWater = AlgorithmLogic.landOrWater.bind(this);
     this.rideEstimate = AlgorithmLogic.rideEstimate.bind(this);
+
+    this.changeFormState = this.changeFormState.bind(this);
   }
 
   changeFormState(){
@@ -38,7 +38,6 @@ class UserInputForm extends React.Component {
   submitForm(e) {
     e.preventDefault();
     this.refs.btn.setAttribute("disabled", "disabled");
-
     this.setState({ formSubmitted: true }, () => {
       this.parseAddressToLatLng(this.state.addressInput);
     });
@@ -88,7 +87,7 @@ class UserInputForm extends React.Component {
           >WHERE CAN I GO WITH</div>
 
           <div id={formName} className="dollar-input-div">
-            <img className="dollar-input-icon" src="https://i.imgur.com/lbwIy4B.png" />
+            <img className="dollar-input-icon" src="https://i.imgur.com/KdVi5oB.png" />
             <input type="number"
               id={formName}
               className={`dollar-input`}
@@ -115,7 +114,7 @@ class UserInputForm extends React.Component {
             id={formName}
             className="submit"
             ref="btn"
-            onClick={this.submitForm}>GO</button>
+            onClick={this.submitForm}><img id={formName} className="go-icon" src="https://i.imgur.com/wIo7DEh.png" /></button>
         </form>
         {rideSelection}
       </React.Fragment>

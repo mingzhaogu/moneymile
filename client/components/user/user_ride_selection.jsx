@@ -12,15 +12,15 @@ class UserRideSelection extends React.Component {
 
   updateType(type) {
     const selectedRideTypes = this.state.selected;
-
+    console.log(this.state.selected);
     return (e) => {
       if (this.state.selected.includes(type)) {
-        e.target.classList.remove('selected');
+        e.currentTarget.classList.remove('selected');
         const index = selectedRideTypes.indexOf(type);
         selectedRideTypes.splice(index, 1);
         this.setState({selected: selectedRideTypes});
       } else {
-        e.target.classList.add('selected');
+        e.currentTarget.classList.add('selected');
         selectedRideTypes.push(type);
         this.setState({selected: selectedRideTypes});
         this.props.getRideType(type);
@@ -28,31 +28,33 @@ class UserRideSelection extends React.Component {
     }
   }
 
-  changeSelection() {
-
-  }
-
   render() {
 
     return (
       <ul className="user_ride_selection">
         <li onClick={this.updateType("lyft")}>
-          <p>test</p>
+          <img className="car-icon" src="https://i.imgur.com/1PtENWQ.png"/>
+          <p>Lyft</p>
         </li>
         <li onClick={this.updateType("lyft_plus")}>
-          <p>test</p>
+          <img className="car-icon" src="https://i.imgur.com/1PtENWQ.png"/>
+          <p>Plus</p>
         </li>
         <li onClick={this.updateType("lyft_line")}>
-          <p>test</p>
+          <img className="car-icon" src="https://i.imgur.com/1PtENWQ.png"/>
+          <p>Line</p>
         </li>
         <li onClick={this.updateType("lyft_premier")}>
-          <p>test</p>
+          <img className="car-icon" src="https://i.imgur.com/1PtENWQ.png"/>
+          <p>Premier</p>
         </li>
         <li onClick={this.updateType("lyft_lux")}>
-          <p>test</p>
+          <img className="car-icon" src="https://i.imgur.com/1PtENWQ.png"/>
+          <p>Lux</p>
         </li>
         <li onClick={this.updateType("lyft_luxsuv")}>
-          <p>test</p>
+          <img className="car-icon" src="https://i.imgur.com/1PtENWQ.png"/>
+          <p>Lux SUV</p>
         </li>
       </ul>
     );
