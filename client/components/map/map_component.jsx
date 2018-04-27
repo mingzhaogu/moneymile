@@ -4,7 +4,7 @@ import NavBar from '../ui/nav';
 import UserInputForm from '../forms/user_input_form';
 import FetchLocationForm from '../forms/fetch_location';
 import MapStyle from './map_style';
-
+import * as MapTools from '../../util/cartographic_tools';
 
 class Map extends React.Component {
   constructor(props) {
@@ -21,14 +21,13 @@ class Map extends React.Component {
     this.getUserLocation = this.getUserLocation.bind(this);
     this.initializeMap = this.initializeMap.bind(this);
     this.centerMap = this.centerMap.bind(this);
-    // this.parseAddressToLatLng = this.parseAddressToLatLng.bind(this);
-    this.drawBoundaries = this.drawBoundaries.bind(this);
+    this.drawBoundaries = MapTools.drawBoundaries.bind(this);
     this.newMarker = this.newMarker.bind(this);
   }
 
   componentDidMount() {
     this.initializeMap();
-    this.setState({ status: "FETCHING CURRENT LOCATION..."})
+    this.setState({ status: "FETCHING CURRENT LOCATION..."});
     this.getUserLocation();
   }
 
@@ -65,23 +64,6 @@ class Map extends React.Component {
     })
   }
 
-  // parseAddressToLatLng(address) {
-  //   const geocoder = new google.maps.Geocoder;
-  //   geocoder.geocode({ address: address }, (results, status) => {
-  //     //include componentRestrictions? Restrict to areas lyft operates?
-  //     if (status === 'OK') {
-  //       const addressLatLng = {
-  //         lat: results[0].geometry.location.lat(),
-  //         lng: results[0].geometry.location.lng()
-  //       }
-  //       console.log("addy", addressLatLng);
-  //       this.centerMap(addressLatLng)
-  //     } else {
-  //       console.log('did not work')
-  //     }
-  //   });
-  // }
-
   getUserLocation() {
     const successCallback = (position) => {
       const parsedLocation = {
@@ -93,7 +75,6 @@ class Map extends React.Component {
       const geocoder = new google.maps.Geocoder;
       this.setState({ userLocation: parsedLocation });
       geocoder.geocode({ location: parsedLocation }, (results, status) => {
-        //include componentRestrictions? Restrict to areas lyft operates?
         if (status === 'OK') {
           this.setState(
             { userAddress: results[0].formatted_address },
@@ -107,7 +88,6 @@ class Map extends React.Component {
 
     const errorCallback = (error) => {
       console.log(error);
-      // this.setState({ status: `Couldn't find current location.. &#9785`})
       this.setState({ status: "SORRY, COULDN'T FIND YOU..."});
       setTimeout(function(){
         this.setState({userAddress: " "});
@@ -126,37 +106,6 @@ class Map extends React.Component {
       map: this.map,
       title: `${pos.lat()}, ${pos.lng()}`
     });
-  }
-
-  drawBoundaries(boundaries) {
-    let boundariesArray = [];
-
-    for (let i = 0; i < 18; i++) {
-      boundariesArray.push(i);
-    }
-
-    boundariesArray = boundariesArray.map(index => boundaries[index]);
-
-    boundariesArray.forEach((boundary, index) => {
-      new google.maps.Marker({
-        position: boundary,
-        map: this.map,
-        title: `${index}`
-      });
-    });
-
-    const bermudaTriangle = new google.maps.Polygon({
-         paths: boundariesArray,
-         strokeColor: '#FF0000',
-         strokeOpacity: 0.8,
-         strokeWeight: 3,
-         fillColor: '#FF0000',
-         fillOpacity: 0.35
-       });
-    const bounds = new google.maps.LatLngBounds();
-    boundariesArray.forEach((coord) => bounds.extend(coord));
-    this.map.fitBounds(bounds);
-    bermudaTriangle.setMap(this.map);
   }
 
   render() {

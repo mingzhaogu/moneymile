@@ -1,5 +1,4 @@
-export const drawBoundaries = (boundaries, map) => {
-  // console.log(map);
+export const drawBoundaries = function(boundaries) {
   let boundariesArray = [];
 
   for (let i = 0; i < 18; i++) {
@@ -7,25 +6,25 @@ export const drawBoundaries = (boundaries, map) => {
   }
 
   boundariesArray = boundariesArray.map(index => boundaries[index]);
+
   boundariesArray.forEach((boundary, index) => {
     new google.maps.Marker({
       position: boundary,
-      map: map,
+      map: this.map,
       title: `${index}`
     });
   });
-  // console.log("boundariesArray", boundariesArray);
-  const bermudaTriangle = new google.maps.Polygon({
-    paths: boundariesArray,
-    strokeColor: '#FF0000',
-    strokeOpacity: 0.8,
-    strokeWeight: 3,
-    fillColor: '#FF0000',
-    fillOpacity: 0.35
-  });
 
+  const bermudaTriangle = new google.maps.Polygon({
+       paths: boundariesArray,
+       strokeColor: '#FF0000',
+       strokeOpacity: 0.8,
+       strokeWeight: 3,
+       fillColor: '#FF0000',
+       fillOpacity: 0.35
+     });
   const bounds = new google.maps.LatLngBounds();
   boundariesArray.forEach((coord) => bounds.extend(coord));
-  map.fitBounds(bounds);
-  bermudaTriangle.setMap(map);
-};
+  this.map.fitBounds(bounds);
+  bermudaTriangle.setMap(this.map);
+}
