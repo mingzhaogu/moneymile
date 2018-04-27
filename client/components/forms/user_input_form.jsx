@@ -35,6 +35,12 @@ class UserInputForm extends React.Component {
     this.refs.btn.removeAttribute("disabled");
   }
 
+  componentWillReceiveProps(newProps){
+      if (this.props.currentAddress !== newProps.currentAddress) {
+           this.setState({addressInput: newProps.currentAddress})
+      }
+  }
+
   submitForm(e) {
     e.preventDefault();
     this.refs.btn.setAttribute("disabled", "disabled");
@@ -114,7 +120,7 @@ class UserInputForm extends React.Component {
             id={formName}
             className="submit"
             ref="btn"
-            onClick={this.submitForm}><img id={formName} className="go-icon" src="https://i.imgur.com/wIo7DEh.png" /></button>
+            onClick={this.submitForm}>GO</button>
         </form>
         {rideSelection}
       </React.Fragment>
