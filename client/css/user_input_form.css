@@ -65,6 +65,10 @@ form {
   color: #FFFFFF;
 }
 
+button:disabled{
+  color: grey;
+}
+
 .submit {
   background-color: transparent;
   padding: none;

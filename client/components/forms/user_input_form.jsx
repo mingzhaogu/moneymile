@@ -23,6 +23,7 @@ class UserInputForm extends React.Component {
     this.submitForm = this.submitForm.bind(this);
     this.centerMap = this.centerMap.bind(this);
     this.getRideType = this.getRideType.bind(this);
+    this.changeFormState = this.changeFormState.bind(this);
 
     this.parseAddressToLatLng = LatLongTool.parseAddressToLatLng.bind(this);
     this.getBoundaries = AlgorithmLogic.getBoundaries.bind(this);
@@ -30,8 +31,14 @@ class UserInputForm extends React.Component {
     this.rideEstimate = AlgorithmLogic.rideEstimate.bind(this);
   }
 
+  changeFormState(){
+    this.refs.btn.removeAttribute("disabled");
+  }
+
   submitForm(e) {
     e.preventDefault();
+    this.refs.btn.setAttribute("disabled", "disabled");
+
     this.setState({ formSubmitted: true }, () => {
       this.parseAddressToLatLng(this.state.addressInput);
     });
@@ -107,6 +114,7 @@ class UserInputForm extends React.Component {
           <button
             id={formName}
             className="submit"
+            ref="btn"
             onClick={this.submitForm}>GO</button>
         </form>
         {rideSelection}

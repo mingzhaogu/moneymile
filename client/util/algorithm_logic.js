@@ -70,7 +70,7 @@ export const rideEstimate = async function(start, end, amount, stdDev, index, di
 
     // let estimate = result.data.cost_estimates[0].estimated_cost_cents_max / 100;
     if ((estimate < (amount + stdDev) && estimate > (amount - stdDev)) ||
-        history.length > 15) {
+        history.length > 10) {
       let newBoundaries = Object.assign({}, this.state.boundaries);
       newBoundaries[index] = end;
       this.setState({ boundaries: newBoundaries },
@@ -78,6 +78,8 @@ export const rideEstimate = async function(start, end, amount, stdDev, index, di
         if (Object.keys(this.state.boundaries).length === 18) {
           // MapTools.drawBoundaries(this.state.boundaries, this.props.map);
           this.props.drawBoundaries(this.state.boundaries);
+          // **************** //
+          this.changeFormState();
         }
       });
     } else {
