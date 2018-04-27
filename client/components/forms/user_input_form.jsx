@@ -53,7 +53,7 @@ class UserInputForm extends React.Component {
     e.preventDefault();
     this.refs.btn.setAttribute("disabled", "disabled");
 
-    this.setState({ formSubmitted: true }, () => {
+    this.setState({ formSubmitted: true, boundaries: []}, () => {
       this.parseAddressToLatLng(this.state.addressInput);
     });
   }
