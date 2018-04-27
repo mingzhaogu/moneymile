@@ -16,7 +16,7 @@ class UserInputForm extends React.Component {
       addressInput: addressInput,
       formSubmitted: false,
       boundaries: [],
-      rideType: "lyft",
+      rideType: 'lyft',
 
       touched: {
         dollarInput: false,
@@ -69,7 +69,7 @@ class UserInputForm extends React.Component {
   }
 
   getRideType(type) {
-    this.setState({ rideType: type }, () => { this.getBoundaries(); });
+    this.setState({ rideType: type, boundaries: [] }, () => { this.getBoundaries(); });
   }
 
   validateDollar(amt) {

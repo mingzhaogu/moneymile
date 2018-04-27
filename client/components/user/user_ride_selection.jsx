@@ -44,18 +44,6 @@ class UserRideSelection extends React.Component {
           <img className="car-icon" src="https://i.imgur.com/1PtENWQ.png"/>
           <p>Line</p>
         </li>
-        <li onClick={this.updateType("lyft_premier")}>
-          <img className="car-icon" src="https://i.imgur.com/1PtENWQ.png"/>
-          <p>Premier</p>
-        </li>
-        <li onClick={this.updateType("lyft_lux")}>
-          <img className="car-icon" src="https://i.imgur.com/1PtENWQ.png"/>
-          <p>Lux</p>
-        </li>
-        <li onClick={this.updateType("lyft_luxsuv")}>
-          <img className="car-icon" src="https://i.imgur.com/1PtENWQ.png"/>
-          <p>Lux SUV</p>
-        </li>
       </ul>
     );
   }
