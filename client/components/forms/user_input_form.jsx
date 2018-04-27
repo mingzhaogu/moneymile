@@ -84,10 +84,6 @@ class UserInputForm extends React.Component {
     return (
       checkValidDollar && addressInput.length > 0
     );
-    // return {
-    //   dollarInput: checkValidDollar,
-    //   addressInput: addressInput.length > 0
-    // };
   }
 
 
