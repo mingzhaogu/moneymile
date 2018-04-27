@@ -4,7 +4,7 @@ import axios from 'axios';
 export const getBoundaries = function() {
   const amount = parseInt(this.state.dollarInput);
   const stdDev = 2;
-  const defaultRadiusInMeters = 3000;
+  const defaultRadiusInMeters = 32000;
   const currentLatLng = this.state.addressLatLng;
   const rideType = this.state.rideType
   let directions = [];
@@ -66,29 +66,36 @@ export const rideEstimate = async function(start, end, amount, stdDev, index, di
   this.props.newMarker(end);
   if (result.data) {
     let primetimeString = result.data.cost_estimates[0].primetime_percentage;
-    let primtimePercentage = parseFloat(primetimeString) / 100.0;
+    let primetimePercentage = parseFloat(primetimeString) / 100.0;
     let baseCost = result.data.cost_estimates[0].estimated_cost_cents_max / 100;
-    let estimate = (primtimePercentage * baseCost) + baseCost;
+    let estimate = (primetimePercentage * baseCost) + baseCost;
 
     // let estimate = result.data.cost_estimates[0].estimated_cost_cents_max / 100;
-    if ((estimate < (amount + stdDev) && estimate > (amount - stdDev)) ||
-        history.length > 15) {
-      let newBoundaries = Object.assign({}, this.state.boundaries);
-      newBoundaries[index] = end;
-      this.setState({ boundaries: newBoundaries },
-      () => {
-        if (Object.keys(this.state.boundaries).length === 18) {
-          // MapTools.drawBoundaries(this.state.boundaries, this.props.map);
-          this.props.drawBoundaries(this.state.boundaries);
-          this.changeFormState();
-        }
-      });
+    if (result.data.cost_estimates[0].can_request_ride) {
+      if ((estimate < (amount + stdDev) && estimate > (amount - stdDev)) ||
+      history.length > 15) {
+        let newBoundaries = Object.assign({}, this.state.boundaries);
+        newBoundaries[index] = end;
+        this.setState({ boundaries: newBoundaries },
+          () => {
+            if (Object.keys(this.state.boundaries).length === 18) {
+              // MapTools.drawBoundaries(this.state.boundaries, this.props.map);
+              this.props.drawBoundaries(this.state.boundaries);
+              this.changeFormState();
+            }
+          });
+      } else {
+        let ratio = amount / estimate;
+        const googleGeometry = google.maps.geometry.spherical;
+        const newDistance = googleGeometry.computeDistanceBetween(start, end);
+        const newEnd = new googleGeometry.computeOffset(start, ratio * newDistance, direction);
+        history.push(newEnd);
+        this.rideEstimate(start, newEnd, amount, stdDev, index, direction, history, rideType);
+      }
     } else {
-      let ratio = amount / estimate;
       const googleGeometry = google.maps.geometry.spherical;
-      const newDistance = googleGeometry.computeDistanceBetween(start, end);
-      const newEnd = new googleGeometry.computeOffset(start, ratio * newDistance, direction);
-      history.push(newEnd);
+      const newDistance = googleGeometry.computeDistanceBetween(start, end) / 2;
+      const newEnd = new googleGeometry.computeOffset(start, newDistance, direction);
       this.rideEstimate(start, newEnd, amount, stdDev, index, direction, history, rideType);
     }
   }
