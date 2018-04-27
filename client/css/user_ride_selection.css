@@ -4,22 +4,19 @@
   height: 400px;
   background-color: rgba(0, 0, 0, 0.8);
   box-shadow: 5px 5px 4px 0 rgba(0,0,0,0.50), inset 0 1px 3px 0 rgba(0,0,0,0.50);
-  border-radius: 6px;
+  border-top-right-radius: 6px;
   bottom: 0;
   left: 0;
-  display
 }
 
 .user_ride_selection li {
   width: 100%;
   height: 66px;
-  /* border-radius: 6px; */
 }
 .user_ride_selection li:hover {
-  /* background-color: yellow; */
   background-color: rgba(255, 255, 255, 0.2);
 }
 
 .selected {
-  background-color: yellow;
+  background-color: lightblue;
 }
