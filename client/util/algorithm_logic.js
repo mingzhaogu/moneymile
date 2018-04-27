@@ -3,7 +3,7 @@ import axios from 'axios';
 
 export const getBoundaries = function() {
   const amount = parseInt(this.state.dollarInput);
-  const stdDev = 2;
+  const stdDev = 0.5;
   const defaultRadiusInMeters = 32000;
   const currentLatLng = this.state.addressLatLng;
   let directions = [];
@@ -22,28 +22,58 @@ export const getBoundaries = function() {
   });
 }
 
-export const landOrWater = function(lat, lng, callback) {
-  const map_url = "http://maps.googleapis.com/maps/api/staticmap?center="+lat+","+lng+"&zoom="+this.props.map.getZoom()+"&size=1x1&maptype=roadmap"
+export const landOrWater = function (position, map, callback) {
+  const mapUrl = `http://maps.googleapis.com/maps/api/staticmap?center=${position.lat()},${position.lng()}&zoom=${map.getZoom()}&size=1x1&maptype=roadmap`
   const canvas = document.createElement('canvas');
   const ctx = canvas.getContext('2d');
   let result;
 
   const image = new Image();
   image.crossOrigin = "Anonymous";
-  image.src = map_url;
+  image.src = mapUrl;
 
-  image.onload = function() {
+  image.onload = () => {
     canvas.width = image.width;
     canvas.height = image.height;
     canvas.getContext('2d').drawImage(image, 0, 0, image.width, image.height);
     const pixelData = canvas.getContext('2d').getImageData(0, 0, 1, 1).data;
-    if( pixelData[0] > 160 && pixelData[0] < 181 && pixelData[1] > 190 && pixelData[1] < 210 ) {
-        result = "water";
+    if (pixelData[0] > 160 && pixelData[0] < 181 && pixelData[1] > 190 && pixelData[1] < 210) {
+      result = "water";
     } else {
-        result = "land";
+      result = "land";
     }
     callback(result);
-  }
+  };
+}
+
+export const snapToNearestRoad = async function (index, position, map, callback) {
+  const directionsService = new google.maps.DirectionsService();
+  const request = {
+    origin: position,
+    destination: position,
+    travelMode: google.maps.DirectionsTravelMode.DRIVING
+  };
+
+  await directionsService.route(request, (response, status) => {
+    if (status == google.maps.DirectionsStatus.OK) {
+      const result = response.routes[0].legs[0].start_location
+      console.log("index", index);
+      console.log(result.lat(), result.lng());
+      callback(result)
+    } else {
+      new google.maps.Marker({
+        position: position,
+        map: map,
+        icon: {
+          url: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png',
+          scaledSize: new google.maps.Size(32, 32)
+        }
+      });
+      console.log("index", index);
+      console.log("position", position.lat(), position.lng());
+      console.log("result not found");
+    }
+  });
 }
 
 export const rideEstimate = async function(start, end, amount, stdDev, index, direction, history) {
@@ -60,24 +90,22 @@ export const rideEstimate = async function(start, end, amount, stdDev, index, di
   .then(res => {result = res})
   .catch(errors => console.log(errors))
 
-  console.log(result);
   this.props.newMarker(end);
   if (result.data) {
     let primetimeString = result.data.cost_estimates[0].primetime_percentage;
-    let primtimePercentage = parseFloat(primetimeString) / 100.0;
+    let primetimePercentage = parseFloat(primetimeString) / 100.0;
     let baseCost = result.data.cost_estimates[0].estimated_cost_cents_max / 100;
-    let estimate = (primtimePercentage * baseCost) + baseCost;
-
+    let estimate = (primetimePercentage * baseCost) + baseCost;
     // let estimate = result.data.cost_estimates[0].estimated_cost_cents_max / 100;
     if ((estimate < (amount + stdDev) && estimate > (amount - stdDev)) ||
-        history.length > 15) {
+        history.length > 8) {
       let newBoundaries = Object.assign({}, this.state.boundaries);
       newBoundaries[index] = end;
       this.setState({ boundaries: newBoundaries },
       () => {
         if (Object.keys(this.state.boundaries).length === 18) {
           // MapTools.drawBoundaries(this.state.boundaries, this.props.map);
-          this.props.drawBoundaries(this.state.boundaries);
+          this.props.drawBoundaries(start, this.state.boundaries, amount);
         }
       });
     } else {

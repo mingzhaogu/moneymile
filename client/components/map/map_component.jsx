@@ -27,7 +27,7 @@ class Map extends React.Component {
 
   componentDidMount() {
     this.initializeMap();
-    this.setState({ status: "FETCHING CURRENT LOCATION..."});
+    this.setState({ status: "FETCHING CURRENT LOCATION..." });
     this.getUserLocation();
   }
 
@@ -104,7 +104,11 @@ class Map extends React.Component {
     new google.maps.Marker({
       position: pos,
       map: this.map,
-      title: `${pos.lat()}, ${pos.lng()}`
+      title: `${pos.lat()}, ${pos.lng()}`,
+      icon: {
+        url: 'http://maps.google.com/mapfiles/ms/icons/red-dot.png',
+        scaledSize: new google.maps.Size(5, 5)
+      }
     });
   }
 
