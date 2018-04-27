@@ -5,6 +5,7 @@ import UserInputForm from '../forms/user_input_form';
 import FetchLocationForm from '../forms/fetch_location';
 import MapStyle from './map_style';
 
+
 class Map extends React.Component {
   constructor(props) {
     super(props);
@@ -20,7 +21,7 @@ class Map extends React.Component {
     this.getUserLocation = this.getUserLocation.bind(this);
     this.initializeMap = this.initializeMap.bind(this);
     this.centerMap = this.centerMap.bind(this);
-    this.parseAddressToLatLng = this.parseAddressToLatLng.bind(this);
+    // this.parseAddressToLatLng = this.parseAddressToLatLng.bind(this);
     this.drawBoundaries = this.drawBoundaries.bind(this);
     this.newMarker = this.newMarker.bind(this);
   }
@@ -64,22 +65,22 @@ class Map extends React.Component {
     })
   }
 
-  parseAddressToLatLng(address) {
-    const geocoder = new google.maps.Geocoder;
-    geocoder.geocode({ address: address }, (results, status) => {
-      //include componentRestrictions? Restrict to areas lyft operates?
-      if (status === 'OK') {
-        const addressLatLng = {
-          lat: results[0].geometry.location.lat(),
-          lng: results[0].geometry.location.lng()
-        }
-        console.log("addy", addressLatLng);
-        this.centerMap(addressLatLng)
-      } else {
-        console.log('did not work')
-      }
-    });
-  }
+  // parseAddressToLatLng(address) {
+  //   const geocoder = new google.maps.Geocoder;
+  //   geocoder.geocode({ address: address }, (results, status) => {
+  //     //include componentRestrictions? Restrict to areas lyft operates?
+  //     if (status === 'OK') {
+  //       const addressLatLng = {
+  //         lat: results[0].geometry.location.lat(),
+  //         lng: results[0].geometry.location.lng()
+  //       }
+  //       console.log("addy", addressLatLng);
+  //       this.centerMap(addressLatLng)
+  //     } else {
+  //       console.log('did not work')
+  //     }
+  //   });
+  // }
 
   getUserLocation() {
     const successCallback = (position) => {
@@ -163,7 +164,7 @@ class Map extends React.Component {
     if (this.state.userAddress) {
       form = <UserInputForm
                 currentAddress={this.state.userAddress}
-                parseAddressToLatLng={this.parseAddressToLatLng}
+
                 drawBoundaries={this.drawBoundaries}
                 newMarker={this.newMarker}
                 map={this.map}

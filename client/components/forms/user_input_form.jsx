@@ -3,7 +3,9 @@ import NavBar from '../ui/nav';
 import axios from 'axios';
 import async from 'async';
 import UserRideSelection from '../user/user_ride_selection';
-// import icon from '../../../public/moneymoney.png';
+import * as MapTools from '../../util/cartographic_tools';
+import * as LatLongTool from '../../util/latlong_conversion';
+
 
 class UserInputForm extends React.Component {
   constructor(props) {
@@ -16,7 +18,7 @@ class UserInputForm extends React.Component {
       addressInput: addressInput,
       formSubmitted: false,
       boundaries: [],
-      rideType: "lyft"
+      rideType: "lyft",
     };
 
     this.updateAddress = this.updateAddress.bind(this);
@@ -24,18 +26,18 @@ class UserInputForm extends React.Component {
     this.submitForm = this.submitForm.bind(this);
     this.rideEstimate = this.rideEstimate.bind(this);
     this.getBoundaries = this.getBoundaries.bind(this);
-    this.parseAddressToLatLng = this.parseAddressToLatLng.bind(this);
     this.centerMap = this.centerMap.bind(this);
     this.getRideType = this.getRideType.bind(this);
+
+    this.parseAddressToLatLng = LatLongTool.parseAddressToLatLng.bind(this);
   }
 
   submitForm(e) {
-   e.preventDefault();
-   this.setState({ formSubmitted: true }, () => {
-     this.parseAddressToLatLng(this.state.addressInput);
-   });
- }
-
+    e.preventDefault();
+    this.setState({ formSubmitted: true }, () => {
+      this.parseAddressToLatLng(this.state.addressInput);
+    });
+  }
 
   centerMap(locationLatLng) {
     this.setState({
@@ -43,42 +45,52 @@ class UserInputForm extends React.Component {
     });
   }
 
-  parseAddressToLatLng(address, callback) {
-   const geocoder = new google.maps.Geocoder;
-   geocoder.geocode({ address: address }, (results, status) => {
-     if (status === 'OK') {
-       const addressLatLng = new google.maps.LatLng(
-         results[0].geometry.location.lat(),
-         results[0].geometry.location.lng()
-       );
-       this.setState({ addressLatLng }, () => {
-         this.getBoundaries();
-       });
-       this.centerMap(addressLatLng);
-     }
-   });
- }
+  updateInput(field) {
+    return (e) => { this.setState({ [field]: e.target.value }); };
+  }
+
+  updateAddress(e) {
+    this.setState({ addressInput: e.target.value });
+  }
+
+//TODO: Refactoring
+
+  // parseAddressToLatLng(address, callback) {
+  //  const geocoder = new google.maps.Geocoder;
+  //  geocoder.geocode({ address: address }, (results, status) => {
+  //    if (status === 'OK') {
+  //      const addressLatLng = new google.maps.LatLng(
+  //        results[0].geometry.location.lat(),
+  //        results[0].geometry.location.lng()
+  //      );
+  //      this.setState({ addressLatLng }, () => {
+  //        this.getBoundaries();
+  //      });
+  //      this.centerMap(addressLatLng);
+  //    }
+  //  });
+  // }
 
   getBoundaries() {
-      const stdDev = 2;
-      const amount = 15;
-      const defaultRadiusInMeters = 32000;
-      const currentLatLng = this.state.addressLatLng;
-      let directions = [];
+    const stdDev = 2;
+    const amount = 15;
+    const defaultRadiusInMeters = 32000;
+    const currentLatLng = this.state.addressLatLng;
+    let directions = [];
 
-      for (let i = 0; i < 360; i+=20) {
-        directions.push(i);
-      }
-
-      const googleGeometry = google.maps.geometry.spherical;
-
-      async.eachOf(directions, (direction, index, callback) => {
-        const endLatLng = new googleGeometry.computeOffset(currentLatLng, defaultRadiusInMeters, direction);
-        // this.landOrWater(endLatLng.lat(), endLatLng.lng(), res => console.log(res))
-        this.rideEstimate(currentLatLng, endLatLng, amount, stdDev, index, direction, []);
-        callback(null);
-      });
+    for (let i = 0; i < 360; i+=20) {
+      directions.push(i);
     }
+
+    const googleGeometry = google.maps.geometry.spherical;
+
+    async.eachOf(directions, (direction, index, callback) => {
+      const endLatLng = new googleGeometry.computeOffset(currentLatLng, defaultRadiusInMeters, direction);
+      // this.landOrWater(endLatLng.lat(), endLatLng.lng(), res => console.log(res))
+      this.rideEstimate(currentLatLng, endLatLng, amount, stdDev, index, direction, []);
+      callback(null);
+    });
+  }
 
   getRideType(type) {
     this.setState({ rideType: type }, () => { this.getBoundaries() })
@@ -137,8 +149,10 @@ class UserInputForm extends React.Component {
         newBoundaries[index] = end;
         this.setState({ boundaries: newBoundaries },
         () => {
-          if (Object.keys(this.state.boundaries).length === 18)
+          if (Object.keys(this.state.boundaries).length === 18) {
+            // MapTools.drawBoundaries(this.state.boundaries, this.props.map);
             this.props.drawBoundaries(this.state.boundaries);
+          }
         });
       } else {
         let ratio = amount / estimate;
@@ -149,14 +163,6 @@ class UserInputForm extends React.Component {
         this.rideEstimate(start, newEnd, amount, stdDev, index, direction, history);
       }
     }
-  }
-
-  updateInput(field) {
-    return (e) => { this.setState({ [field]: e.target.value }); };
-  }
-
-  updateAddress(e) {
-    this.setState({ addressInput: e.target.value });
   }
 
   render() {
