@@ -12,13 +12,11 @@
 .user_ride_selection li {
   width: 100%;
   height: 66px;
-  /* border-radius: 6px; */
 }
 .user_ride_selection li:hover {
-  /* background-color: yellow; */
   background-color: rgba(255, 255, 255, 0.2);
 }
 
 .selected {
-  background-color: yellow;
+  background-color: lightblue;
 }
