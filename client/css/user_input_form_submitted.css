@@ -32,3 +32,9 @@
 #submitted.submit {
   width: 8vw;
 }
+
+#submitted.go-icon {
+  margin-top: 5px;
+  margin-right: 8px;
+
+}

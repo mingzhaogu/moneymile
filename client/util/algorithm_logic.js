@@ -78,6 +78,7 @@ export const rideEstimate = async function(start, end, amount, stdDev, index, di
         if (Object.keys(this.state.boundaries).length === 18) {
           // MapTools.drawBoundaries(this.state.boundaries, this.props.map);
           this.props.drawBoundaries(this.state.boundaries);
+          this.changeFormState();
         }
       });
     } else {
