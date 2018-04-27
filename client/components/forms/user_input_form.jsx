@@ -17,6 +17,11 @@ class UserInputForm extends React.Component {
       formSubmitted: false,
       boundaries: [],
       rideType: "lyft",
+
+      touched: {
+        dollarInput: false,
+        addressInput: false,
+      },
     };
 
     this.updateInput = this.updateInput.bind(this);
@@ -32,6 +37,13 @@ class UserInputForm extends React.Component {
     this.changeFormState = this.changeFormState.bind(this);
     this.validate = this.validate.bind(this);
   }
+
+  componentWillReceiveProps(newProps){
+      if (this.props.currentAddress !== newProps.currentAddress) {
+           this.setState({addressInput: newProps.currentAddress});
+      }
+  }
+
 
   changeFormState(){
     this.refs.btn.removeAttribute("disabled");
@@ -62,17 +74,20 @@ class UserInputForm extends React.Component {
 
   validateDollar(amt) {
     const regex  = /^\$?[0-9]+(\.[0-9][0-9])?$/;
-    return regex.test(amt) ? true : false;
+    const bound = (amt >= 9.99 && amt <= 500);
+    return (regex.test(amt) && bound) ? true : false;
   }
 
   validate() {
     const { dollarInput, addressInput } = this.state;
     let checkValidDollar = this.validateDollar(dollarInput);
-    console.log(checkValidDollar);
     return (
-      checkValidDollar &&
-      addressInput.length > 0
+      checkValidDollar && addressInput.length > 0
     );
+    // return {
+    //   dollarInput: checkValidDollar,
+    //   addressInput: addressInput.length > 0
+    // };
   }
 
 
@@ -81,6 +96,7 @@ class UserInputForm extends React.Component {
 
     // validation for button and input fields
     const isEnabled = this.validate();
+    const errors = this.validate(this.state.dollarInput, this.state.addressInput);
 
     let navBar = <div></div>;
     let formName;
@@ -114,8 +130,11 @@ class UserInputForm extends React.Component {
               id={formName}
               className={`dollar-input`}
               value={this.state.dollarInput}
+              min="10"
+              max="500"
               onChange={this.updateInput("dollarInput")}
             />
+
           </div>
 
           <div id={formName}

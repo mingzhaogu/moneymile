@@ -23,14 +23,13 @@ form {
 .address-input-div {
   display: flex;
   font-size: 9px;
-  /* background-color: rbga(86, 68, 101, 0.21); */
   background-color: rgba(68, 31, 84, 0.2);
   border: 1px solid rgba(255, 255, 255, 0.24);
   border-radius: 6px;
 }
 
 .dollar-input-div {
-  width: 50%;
+  /* width: 50%; */
   max-width: 300px;
 }
 
@@ -87,10 +86,22 @@ form {
   /* height: 10px; */
 }
 
+.input-error {
+  background-color: rgba(68, 31, 84, 0.2);
+  border: none;
+  text-align: center;
+  width: 100%;
+  color: white;
+}
 
 button:disabled{
   opacity: 0.2;
 }
+
+/* .error-icon {
+height: 30px;
+width: 9px;
+} */
 
 /* @media (min-width: 340px) {
   form {
