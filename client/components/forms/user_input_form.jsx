@@ -60,10 +60,17 @@ class UserInputForm extends React.Component {
     this.setState({ rideType: type }, () => { this.getBoundaries(); });
   }
 
+  validateDollar(amt) {
+    const regex  = /^\$?[0-9]+(\.[0-9][0-9])?$/;
+    return regex.test(amt) ? true : false;
+  }
+
   validate() {
     const { dollarInput, addressInput } = this.state;
+    let checkValidDollar = this.validateDollar(dollarInput);
+    console.log(checkValidDollar);
     return (
-      dollarInput.length > 0 &&
+      checkValidDollar &&
       addressInput.length > 0
     );
   }
