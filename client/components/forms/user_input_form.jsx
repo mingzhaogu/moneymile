@@ -30,6 +30,7 @@ class UserInputForm extends React.Component {
     this.rideEstimate = AlgorithmLogic.rideEstimate.bind(this);
 
     this.changeFormState = this.changeFormState.bind(this);
+    this.validate = this.validate.bind(this);
   }
 
   changeFormState(){
@@ -39,6 +40,7 @@ class UserInputForm extends React.Component {
   submitForm(e) {
     e.preventDefault();
     this.refs.btn.setAttribute("disabled", "disabled");
+
     this.setState({ formSubmitted: true }, () => {
       this.parseAddressToLatLng(this.state.addressInput);
     });
@@ -55,11 +57,23 @@ class UserInputForm extends React.Component {
   }
 
   getRideType(type) {
-    this.setState({ rideType: type }, () => { this.getBoundaries(); })
+    this.setState({ rideType: type }, () => { this.getBoundaries(); });
   }
+
+  validate() {
+    const { dollarInput, addressInput } = this.state;
+    return (
+      dollarInput.length > 0 &&
+      addressInput.length > 0
+    );
+  }
+
 
   render() {
     if (!this.props.currentAddress) return null;
+
+    // validation for button and input fields
+    const isEnabled = this.validate();
 
     let navBar = <div></div>;
     let formName;
@@ -113,6 +127,7 @@ class UserInputForm extends React.Component {
 
           <button
             id={formName}
+            disabled={!isEnabled}
             className="submit"
             ref="btn"
             onClick={this.submitForm}><img id={formName} className="go-icon" src="https://i.imgur.com/wIo7DEh.png" /></button>
