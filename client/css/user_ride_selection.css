@@ -1,7 +1,7 @@
 .user_ride_selection {
   position: absolute;
   width: 60px;
-  height: 400px;
+  height: 200px;
   background-color: rgba(0, 0, 0, 0.8);
   box-shadow: 5px 5px 4px 0 rgba(0,0,0,0.50), inset 0 1px 3px 0 rgba(0,0,0,0.50);
   border-top-right-radius: 6px;
@@ -9,14 +9,37 @@
   left: 0;
 }
 
+.user_ride_selection li:first-child {
+  border-top-right-radius: 6px;
+}
+
 .user_ride_selection li {
+  cursor: pointer;
   width: 100%;
   height: 66px;
+  text-align: center;
+  vertical-align: center;
+  box-shadow: inset 0 1px 3px 0 rgba(0,0,0,0.50);
 }
+
 .user_ride_selection li:hover {
   background-color: rgba(255, 255, 255, 0.2);
 }
 
+.user_ride_selection li p {
+  font-size: 10px;
+  text-align: center;
+  color: white;
+  font-family: 'Source Code Pro', monospace;
+}
+
+
+.car-icon {
+  margin-top: 8px;
+  width: 70%;
+  height: 34px;
+}
+
 .selected {
-  background-color: lightblue;
+  background-color: rgba(252, 196, 255, 0.3);
 }
