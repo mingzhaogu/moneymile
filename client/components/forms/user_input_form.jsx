@@ -71,7 +71,7 @@ class UserInputForm extends React.Component {
 
   validateDollar(amt) {
     const regex  = /^\$?[0-9]+(\.[0-9][0-9])?$/;
-    const bound = (amt >= 9.99 && amt <= 500);
+    const bound = (amt >= 9.99 && amt <= 400);
     return (regex.test(amt) && bound) ? true : false;
   }
 

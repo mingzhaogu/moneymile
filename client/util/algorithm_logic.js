@@ -25,7 +25,8 @@ export const getBoundaries = function() {
 }
 
 export const landOrWater = function(position, map, direction, callback) {
-  const mapUrl = `http://maps.googleapis.com/maps/api/staticmap?center=${position.lat()},${position.lng()}&zoom=${map.getZoom()}&size=1x1&maptype=roadmap&key=AIzaSyDEXz3xx4nhRj4ePTFB39xLHHtvampEivs`
+  // const mapUrl = `http://maps.googleapis.com/maps/api/staticmap?center=${position.lat()},${position.lng()}&zoom=${map.getZoom()}&size=1x1&maptype=roadmap&key=AIzaSyDEXz3xx4nhRj4ePTFB39xLHHtvampEivs`
+  const mapUrl = `http://maps.googleapis.com/maps/api/staticmap?center=${position.lat()},${position.lng()}&zoom=${map.getZoom()}&size=1x1&maptype=roadmap`;
   const canvas = document.createElement('canvas');
   const ctx = canvas.getContext('2d');
   let result;
