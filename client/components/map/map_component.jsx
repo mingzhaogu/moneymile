@@ -23,20 +23,22 @@ class Map extends React.Component {
     this.centerMap = this.centerMap.bind(this);
     this.drawBoundaries = MapTools.drawBoundaries.bind(this);
     this.newMarker = this.newMarker.bind(this);
+    this.resetMarkerPositionOnClick = this.resetMarkerPositionOnClick.bind(this);
+    this.geocodeLocation = this.geocodeLocation.bind(this);
   }
 
   componentDidMount() {
     this.initializeMap();
-    this.setState({ status: "FETCHING CURRENT LOCATION..."});
+    this.setState({ status: 'FETCHING CURRENT LOCATION...' });
     this.getUserLocation();
   }
 
-  componentDidUpdate() {
-    this.initializeMap();
-  }
+  // componentDidUpdate() {
+  //   // this.initializeMap();
+  // }
 
   initializeMap() {
-    const sfCenter = { lat: 37.773972, lng: -122.431297 }
+    const sfCenter = { lat: 37.773972, lng: -122.431297 };
     const center = this.state.userLocation || sfCenter;
 
     const mapOptions = {
@@ -53,40 +55,69 @@ class Map extends React.Component {
 
     this.map = new google.maps.Map(this.refs.renderedMap, mapOptions);
     this.marker = new google.maps.Marker({
-          position: center,
-          map: this.map,
-        });
+      position: center,
+      map: this.map,
+      draggable: true
+    });
+
+
+    this.marker.addListener('dragend', () => this.resetMarkerPositionOnClick(this.marker));
+    this.marker.addListener('click', () => this.resetMarkerPositionOnClick(this.marker))
+    this.map.addListener('click', e => {
+      this.marker.setPosition(e.latLng);
+      this.resetMarkerPositionOnClick(this.marker)
+    });
+  }
+
+  geocodeLocation(latLngObject){
+    const geocoder = new google.maps.Geocoder();
+    geocoder.geocode({ location: latLngObject }, (results, status) => {
+      if (status === 'OK') {
+        this.setState(
+          { userAddress: results[0].formatted_address },
+          console.log(results[0].formatted_address)
+        );
+      } else {
+        console.log('did not work');
+      }
+    });
+  }
+
+  resetMarkerPositionOnClick(centerMarker){
+    const newPosition = centerMarker.getPosition();
+    this.geocodeLocation(newPosition);
+    this.centerMap(newPosition)
   }
 
   centerMap(locationLatLng) {
+    this.map.setCenter(locationLatLng);
     this.setState({
       userLocation: locationLatLng
-    })
+    });
   }
 
   getUserLocation() {
-    const successCallback = (position) => {
+    const successCallback = position => {
       const parsedLocation = {
         lat: position.coords.latitude,
         lng: position.coords.longitude
       };
-      this.setState({userLocation: parsedLocation})
-
-      const geocoder = new google.maps.Geocoder;
       this.setState({ userLocation: parsedLocation });
-      geocoder.geocode({ location: parsedLocation }, (results, status) => {
-        if (status === 'OK') {
-          this.setState({ userAddress: results[0].formatted_address });
-        }
-      });
+      this.geocodeLocation(parsedLocation);
+      this.marker.setPosition(parsedLocation)
+      this.centerMap(parsedLocation)
     };
 
-    const errorCallback = (error) => {
-      this.setState({ status: "SORRY, COULDN'T FIND YOU..."});
-      setTimeout(function(){
-        this.setState({userAddress: " "});
-      }.bind(this), 3000);
-    }
+    const errorCallback = error => {
+      console.log(error);
+      this.setState({ status: "SORRY, COULDN'T FIND YOU..." });
+      setTimeout(
+        function() {
+          this.setState({ userAddress: ' ' });
+        }.bind(this),
+        3000
+      );
+    };
 
     navigator.geolocation.getCurrentPosition(successCallback, errorCallback, {
       timeout: 10000,
@@ -109,14 +140,16 @@ class Map extends React.Component {
   render() {
     let form;
     if (this.state.userAddress) {
-      form = <UserInputForm
-                currentAddress={this.state.userAddress}
-                drawBoundaries={this.drawBoundaries}
-                newMarker={this.newMarker}
-                map={this.map}
-              />;
+      form = (
+        <UserInputForm
+          currentAddress={this.state.userAddress}
+          drawBoundaries={this.drawBoundaries}
+          newMarker={this.newMarker}
+          map={this.map}
+        />
+      );
     } else {
-      form = <FetchLocationForm currentStatus={this.state.status} />
+      form = <FetchLocationForm currentStatus={this.state.status} />;
     }
 
     return (

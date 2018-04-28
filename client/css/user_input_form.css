@@ -6,6 +6,7 @@ form {
   color: #FFFFFF;
   position: absolute;
   height: auto;
+  min-width: 300px;
   width: 85vw;
   background-color: rgba(12, 7, 17, 0.7);
   border-radius: 6px;
@@ -22,17 +23,19 @@ form {
 .address-input-div {
   display: flex;
   font-size: 9px;
-  background-color: rbga(86, 68, 101, 0.21);
+  background-color: rgba(68, 31, 84, 0.2);
   border: 1px solid rgba(255, 255, 255, 0.24);
   border-radius: 6px;
 }
 
 .dollar-input-div {
-  width: 50%;
+  /* width: 50%; */
+  max-width: 300px;
 }
 
 .address-input-div {
-  width: 90%;
+  width: 80%;
+  max-width: 400px;
 }
 
 .dollar-input-icon,
@@ -44,10 +47,12 @@ form {
 
 .dollar-input-icon,
 .address-input-icon {
-  height: 20px;
-  width: 20px;
+  height: 24px;
+  width: 24px;
   margin-right: 0px;
 }
+
+
 
 .dollar-input,
 .address-input,
@@ -66,16 +71,36 @@ form {
 }
 
 .submit {
-  background-color: transparent;
+  background-image: url('https://i.imgur.com/wIo7DEh.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
   padding: none;
   border-bottom: rgba(62, 195, 0, 1);
   font-size: inherit;
   color: rgba(51, 51, 51, 1);
-  color: green;
   cursor: pointer;
-  /* display: none; */
-  /* height: 10px; */
+  width: 30px;
+  height: 30px;
+  margin-top: 15px;
 }
+
+.input-error {
+  background-color: rgba(68, 31, 84, 0.2);
+  border: none;
+  text-align: center;
+  width: 100%;
+  color: white;
+}
+
+button:disabled{
+  opacity: 0.2;
+}
+
+/* .error-icon {
+height: 30px;
+width: 9px;
+} */
 
 /* @media (min-width: 340px) {
   form {

@@ -14,7 +14,12 @@ class UserInputForm extends React.Component {
       addressInput: addressInput,
       formSubmitted: false,
       boundaries: [],
-      rideType: "lyft",
+      rideType: 'lyft',
+
+      touched: {
+        dollarInput: false,
+        addressInput: false,
+      },
     };
 
     this.updateInput = this.updateInput.bind(this);
@@ -25,11 +30,27 @@ class UserInputForm extends React.Component {
     this.parseAddressToLatLng = LatLongTool.parseAddressToLatLng.bind(this);
     this.getBoundaries = AlgorithmLogic.getBoundaries.bind(this);
     this.rideEstimate = AlgorithmLogic.rideEstimate.bind(this);
+
+    this.changeFormState = this.changeFormState.bind(this);
+    this.validate = this.validate.bind(this);
+  }
+
+  componentWillReceiveProps(newProps){
+      if (this.props.currentAddress !== newProps.currentAddress) {
+           this.setState({addressInput: newProps.currentAddress});
+      }
+  }
+
+
+  changeFormState(){
+    this.refs.btn.removeAttribute("disabled");
   }
 
   submitForm(e) {
     e.preventDefault();
-    this.setState({ formSubmitted: true }, () => {
+    this.refs.btn.setAttribute("disabled", "disabled");
+
+    this.setState({ formSubmitted: true, boundaries: []}, () => {
       this.parseAddressToLatLng(this.state.addressInput);
     });
   }
@@ -45,11 +66,29 @@ class UserInputForm extends React.Component {
   }
 
   getRideType(type) {
-    this.setState({ rideType: type }, () => { this.getBoundaries(); })
+    this.setState({ rideType: type, boundaries: [] }, () => { this.getBoundaries(); });
   }
+
+  validateDollar(amt) {
+    const regex  = /^\$?[0-9]+(\.[0-9][0-9])?$/;
+    const bound = (amt >= 9.99 && amt <= 500);
+    return (regex.test(amt) && bound) ? true : false;
+  }
+
+  validate() {
+    const { dollarInput, addressInput } = this.state;
+    let checkValidDollar = this.validateDollar(dollarInput);
+    return (
+      checkValidDollar && addressInput.length > 0
+    );
+  }
+
 
   render() {
     if (!this.props.currentAddress) return null;
+
+    const isEnabled = this.validate();
+    const errors = this.validate(this.state.dollarInput, this.state.addressInput);
 
     let navBar = <div></div>;
     let formName;
@@ -78,13 +117,16 @@ class UserInputForm extends React.Component {
           >WHERE CAN I GO WITH</div>
 
           <div id={formName} className="dollar-input-div">
-            <img className="dollar-input-icon" src="https://i.imgur.com/lbwIy4B.png" />
+            <img className="dollar-input-icon" src="https://i.imgur.com/KdVi5oB.png" />
             <input type="number"
               id={formName}
               className={`dollar-input`}
               value={this.state.dollarInput}
+              min="10"
+              max="500"
               onChange={this.updateInput("dollarInput")}
             />
+
           </div>
 
           <div id={formName}
@@ -103,8 +145,10 @@ class UserInputForm extends React.Component {
 
           <button
             id={formName}
+            disabled={!isEnabled}
             className="submit"
-            onClick={this.submitForm}>GO</button>
+            ref="btn"
+            onClick={this.submitForm}></button>
         </form>
         {rideSelection}
       </React.Fragment>

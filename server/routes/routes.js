@@ -1,5 +1,5 @@
-//server/routes/routes.js
 const express = require('express');
+const axios = require('axios');
 const router = express.Router();
 const bodyParser = require('body-parser');
 const Lyft = require('lyft-node');
@@ -36,6 +36,25 @@ router.get('/rideEstimate', (req, res) =>  {
   });
 });
 
-
+router.get('/snapToRoad', (req, res) => {
+  console.log("HIT THE SERVER");
+  axios.request({
+    url: 'https://maps.googleapis.com/maps/api/directions/',
+    method: 'GET',
+    outputFormat: 'json',
+    params: {
+      origin: req.query.origin,
+      destination: req.query.destination,
+      key: process.env.GOOGLE_MAPS_API_KEY
+    }
+  })
+  .then((result) => {
+    console.log(result);
+    res.send(result);
+  })
+  .catch((error) => {
+    console.log(error);
+  });
+});
 
 module.exports = router;

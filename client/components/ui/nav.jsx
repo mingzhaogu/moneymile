@@ -11,7 +11,7 @@ class NavBar extends React.Component {
     return (
       <nav className="nav-bar">
         <img className="logo" src="https://i.imgur.com/3ko7M3m.png"/>
-        <div className="login-icon">Login with Lyft</div>
+        <div className="login-icon"></div>
       </nav>
     );
   }
