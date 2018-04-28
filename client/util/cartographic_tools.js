@@ -2,7 +2,7 @@ import { landOrWater } from './algorithm_logic';
 
 export const drawBoundaries = function (boundaries) {
   const boundariesArray = [];
-  const recalcluatedBoundaries = [];
+  const recalculatedBoundaries = [];
   const numBoundaries = Object.keys(boundaries).length;
   let numRecalculatedBoundaries = 0;
 

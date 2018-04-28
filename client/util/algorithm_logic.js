@@ -9,7 +9,7 @@ export const getBoundaries = function() {
   const currentLatLng = this.state.addressLatLng;
   const rideType = this.state.rideType
   let directions = [];
-  
+
   for (let i = 0; i < 360; i+=10) {
     directions.push(i);
   }
@@ -108,7 +108,7 @@ export const rideEstimate = async function(start, end, amount, stdDev, index, nu
         const newDistance = googleGeometry.computeDistanceBetween(start, end);
         const newEnd = new googleGeometry.computeOffset(start, ratio * newDistance, direction);
         history.push(newEnd);
-        this.rideEstimate(start, newEnd, amount, stdDev, index, direction, history, rideType);
+        this.rideEstimate(start, newEnd, amount, stdDev, index, numDirections, direction, history, rideType);
       }
 
     } else {
