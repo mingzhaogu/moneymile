@@ -22,7 +22,6 @@ export const drawBoundaries = function (boundaries) {
       // });
       recalculatedBoundaries[index] = res;
       numRecalculatedBoundaries++;
-      // console.log(numRecalculatedBoundaries);
 
       if (numRecalculatedBoundaries === numBoundaries) {
         const bermudaPolygon = new google.maps.Polygon({
