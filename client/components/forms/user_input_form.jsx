@@ -99,9 +99,9 @@ class UserInputForm extends React.Component {
       formClassName = "user-submitted-form";
       rideSelection = <UserRideSelection
         activeType={this.state.rideType}
-        getRideType={this.getRideType}/>
+        getRideType={this.getRideType}/>;
     } else {
-      navBar = <NavBar />
+      navBar = <NavBar />;
       formName = "";
       formClassName = "user-input-form";
     }

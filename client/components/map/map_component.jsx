@@ -29,7 +29,7 @@ class Map extends React.Component {
 
   componentDidMount() {
     this.initializeMap();
-    this.setState({ status: 'FETCHING CURRENT LOCATION...' });
+    this.setState({ status: 'FETCHING CURRENT LOCATION' });
     this.getUserLocation();
   }
 
