@@ -19,6 +19,10 @@
   padding: 0;
 }
 
+#submitted.dollar-input {
+  width: 75px;
+}
+
 #submitted.dollar-input-icon,
 #submitted.address-input-icon {
   height: 24px;
@@ -27,7 +31,7 @@
 }
 
 #submitted.dollar-input-div {
-  width: 35%;
+  width: 100px;
 }
 
 #submitted.address-input,
@@ -69,6 +73,10 @@
     font-size: 26px;
     text-align: left;
     margin-left: 12px;
+  }
+
+  #submitted.dollar-input-div {
+    width: 35%;
   }
 
   #submitted.address-input {
