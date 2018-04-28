@@ -42,7 +42,7 @@ class UserInputForm extends React.Component {
   }
 
 
-  changeFormState(){
+  changeFormState() {
     this.refs.btn.removeAttribute("disabled");
   }
 
@@ -88,7 +88,7 @@ class UserInputForm extends React.Component {
     if (!this.props.currentAddress) return null;
 
     const isEnabled = this.validate();
-    const errors = this.validate(this.state.dollarInput, this.state.addressInput);
+    // const errors = this.validate(this.state.dollarInput, this.state.addressInput);
 
     let navBar = <div></div>;
     let formName;
@@ -117,7 +117,7 @@ class UserInputForm extends React.Component {
           >WHERE CAN I GO WITH</div>
 
           <div id={formName} className="dollar-input-div">
-            <img className="dollar-input-icon" src="https://i.imgur.com/KdVi5oB.png" />
+            <img className="dollar-input-icon" src="https://i.imgur.com/um4yd7D.png" />
             <input type="number"
               id={formName}
               className={`dollar-input`}
