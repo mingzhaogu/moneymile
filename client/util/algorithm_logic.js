@@ -3,7 +3,7 @@ import axios from 'axios';
 require('dotenv').config();
 
 export const getBoundaries = function() {
-  const amount = 15; //parseInt(this.state.dollarInput);
+  const amount = parseInt(this.state.dollarInput);
   const stdDev = 2;
   const defaultRadiusInMeters = 32000;
   const currentLatLng = this.state.addressLatLng;
@@ -80,7 +80,6 @@ export const rideEstimate = async function(start, end, amount, stdDev, index, nu
   .then(res => {result = res})
   .catch(errors => console.log(errors))
 
-  // this.props.newMarker(end);
   if (result.data) {
     let primetimeString = result.data.cost_estimates[0].primetime_percentage;
     let primtimePercentage = parseFloat(primetimeString) / 100.0;
