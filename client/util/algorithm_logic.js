@@ -102,7 +102,7 @@ export const rideEstimate = async function(start, end, amount, stdDev, index, nu
       const newDistance = googleGeometry.computeDistanceBetween(start, end);
       const newEnd = new googleGeometry.computeOffset(start, ratio * newDistance, direction);
       history.push(newEnd);
-      this.rideEstimate(start, newEnd, amount, stdDev, index, numDirections,direction, history);
+      this.rideEstimate(start, newEnd, amount, stdDev, index, numDirections, direction, history);
     }
   }
 }
