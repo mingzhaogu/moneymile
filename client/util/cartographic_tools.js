@@ -8,7 +8,7 @@ export const drawBoundaries = function (boundaries) {
 
   for (let i = 0; i < numBoundaries; i++) {
     boundariesArray.push(boundaries[i]);
-    recalcluatedBoundaries.push(i);
+    recalculatedBoundaries.push(i);
   }
 
   boundariesArray.forEach((boundary, index) => {
@@ -20,13 +20,13 @@ export const drawBoundaries = function (boundaries) {
       //   map: this.map,
       //   title: `${index}`
       // });
-      recalcluatedBoundaries[index] = res;
+      recalculatedBoundaries[index] = res;
       numRecalculatedBoundaries++;
       // console.log(numRecalculatedBoundaries);
 
       if (numRecalculatedBoundaries === numBoundaries) {
         const bermudaPolygon = new google.maps.Polygon({
-          paths: recalcluatedBoundaries,
+          paths: recalculatedBoundaries,
           strokeColor: '#FF0000',
           strokeOpacity: 0.8,
           strokeWeight: 3,
@@ -35,7 +35,7 @@ export const drawBoundaries = function (boundaries) {
         });
 
         const bounds = new google.maps.LatLngBounds();
-        recalcluatedBoundaries.forEach(coord => bounds.extend(coord));
+        recalculatedBoundaries.forEach(coord => bounds.extend(coord));
         this.map.fitBounds(bounds);
         bermudaPolygon.setMap(this.map);
       }
