@@ -129,7 +129,11 @@ class Map extends React.Component {
     new google.maps.Marker({
       position: pos,
       map: this.map,
-      title: `${pos.lat()}, ${pos.lng()}`
+      title: `${pos.lat()}, ${pos.lng()}`,
+      icon: {
+        url: 'http://maps.google.com/mapfiles/ms/icons/red-dot.png',
+        scaledSize: new google.maps.Size(5, 5)
+      }
     });
   }
 
