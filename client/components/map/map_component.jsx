@@ -131,8 +131,8 @@ class Map extends React.Component {
       map: this.map,
       title: `${pos.lat()}, ${pos.lng()}`,
       icon: {
-        url: 'http://maps.google.com/mapfiles/ms/icons/red-dot.png',
-        scaledSize: new google.maps.Size(5, 5)
+        url: "http://maps.google.com/mapfiles/ms/icons/red-dot.png",
+        scaledSize: new google.maps.Size(20, 20)
       }
     });
   }

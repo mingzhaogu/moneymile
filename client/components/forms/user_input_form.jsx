@@ -1,7 +1,6 @@
 import React from 'react';
 import NavBar from '../ui/nav';
 import UserRideSelection from '../user/user_ride_selection';
-import * as MapTools from '../../util/cartographic_tools';
 import * as LatLongTool from '../../util/latlong_conversion';
 import * as AlgorithmLogic from '../../util/algorithm_logic';
 
@@ -10,7 +9,6 @@ class UserInputForm extends React.Component {
     super(props);
 
     const addressInput = this.props.currentAddress;
-    console.log("addressinput", addressInput);
     this.state = {
       dollarInput: "",
       addressInput: addressInput,
@@ -31,7 +29,6 @@ class UserInputForm extends React.Component {
 
     this.parseAddressToLatLng = LatLongTool.parseAddressToLatLng.bind(this);
     this.getBoundaries = AlgorithmLogic.getBoundaries.bind(this);
-    this.landOrWater = AlgorithmLogic.landOrWater.bind(this);
     this.rideEstimate = AlgorithmLogic.rideEstimate.bind(this);
 
     this.changeFormState = this.changeFormState.bind(this);
