@@ -34,20 +34,20 @@ export const drawBoundaries = function(start, boundaries, amount) {
     )
   });
 
-  // console.log('totaldistance', distance);
-  // console.log('distance per point', distance / boundariesArray.length);
-  // console.log('distance per dollar', distance / (boundariesArray.length * amount));
-  //
-  // const bermudaTriangle = new google.maps.Polygon({
-  //      paths: boundariesArray,
-  //      strokeColor: '#FF0000',
-  //      strokeOpacity: 0.8,
-  //      strokeWeight: 3,
-  //      fillColor: '#FF0000',
-  //      fillOpacity: 0.35
-  //    });
-  // const bounds = new google.maps.LatLngBounds();
-  // boundariesArray.forEach((coord) => bounds.extend(coord));
-  // this.map.fitBounds(bounds);
-  // bermudaTriangle.setMap(this.map);
+  console.log('totaldistance', distance);
+  console.log('distance per point', distance / boundariesArray.length);
+  console.log('distance per dollar', distance / (boundariesArray.length * amount));
+
+  const bermudaTriangle = new google.maps.Polygon({
+       paths: boundariesArray,
+       strokeColor: '#FF0000',
+       strokeOpacity: 0.8,
+       strokeWeight: 3,
+       fillColor: '#FF0000',
+       fillOpacity: 0.35
+     });
+  const bounds = new google.maps.LatLngBounds();
+  boundariesArray.forEach((coord) => bounds.extend(coord));
+  this.map.fitBounds(bounds);
+  bermudaTriangle.setMap(this.map);
 }
