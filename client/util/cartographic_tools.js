@@ -2,7 +2,7 @@ import { landOrWater } from './algorithm_logic';
 
 export const drawBoundaries = function (boundaries) {
   const boundariesArray = [];
-  const recalcluatedBoundaries = [];
+  const recalculatedBoundaries = [];
   const numBoundaries = Object.keys(boundaries).length;
   let numRecalculatedBoundaries = 0;
 
@@ -22,7 +22,6 @@ export const drawBoundaries = function (boundaries) {
       // });
       recalculatedBoundaries[index] = res;
       numRecalculatedBoundaries++;
-      // console.log(numRecalculatedBoundaries);
 
       if (numRecalculatedBoundaries === numBoundaries) {
         const bermudaPolygon = new google.maps.Polygon({
