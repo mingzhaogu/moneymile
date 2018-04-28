@@ -76,18 +76,12 @@ class Map extends React.Component {
       this.setState({ userLocation: parsedLocation });
       geocoder.geocode({ location: parsedLocation }, (results, status) => {
         if (status === 'OK') {
-          this.setState(
-            { userAddress: results[0].formatted_address },
-            console.log("should have recentered")
-          )
-        } else {
-          console.log('did not work')
+          this.setState({ userAddress: results[0].formatted_address });
         }
       });
     };
 
     const errorCallback = (error) => {
-      console.log(error);
       this.setState({ status: "SORRY, COULDN'T FIND YOU..."});
       setTimeout(function(){
         this.setState({userAddress: " "});
@@ -104,7 +98,11 @@ class Map extends React.Component {
     new google.maps.Marker({
       position: pos,
       map: this.map,
-      title: `${pos.lat()}, ${pos.lng()}`
+      title: `${pos.lat()}, ${pos.lng()}`,
+      icon: {
+        url: "http://maps.google.com/mapfiles/ms/icons/red-dot.png",
+        scaledSize: new google.maps.Size(20, 20)
+      }
     });
   }
 
@@ -113,7 +111,6 @@ class Map extends React.Component {
     if (this.state.userAddress) {
       form = <UserInputForm
                 currentAddress={this.state.userAddress}
-
                 drawBoundaries={this.drawBoundaries}
                 newMarker={this.newMarker}
                 map={this.map}
