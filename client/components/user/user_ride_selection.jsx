@@ -12,7 +12,6 @@ class UserRideSelection extends React.Component {
 
   updateType(type) {
     const selectedRideTypes = this.state.selected;
-    console.log(this.state.selected);
     return (e) => {
       if (this.state.selected.includes(type)) {
         e.currentTarget.classList.remove('selected');
