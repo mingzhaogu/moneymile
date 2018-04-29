@@ -42,7 +42,7 @@ class UserInputForm extends React.Component {
   }
 
 
-  changeFormState(){
+  changeFormState() {
     this.refs.btn.removeAttribute("disabled");
   }
 
@@ -71,7 +71,7 @@ class UserInputForm extends React.Component {
 
   validateDollar(amt) {
     const regex  = /^\$?[0-9]+(\.[0-9][0-9])?$/;
-    const bound = (amt >= 9.99 && amt <= 500);
+    const bound = (amt >= 9.99 && amt <= 400);
     return (regex.test(amt) && bound) ? true : false;
   }
 
@@ -88,7 +88,7 @@ class UserInputForm extends React.Component {
     if (!this.props.currentAddress) return null;
 
     const isEnabled = this.validate();
-    const errors = this.validate(this.state.dollarInput, this.state.addressInput);
+    // const errors = this.validate(this.state.dollarInput, this.state.addressInput);
 
     let navBar = <div></div>;
     let formName;
@@ -99,9 +99,9 @@ class UserInputForm extends React.Component {
       formClassName = "user-submitted-form";
       rideSelection = <UserRideSelection
         activeType={this.state.rideType}
-        getRideType={this.getRideType}/>
+        getRideType={this.getRideType}/>;
     } else {
-      navBar = <NavBar />
+      navBar = <NavBar />;
       formName = "";
       formClassName = "user-input-form";
     }
@@ -117,7 +117,7 @@ class UserInputForm extends React.Component {
           >WHERE CAN I GO WITH</div>
 
           <div id={formName} className="dollar-input-div">
-            <img className="dollar-input-icon" src="https://i.imgur.com/KdVi5oB.png" />
+            <img className="dollar-input-icon" src="https://i.imgur.com/um4yd7D.png" />
             <input type="number"
               id={formName}
               className={`dollar-input`}

@@ -15,6 +15,7 @@ class FetchLocationForm extends React.Component {
         <form className="fetch-location-form">
           <img className="fetch-location-img" src="https://i.imgur.com/P0CmA6f.png" />
           {status}
+          <p className="wait-text">Please wait...</p>
         </form>
       </React.Fragment>
     );
