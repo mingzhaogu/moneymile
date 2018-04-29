@@ -15,7 +15,7 @@ class UserInputForm extends React.Component {
       formSubmitted: false,
       boundaries: [],
       rideType: 'lyft',
-
+      
       touched: {
         dollarInput: false,
         addressInput: false,

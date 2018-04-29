@@ -15,7 +15,8 @@ class Map extends React.Component {
     this.state = {
       userLocation: null,
       userAddress: null,
-      status: ''
+      status: '',
+      newBoundary: {}
     };
 
     this.getUserLocation = this.getUserLocation.bind(this);

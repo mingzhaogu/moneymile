@@ -99,7 +99,7 @@ export const rideEstimate = async function(start, end, amount, stdDev, index, nu
         this.setState({ boundaries: newBoundaries },
           () => {
             if (Object.keys(this.state.boundaries).length === numDirections) {
-              this.props.drawBoundaries(this.state.boundaries);
+              this.props.drawBoundaries(this.state.boundaries, rideType);
               this.changeFormState();
             }
           });
