@@ -91,13 +91,13 @@ form div {
   margin-top: 15px;
 }
 
-.input-error {
+/* .input-error {
   background-color: rgba(68, 31, 84, 0.2);
   border: none;
   text-align: center;
   width: 100%;
   color: white;
-}
+} */
 
 button:disabled{
   opacity: 0.2;
