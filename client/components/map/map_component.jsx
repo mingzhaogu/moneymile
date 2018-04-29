@@ -34,10 +34,6 @@ class Map extends React.Component {
     this.getUserLocation();
   }
 
-  // componentDidUpdate() {
-  //   // this.initializeMap();
-  // }
-
   initializeMap() {
     const sfCenter = { lat: 37.773972, lng: -122.431297 };
     const center = this.state.userLocation || sfCenter;
