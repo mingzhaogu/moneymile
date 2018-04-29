@@ -1,6 +1,6 @@
-import { landOrWater } from './algorithm_logic';
+import { recalculateBoundary } from './algorithm_logic';
 
-export const drawBoundaries = function (boundaries) {
+export const drawBoundaries = function (currentPos, boundaries) {
   const boundariesArray = [];
   const recalculatedBoundaries = [];
   const numBoundaries = Object.keys(boundaries).length;
@@ -14,12 +14,7 @@ export const drawBoundaries = function (boundaries) {
   boundariesArray.forEach((boundary, index) => {
     let direction = 360 / numBoundaries * index;
 
-    landOrWater(boundary, this.map, direction, res => {
-      // new google.maps.Marker({
-      //   position: res,
-      //   map: this.map,
-      //   title: `${index}`
-      // });
+    recalculateBoundary(currentPos, boundary, this.map, direction, res => {
       recalculatedBoundaries[index] = res;
       numRecalculatedBoundaries++;
 
