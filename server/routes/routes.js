@@ -31,13 +31,10 @@ router.get('/rideEstimate', (req, res) =>  {
   .then((result) => {
     res.send(result);
   })
-  .catch((error) => {
-    console.log(error);
-  });
+  .catch((error) => {});
 });
 
 router.get('/snapToRoad', (req, res) => {
-  console.log("HIT THE SERVER");
   axios.request({
     url: 'https://maps.googleapis.com/maps/api/directions/',
     method: 'GET',
@@ -49,12 +46,9 @@ router.get('/snapToRoad', (req, res) => {
     }
   })
   .then((result) => {
-    console.log(result);
     res.send(result);
   })
-  .catch((error) => {
-    console.log(error);
-  });
+  .catch((error) => {});
 });
 
 module.exports = router;

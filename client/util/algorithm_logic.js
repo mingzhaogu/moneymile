@@ -17,7 +17,6 @@ export const getBoundaries = function() {
   const googleGeometry = google.maps.geometry.spherical;
 
   async.eachOf(directions, (direction, index, callback) => {
-    console.log('************', rideType)
     const endLatLng = new googleGeometry.computeOffset(currentLatLng, defaultRadiusInMeters, direction);
     this.rideEstimate(currentLatLng, endLatLng, amount, stdDev, index, directions.length, direction, [], rideType);
     callback(null);
@@ -83,7 +82,7 @@ export const rideEstimate = async function(start, end, amount, stdDev, index, nu
     }
   })
   .then(res => {result = res})
-  .catch(errors => console.log(errors))
+  .catch(errors => {})
 
   if (result.data) {
     let primetimeString = result.data.cost_estimates[0].primetime_percentage;

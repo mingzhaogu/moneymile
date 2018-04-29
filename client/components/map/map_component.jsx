@@ -75,10 +75,7 @@ class Map extends React.Component {
       if (status === 'OK') {
         this.setState(
           { userAddress: results[0].formatted_address },
-          console.log(results[0].formatted_address)
         );
-      } else {
-        console.log('did not work');
       }
     });
   }
@@ -109,7 +106,6 @@ class Map extends React.Component {
     };
 
     const errorCallback = error => {
-      console.log(error);
       this.setState({ status: "SORRY, COULDN'T FIND YOU..." });
       setTimeout(
         function() {
