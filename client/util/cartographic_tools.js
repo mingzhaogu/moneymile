@@ -1,6 +1,7 @@
 import { recalculateBoundary } from './algorithm_logic';
 
-export const drawBoundaries = function (currentPos, boundaries) {
+export const drawBoundaries = function (currentPos, boundaries, rideType) {
+
   const boundariesArray = [];
   const recalculatedBoundaries = [];
   const numBoundaries = Object.keys(boundaries).length;
@@ -14,19 +15,37 @@ export const drawBoundaries = function (currentPos, boundaries) {
   boundariesArray.forEach((boundary, index) => {
     let direction = 360 / numBoundaries * index;
 
+    let newRideType = rideType
     recalculateBoundary(currentPos, boundary, this.map, direction, res => {
+
       recalculatedBoundaries[index] = res;
       numRecalculatedBoundaries++;
 
       if (numRecalculatedBoundaries === numBoundaries) {
+       
+        if (this.state.newBoundary[rideType] !== undefined) {
+          this.state.newBoundary[rideType].setMap(null);
+        }
+        
+        const color = {
+          'lyft': '#FF0000',
+          'lyft_line': '#32CD32',
+          'lyft_plus': '#ADFF2F'
+        }
+        
         const bermudaPolygon = new google.maps.Polygon({
           paths: recalculatedBoundaries,
-          strokeColor: '#FF0000',
+          strokeColor: color[rideType],
           strokeOpacity: 0.8,
           strokeWeight: 3,
-          fillColor: '#FF0000',
+          fillColor: color[rideType],
           fillOpacity: 0.35
         });
+        
+ 
+        let newBoundary = this.state.newBoundary
+        newBoundary[rideType] = bermudaPolygon
+        this.setState({newBoundary})
 
         const bounds = new google.maps.LatLngBounds();
         recalculatedBoundaries.forEach(coord => bounds.extend(coord));
