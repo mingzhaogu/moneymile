@@ -1,7 +1,7 @@
 .user_ride_selection {
   position: absolute;
   width: 60px;
-  height: 200px;
+  height: 198px;
   background-color: rgba(0, 0, 0, 0.8);
   box-shadow: 5px 5px 4px 0 rgba(0,0,0,0.50), inset 0 1px 3px 0 rgba(0,0,0,0.50);
   border-top-right-radius: 6px;
@@ -47,7 +47,12 @@
 @media only screen and (min-width: 720px) {
   .user_ride_selection {
     border-top-right-radius: 6px;
+    border-bottom-right-radius: 6px;
     top: 40vh;
     left: 0;
+  }
+
+  .user_ride_selection li:last-child {
+    border-bottom-right-radius: 6px;
   }
 }
