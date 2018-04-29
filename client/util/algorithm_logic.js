@@ -17,19 +17,39 @@ export const getBoundaries = function() {
   const googleGeometry = google.maps.geometry.spherical;
 
   async.eachOf(directions, (direction, index, callback) => {
-    console.log('************', rideType)
     const endLatLng = new googleGeometry.computeOffset(currentLatLng, defaultRadiusInMeters, direction);
     this.rideEstimate(currentLatLng, endLatLng, amount, stdDev, index, directions.length, direction, [], rideType);
     callback(null);
   });
 }
 
-export const landOrWater = function(position, map, direction, callback) {
-  // const mapUrl = `http://maps.googleapis.com/maps/api/staticmap?center=${position.lat()},${position.lng()}&zoom=${map.getZoom()}&size=1x1&maptype=roadmap&key=AIzaSyDEXz3xx4nhRj4ePTFB39xLHHtvampEivs`
-  const mapUrl = `http://maps.googleapis.com/maps/api/staticmap?center=${position.lat()},${position.lng()}&zoom=${map.getZoom()}&size=1x1&maptype=roadmap`;
+export const recalculateBoundary = function (position, boundary, map, direction, callback) {
+  landOrWater(boundary, map, res => {
+    if (res === 'land')
+      callback(boundary);
+    else {
+      const googleGeometry = google.maps.geometry.spherical;
+      const midPoint = googleGeometry.computeDistanceBetween(boundary, position) / 2;
+
+      if (midPoint <= 250) {
+        callback(boundary);
+      } else {
+        const midLatLng = new googleGeometry.computeOffset(position, midPoint, direction);
+        landOrWater(midLatLng, map, res => {
+          if (res === 'water')
+            recalculateBoundary(position, midLatLng, map, direction, callback);
+          else
+            recalculateBoundary(midLatLng, boundary, map, direction, callback);
+        })
+      }
+    }
+  })
+}
+
+export const landOrWater = function (position, map, callback) {
+  const mapUrl = `http://maps.googleapis.com/maps/api/staticmap?center=${position.lat()},${position.lng()}&zoom=${map.getZoom()}&size=1x1&maptype=roadmap&key=AIzaSyDEXz3xx4nhRj4ePTFB39xLHHtvampEivs`;
   const canvas = document.createElement('canvas');
   const ctx = canvas.getContext('2d');
-  let result;
 
   const image = new Image();
   image.crossOrigin = "Anonymous";
@@ -41,33 +61,11 @@ export const landOrWater = function(position, map, direction, callback) {
     canvas.getContext('2d').drawImage(image, 0, 0, image.width, image.height);
     const pixelData = canvas.getContext('2d').getImageData(0, 0, 1, 1).data;
 
-    if(pixelData[0] > 160 && pixelData[0] < 181 && pixelData[1] > 190 && pixelData[1] < 210) {
-      const step = -402;
-      const googleGeometry = google.maps.geometry.spherical;
-      const newPosition = new googleGeometry.computeOffset(position, step, direction);
-      landOrWater(newPosition, map, direction, callback);
-    } else {
-      callback(position);
-    }
+    if(pixelData[0] > 160 && pixelData[0] < 181 && pixelData[1] > 190 && pixelData[1] < 210)
+      callback('water');
+    else
+      callback('land');
   }
-}
-
-export const snapToNearestRoad = function (index, position, callback) {
-  const directionsService = new google.maps.DirectionsService();
-  const request = {
-      origin: position,
-      destination: position,
-      travelMode: google.maps.DirectionsTravelMode.DRIVING
-  };
-
-  directionsService.route(request, (response, status) => {
-    if (status == google.maps.DirectionsStatus.OK) {
-      position = response.routes[0].legs[0].start_location
-      callback(position);
-    } else {
-      setTimeout(snapToNearestRoad(index, position, callback), 1000);
-    }
-  });
 }
 
 export const rideEstimate = async function(start, end, amount, stdDev, index, numDirections, direction, history, rideType) {
@@ -99,7 +97,7 @@ export const rideEstimate = async function(start, end, amount, stdDev, index, nu
         this.setState({ boundaries: newBoundaries },
           () => {
             if (Object.keys(this.state.boundaries).length === numDirections) {
-              this.props.drawBoundaries(this.state.boundaries);
+              this.props.drawBoundaries(start, this.state.boundaries);
               this.changeFormState();
             }
           });
