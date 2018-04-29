@@ -8,7 +8,36 @@
   box-shadow: 5px 5px 4px 0px rgba(0, 0, 0, 0.5);
   color: #FFFFFF;
   position: absolute;
-  font-style: "Anton";
+  font-family: 'Source Code Pro', monospace;
+}
+
+.app-info-container {
+  display: flex;
+  flex-direction: row;
+  list-style: none;
+  justify-content: space-between;
+  width: 120px;
+}
+
+.app-info-container li {
+  margin: auto 0;
+}
+
+.app-info-container a:first-child {
+  color: #FFFFFF;
+  text-decoration: none;
+}
+
+.app-info-container a:first-child:hover {
+  cursor: pointer;
+  color: #E70B81;
+}
+
+.lyft-logo {
+  height: 30px;
+  width: auto;
+  padding-top: 5px;
+  margin-right: 10px;
 }
 
 .logo {

@@ -47,7 +47,7 @@ export const recalculateBoundary = function (position, boundary, map, direction,
 }
 
 export const landOrWater = function (position, map, callback) {
-  const mapUrl = `http://maps.googleapis.com/maps/api/staticmap?center=${position.lat()},${position.lng()}&zoom=${map.getZoom()}&size=1x1&maptype=roadmap&key=AIzaSyDEXz3xx4nhRj4ePTFB39xLHHtvampEivs`
+  const mapUrl = `http://maps.googleapis.com/maps/api/staticmap?center=${position.lat()},${position.lng()}&zoom=${map.getZoom()}&size=1x1&maptype=roadmap&key=AIzaSyDEXz3xx4nhRj4ePTFB39xLHHtvampEivs`;
   const canvas = document.createElement('canvas');
   const ctx = canvas.getContext('2d');
 

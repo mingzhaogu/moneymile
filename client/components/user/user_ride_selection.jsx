@@ -36,11 +36,11 @@ class UserRideSelection extends React.Component {
           <p>Lyft</p>
         </li>
         <li onClick={this.updateType("lyft_plus")}>
-          <img className="car-icon" src="https://i.imgur.com/1PtENWQ.png"/>
+          <img className="car-icon" src="https://i.imgur.com/RjJTuOV.png"/>
           <p>Plus</p>
         </li>
         <li onClick={this.updateType("lyft_line")}>
-          <img className="car-icon" src="https://i.imgur.com/1PtENWQ.png"/>
+          <img className="car-icon" src="https://i.imgur.com/mXvN9Fd.png"/>
           <p>Line</p>
         </li>
       </ul>
