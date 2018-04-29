@@ -4,13 +4,13 @@ require('dotenv').config();
 
 export const getBoundaries = function() {
   const amount = parseInt(this.state.dollarInput);
-  const stdDev = 0.5;
+  const stdDev = 2;
   const defaultRadiusInMeters = 32000;
   const currentLatLng = this.state.addressLatLng;
   const rideType = this.state.rideType
   let directions = [];
 
-  for (let i = 0; i < 360; i+=10) {
+  for (let i = 0; i < 360; i+=45) {
     directions.push(i);
   }
 
@@ -47,7 +47,7 @@ export const recalculateBoundary = function (position, boundary, map, direction,
 }
 
 export const landOrWater = function (position, map, callback) {
-  const mapUrl = `http://maps.googleapis.com/maps/api/staticmap?center=${position.lat()},${position.lng()}&zoom=${map.getZoom()}&size=1x1&maptype=roadmap&key=AIzaSyDEXz3xx4nhRj4ePTFB39xLHHtvampEivs`;
+  const mapUrl = `http://maps.googleapis.com/maps/api/staticmap?center=${position.lat()},${position.lng()}&zoom=${map.getZoom()}&size=1x1&maptype=roadmap&key=${process.env.GOOGLE_API_KEY}`;
   const canvas = document.createElement('canvas');
   const ctx = canvas.getContext('2d');
 

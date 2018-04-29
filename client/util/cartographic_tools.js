@@ -13,7 +13,6 @@ export const drawBoundaries = function (currentPos, boundaries) {
 
   boundariesArray.forEach((boundary, index) => {
     let direction = 360 / numBoundaries * index;
-    // let direction = 180;
 
     recalculateBoundary(currentPos, boundary, this.map, direction, res => {
       recalculatedBoundaries[index] = res;
