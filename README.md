@@ -27,6 +27,9 @@ Our project will provide users with a map overlay displaying possible distances 
 - **Backend:** Node.js/Express
 - **Frontend:** React/Javascript
 
+## Demo
+![demo](https://i.imgur.com/oaEE9mB.gif)
+
 ## UX
 ### Wireframe
 ![LoginPage](https://i.imgur.com/GVRbdna.png)
@@ -56,28 +59,25 @@ Our project will provide users with a map overlay displaying possible distances 
 
 ### Group Members & Work Breakdown
 - first weekend
-  - set up git repo
-  - complete project proposal
+  - [x] set up git repo
+  - [x] complete project proposal
 - Monday, 4/23
-  - Lyft auth
-  - login form on frontend
-    - passport library
-    - persist user info to db
-  - backend pass array of coordinate pair objects to frontend
-  - frontend assume get array of obj pairs, render map
-  - routes finished
+  - [x] Lyft auth
+  - [x] backend pass array of coordinate pair objects to frontend
+  - [x] frontend assume get array of obj pairs, render map
+  - [x] routes finished
 - Tuesday, 4/24
-  - algorithm finished
+  - [x] algorithm finished
 - Wed, 4/25
-  - build user input form
+  - [x] build user input form
 - Thurs, 4/26
-  - build map
-  - build map overlay
+  - [x] build map
+  - [x] build map overlay
 - Fri, 4/27
   - *last day to seek help from TAs*
 - Sat, 4/28
-  - app should be almost, if not already, fully-functional
+  - [x] app should be almost, if not already, fully-functional
 - Sun, 4/29
-  - testing
+  - [x] testing
 - Mon, 4/30
   - project due
