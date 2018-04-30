@@ -28,16 +28,16 @@ export const drawBoundaries = function (currentPos, boundaries, rideType) {
           this.state.newBoundary[rideType].setMap(null);
         } else {
           const color = {
-            'lyft': '#FF0000',
-            'lyft_line': '#32CD32',
-            'lyft_plus': '#ADFF2F'
+            'lyft': '#f7a0ff',
+            'lyft_plus': '#ffd691',
+            'lyft_line': '#ADFF2F'
           }
 
           const bermudaPolygon = new google.maps.Polygon({
             paths: recalculatedBoundaries,
             strokeColor: color[rideType],
-            strokeOpacity: 0.8,
-            strokeWeight: 3,
+            strokeOpacity: 0.7,
+            strokeWeight: 0.5,
             fillColor: color[rideType],
             fillOpacity: 0.35
           });
