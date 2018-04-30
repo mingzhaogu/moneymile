@@ -26,6 +26,7 @@ class Map extends React.Component {
     this.newMarker = this.newMarker.bind(this);
     this.resetMarkerPositionOnClick = this.resetMarkerPositionOnClick.bind(this);
     this.geocodeLocation = this.geocodeLocation.bind(this);
+    this.clearOverlay = this.clearOverlay.bind(this);
   }
 
   componentDidMount() {
@@ -77,11 +78,17 @@ class Map extends React.Component {
     });
   }
 
+  clearOverlay(rideType){
+    this.state.newBoundary[rideType].setMap(null);
+  }
+
   resetMarkerPositionOnClick(centerMarker){
     const newPosition = centerMarker.getPosition();
     this.geocodeLocation(newPosition);
     this.centerMap(newPosition)
   }
+
+
 
   centerMap(locationLatLng) {
     this.map.setCenter(locationLatLng);
@@ -139,6 +146,8 @@ class Map extends React.Component {
           drawBoundaries={this.drawBoundaries}
           newMarker={this.newMarker}
           map={this.map}
+          clearOverlay={this.clearOverlay}
+          centerMap={this.centerMap}
         />
       );
     } else {

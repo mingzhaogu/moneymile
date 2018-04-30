@@ -15,7 +15,7 @@ class UserInputForm extends React.Component {
       formSubmitted: false,
       boundaries: [],
       rideType: 'lyft',
-      
+
       touched: {
         dollarInput: false,
         addressInput: false,
@@ -99,7 +99,8 @@ class UserInputForm extends React.Component {
       formClassName = "user-submitted-form";
       rideSelection = <UserRideSelection
         activeType={this.state.rideType}
-        getRideType={this.getRideType}/>;
+        getRideType={this.getRideType}
+        clearOverlay={this.props.clearOverlay}/>;
     } else {
       navBar = <NavBar />;
       formName = "";

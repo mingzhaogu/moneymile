@@ -18,6 +18,7 @@ class UserRideSelection extends React.Component {
         const index = selectedRideTypes.indexOf(type);
         selectedRideTypes.splice(index, 1);
         this.setState({selected: selectedRideTypes});
+        this.props.clearOverlay(type);
       } else {
         e.currentTarget.classList.add('selected');
         selectedRideTypes.push(type);

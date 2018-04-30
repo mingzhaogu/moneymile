@@ -10,7 +10,7 @@ export const getBoundaries = function() {
   const rideType = this.state.rideType
   let directions = [];
 
-  for (let i = 0; i < 360; i+=45) {
+  for (let i = 0; i < 360; i+=20) {
     directions.push(i);
   }
 
