@@ -6,10 +6,10 @@ export const parseAddressToLatLng = function(address, callback) {
         results[0].geometry.location.lat(),
         results[0].geometry.location.lng()
       );
+      this.props.centerMap(addressLatLng);
       this.setState({ addressLatLng }, () => {
         this.getBoundaries();
       });
-      this.centerMap(addressLatLng);
     }
   });
 };

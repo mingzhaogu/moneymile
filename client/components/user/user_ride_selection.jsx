@@ -3,32 +3,33 @@ import React from 'react';
 class UserRideSelection extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      selected: ["lyft"]
-    };
+    // this.state = {
+    //   selected: ["lyft"]
+    // };
 
     this.updateType = this.updateType.bind(this);
   }
 
   updateType(type) {
-    const selectedRideTypes = this.state.selected;
+    console.log("selectedRideTypes", this.props.selectedRideTypes);
     return (e) => {
-      if (this.state.selected.includes(type)) {
+      // if (this.state.selected.includes(type)) {
+      if (this.props.selectedRideTypes.includes(type)) {
         e.currentTarget.classList.remove('selected');
-        const index = selectedRideTypes.indexOf(type);
-        selectedRideTypes.splice(index, 1);
-        this.setState({selected: selectedRideTypes});
+        // const index = selectedRideTypes.indexOf(type);
+        // selectedRideTypes.splice(index, 1);
+        // this.setState({ selected: selectedRideTypes });
+        this.props.clearOverlay(type)
       } else {
         e.currentTarget.classList.add('selected');
-        selectedRideTypes.push(type);
-        this.setState({selected: selectedRideTypes});
+        // selectedRideTypes.push(type);
+        // this.setState({selected: selectedRideTypes});
         this.props.getRideType(type);
       }
     }
   }
 
   render() {
-
     return (
       <ul className="user_ride_selection">
         <li className="selected" onClick={this.updateType("lyft")}>

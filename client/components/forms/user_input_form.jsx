@@ -15,16 +15,15 @@ class UserInputForm extends React.Component {
       formSubmitted: false,
       boundaries: [],
       rideType: 'lyft',
-      
-      touched: {
-        dollarInput: false,
-        addressInput: false,
-      },
+
+      // touched: {
+      //   dollarInput: false,
+      //   addressInput: false,
+      // },
     };
 
     this.updateInput = this.updateInput.bind(this);
     this.submitForm = this.submitForm.bind(this);
-    this.centerMap = this.centerMap.bind(this);
     this.getRideType = this.getRideType.bind(this);
 
     this.parseAddressToLatLng = LatLongTool.parseAddressToLatLng.bind(this);
@@ -36,11 +35,10 @@ class UserInputForm extends React.Component {
   }
 
   componentWillReceiveProps(newProps){
-      if (this.props.currentAddress !== newProps.currentAddress) {
-           this.setState({addressInput: newProps.currentAddress});
-      }
+    if (this.props.currentAddress !== newProps.currentAddress) {
+      this.setState({addressInput: newProps.currentAddress});
+    }
   }
-
 
   changeFormState() {
     this.refs.btn.removeAttribute("disabled");
@@ -51,13 +49,8 @@ class UserInputForm extends React.Component {
     this.refs.btn.setAttribute("disabled", "disabled");
 
     this.setState({ formSubmitted: true, boundaries: []}, () => {
-      this.parseAddressToLatLng(this.state.addressInput);
-    });
-  }
-
-  centerMap(locationLatLng) {
-    this.setState({
-      userLocation: locationLatLng
+      this.parseAddressToLatLng(this.state.addressInput,
+        (res) => this.centerMap(res));
     });
   }
 
@@ -66,7 +59,10 @@ class UserInputForm extends React.Component {
   }
 
   getRideType(type) {
-    this.setState({ rideType: type, boundaries: [] }, () => { this.getBoundaries(); });
+    console.log("getting");
+    this.setState({ rideType: type, boundaries: [] },
+      () => { this.parseAddressToLatLng(this.state.addressInput); }
+    );
   }
 
   validateDollar(amt) {
@@ -83,12 +79,10 @@ class UserInputForm extends React.Component {
     );
   }
 
-
   render() {
     if (!this.props.currentAddress) return null;
 
     const isEnabled = this.validate();
-    // const errors = this.validate(this.state.dollarInput, this.state.addressInput);
 
     let navBar = <div></div>;
     let formName;
@@ -99,7 +93,9 @@ class UserInputForm extends React.Component {
       formClassName = "user-submitted-form";
       rideSelection = <UserRideSelection
         activeType={this.state.rideType}
-        getRideType={this.getRideType}/>;
+        getRideType={this.getRideType}
+        clearOverlay={this.props.clearOverlay}
+        selectedRideTypes={this.props.selectedRideTypes} />;
     } else {
       navBar = <NavBar />;
       formName = "";

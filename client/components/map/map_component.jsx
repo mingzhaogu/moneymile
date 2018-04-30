@@ -5,6 +5,7 @@ import UserInputForm from '../forms/user_input_form';
 import FetchLocationForm from '../forms/fetch_location';
 import MapStyle from './map_style';
 import * as MapTools from '../../util/cartographic_tools';
+import * as AlgorithmLogic from '../../util/algorithm_logic';
 
 class Map extends React.Component {
   constructor(props) {
@@ -26,6 +27,8 @@ class Map extends React.Component {
     this.newMarker = this.newMarker.bind(this);
     this.resetMarkerPositionOnClick = this.resetMarkerPositionOnClick.bind(this);
     this.geocodeLocation = this.geocodeLocation.bind(this);
+    this.clearOverlay = this.clearOverlay.bind(this);
+    this.getBoundaries = AlgorithmLogic.getBoundaries.bind(this);
   }
 
   componentDidMount() {
@@ -66,7 +69,7 @@ class Map extends React.Component {
     });
   }
 
-  geocodeLocation(latLngObject){
+  geocodeLocation(latLngObject) {
     const geocoder = new google.maps.Geocoder();
     geocoder.geocode({ location: latLngObject }, (results, status) => {
       if (status === 'OK') {
@@ -77,10 +80,20 @@ class Map extends React.Component {
     });
   }
 
-  resetMarkerPositionOnClick(centerMarker){
+  clearOverlay(rideType) {
+    this.state.newBoundary[rideType].setMap(null);
+
+    const currentBoundaries = this.state.newBoundary;
+    delete currentBoundaries[rideType];
+    this.setState({ newBoundary: currentBoundaries })
+  }
+
+  resetMarkerPositionOnClick(centerMarker) {
+    this.resetMap();
     const newPosition = centerMarker.getPosition();
     this.geocodeLocation(newPosition);
     this.centerMap(newPosition)
+    // this.redrawBoundaries();
   }
 
   centerMap(locationLatLng) {
@@ -88,6 +101,26 @@ class Map extends React.Component {
     this.setState({
       userLocation: locationLatLng
     });
+    this.marker.setPosition(locationLatLng);
+  }
+
+  resetMap() {
+    if (this.state.newBoundary.lyft) {
+      this.clearOverlay("lyft");
+    }
+    if (this.state.newBoundary.lyft_plus) {
+      this.clearOverlay("lyft_plus");
+    }
+    if (this.state.newBoundary.lyft_line) {
+      this.clearOverlay("lyft_line");
+    }
+  }
+
+  redrawBoundaries() {
+    console.log("asdf", Object.keys(this.state.newBoundary));
+    Object.keys(this.state.newBoundary).forEach((rideType) => {
+      this.getBoundaries(this.state.userLocation, rideType)
+    })
   }
 
   getUserLocation() {
@@ -136,9 +169,12 @@ class Map extends React.Component {
       form = (
         <UserInputForm
           currentAddress={this.state.userAddress}
+          centerMap={this.centerMap}
           drawBoundaries={this.drawBoundaries}
+          clearOverlay={this.clearOverlay}
           newMarker={this.newMarker}
           map={this.map}
+          selectedRideTypes={Object.keys(this.state.newBoundary)}
         />
       );
     } else {

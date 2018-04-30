@@ -2,15 +2,15 @@ import async from 'async';
 import axios from 'axios';
 require('dotenv').config();
 
-export const getBoundaries = function() {
+export const getBoundaries = function(userLocation, type) {
   const amount = parseInt(this.state.dollarInput);
   const stdDev = 2;
   const defaultRadiusInMeters = 32000;
-  const currentLatLng = this.state.addressLatLng;
-  const rideType = this.state.rideType
+  const currentLatLng = userLocation || this.state.addressLatLng;
+  const rideType = type || this.state.rideType
   let directions = [];
 
-  for (let i = 0; i < 360; i+=45) {
+  for (let i = 0; i < 360; i += 45) {
     directions.push(i);
   }
 
@@ -61,10 +61,12 @@ export const landOrWater = function (position, map, callback) {
     canvas.getContext('2d').drawImage(image, 0, 0, image.width, image.height);
     const pixelData = canvas.getContext('2d').getImageData(0, 0, 1, 1).data;
 
-    if(pixelData[0] > 160 && pixelData[0] < 181 && pixelData[1] > 190 && pixelData[1] < 210)
+    if (pixelData[0] > 160 && pixelData[0] < 181 && pixelData[1] > 190 && pixelData[1] < 210) {
       callback('water');
-    else
+    }
+    else {
       callback('land');
+    }
   }
 }
 
@@ -98,7 +100,6 @@ export const rideEstimate = async function(start, end, amount, stdDev, index, nu
           () => {
             if (Object.keys(this.state.boundaries).length === numDirections) {
               this.props.drawBoundaries(start, this.state.boundaries, rideType);
-
               this.changeFormState();
             }
           });
@@ -110,7 +111,6 @@ export const rideEstimate = async function(start, end, amount, stdDev, index, nu
         history.push(newEnd);
         this.rideEstimate(start, newEnd, amount, stdDev, index, numDirections, direction, history, rideType);
       }
-
     } else {
       const googleGeometry = google.maps.geometry.spherical;
       const newDistance = googleGeometry.computeDistanceBetween(start, end) / 2;
