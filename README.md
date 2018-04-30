@@ -28,7 +28,7 @@ Our project will provide users with a map overlay displaying possible distances 
 - **Frontend:** React/Javascript
 
 ## Demo
-![demo](https://i.imgur.com/dJfInGB.gif)
+![demo](https://i.imgur.com/oaEE9mB.gif)
 
 ## UX
 ### Wireframe
