@@ -23,52 +23,6 @@ export const getBoundaries = function(userLocation, type) {
   });
 }
 
-export const recalculateBoundary = function (position, boundary, map, direction, callback) {
-  landOrWater(boundary, map, res => {
-    if (res === 'land')
-      callback(boundary);
-    else {
-      const googleGeometry = google.maps.geometry.spherical;
-      const midPoint = googleGeometry.computeDistanceBetween(boundary, position) / 2;
-
-      if (midPoint <= 250) {
-        callback(boundary);
-      } else {
-        const midLatLng = new googleGeometry.computeOffset(position, midPoint, direction);
-        landOrWater(midLatLng, map, res => {
-          if (res === 'water')
-            recalculateBoundary(position, midLatLng, map, direction, callback);
-          else
-            recalculateBoundary(midLatLng, boundary, map, direction, callback);
-        })
-      }
-    }
-  })
-}
-
-export const landOrWater = function (position, map, callback) {
-  const mapUrl = `https://maps.googleapis.com/maps/api/staticmap?center=${position.lat()},${position.lng()}&zoom=${map.getZoom()}&size=1x1&maptype=roadmap&key=${process.env.GOOGLE_API_KEY}`;
-  const canvas = document.createElement('canvas');
-  const ctx = canvas.getContext('2d');
-
-  const image = new Image();
-  image.crossOrigin = "Anonymous";
-  image.src = mapUrl;
-
-  image.onload = () => {
-    canvas.width = image.width;
-    canvas.height = image.height;
-    canvas.getContext('2d').drawImage(image, 0, 0, image.width, image.height);
-    const pixelData = canvas.getContext('2d').getImageData(0, 0, 1, 1).data;
-
-    if (pixelData[0] > 160 && pixelData[0] < 181 && pixelData[1] > 190 && pixelData[1] < 210) {
-      callback('water');
-    }
-    else {
-      callback('land');
-    }
-  }
-}
 
 export const rideEstimate = async function(start, end, amount, stdDev, index, numDirections, direction, history, rideType) {
   let result;
@@ -120,3 +74,51 @@ export const rideEstimate = async function(start, end, amount, stdDev, index, nu
     }
   }
 }
+
+
+// export const recalculateBoundary = function (position, boundary, map, direction, callback) {
+//   landOrWater(boundary, map, res => {
+//     if (res === 'land')
+//     callback(boundary);
+//     else {
+//       const googleGeometry = google.maps.geometry.spherical;
+//       const midPoint = googleGeometry.computeDistanceBetween(boundary, position) / 2;
+//
+//       if (midPoint <= 250) {
+//         callback(boundary);
+//       } else {
+//         const midLatLng = new googleGeometry.computeOffset(position, midPoint, direction);
+//         landOrWater(midLatLng, map, res => {
+//           if (res === 'water')
+//           recalculateBoundary(position, midLatLng, map, direction, callback);
+//           else
+//           recalculateBoundary(midLatLng, boundary, map, direction, callback);
+//         })
+//       }
+//     }
+//   })
+// }
+//
+// export const landOrWater = function (position, map, callback) {
+//   const mapUrl = `https://maps.googleapis.com/maps/api/staticmap?center=${position.lat()},${position.lng()}&zoom=${map.getZoom()}&size=1x1&maptype=roadmap&key=${process.env.GOOGLE_API_KEY}`;
+//   const canvas = document.createElement('canvas');
+//   const ctx = canvas.getContext('2d');
+//
+//   const image = new Image();
+//   image.crossOrigin = "Anonymous";
+//   image.src = mapUrl;
+//
+//   image.onload = () => {
+//     canvas.width = image.width;
+//     canvas.height = image.height;
+//     canvas.getContext('2d').drawImage(image, 0, 0, image.width, image.height);
+//     const pixelData = canvas.getContext('2d').getImageData(0, 0, 1, 1).data;
+//
+//     if (pixelData[0] > 160 && pixelData[0] < 181 && pixelData[1] > 190 && pixelData[1] < 210) {
+//       callback('water');
+//     }
+//     else {
+//       callback('land');
+//     }
+//   }
+// }

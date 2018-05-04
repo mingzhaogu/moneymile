@@ -24,7 +24,7 @@ class UserRideSelection extends React.Component {
         e.currentTarget.classList.add('selected');
         // selectedRideTypes.push(type);
         // this.setState({selected: selectedRideTypes});
-        this.props.getRideType(type);
+        // this.props.getRideType(type);
       }
     }
   }
