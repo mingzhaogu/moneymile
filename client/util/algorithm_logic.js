@@ -2,12 +2,12 @@ import async from 'async';
 import axios from 'axios';
 require('dotenv').config();
 
-export const getBoundaries = function(userLocation, type) {
-  const amount = parseInt(this.state.dollarInput);
+export const getBoundaries = function(dollarInput, userLocation, type) {
+  const amount = parseInt(dollarInput);
   const stdDev = 2;
   const defaultRadiusInMeters = 32000;
-  const currentLatLng = userLocation || this.state.addressLatLng;
-  const rideType = type || this.state.rideType
+  const currentLatLng = userLocation;
+  const rideType = type;
   let directions = [];
 
   for (let i = 0; i < 360; i += 45) {
@@ -16,9 +16,21 @@ export const getBoundaries = function(userLocation, type) {
 
   const googleGeometry = google.maps.geometry.spherical;
 
+  // async.eachOf(directions, (direction, index, callback) => {
+  //   const endLatLng = new googleGeometry.computeOffset(currentLatLng, defaultRadiusInMeters, direction);
+  //   this.rideEstimate(currentLatLng, endLatLng, amount, stdDev, index, directions.length, direction, [], 'lyft');
+  //   callback(null);
+  // });
+  //
+  // async.eachOf(directions, (direction, index, callback) => {
+  //   const endLatLng = new googleGeometry.computeOffset(currentLatLng, defaultRadiusInMeters, direction);
+  //   this.rideEstimate(currentLatLng, endLatLng, amount, stdDev, index, directions.length, direction, [], 'lyft_plus');
+  //   callback(null);
+  // });
+
   async.eachOf(directions, (direction, index, callback) => {
     const endLatLng = new googleGeometry.computeOffset(currentLatLng, defaultRadiusInMeters, direction);
-    this.rideEstimate(currentLatLng, endLatLng, amount, stdDev, index, directions.length, direction, [], rideType);
+    this.rideEstimate(currentLatLng, endLatLng, amount, stdDev, index, directions.length, direction, [], type);
     callback(null);
   });
 }
@@ -47,14 +59,16 @@ export const rideEstimate = async function(start, end, amount, stdDev, index, nu
 
     if (result.data.cost_estimates[0].can_request_ride) {
       if ((estimate < (amount + stdDev) && estimate > (amount - stdDev)) ||
-      history.length > 8) {
-        let newBoundaries = Object.assign({}, this.state.boundaries);
+      history.length > 4) {
+        const rideBoundaries = `${rideType}Boundaries`
+        let newBoundaries = Object.assign({}, this.state[rideBoundaries]);
         newBoundaries[index] = end;
-        this.setState({ boundaries: newBoundaries },
+        this.setState({[rideBoundaries]: newBoundaries },
           () => {
-            if (Object.keys(this.state.boundaries).length === numDirections) {
-              this.props.drawBoundaries(start, this.state.boundaries, rideType);
-              this.changeFormState();
+            if (Object.keys(this.state[rideBoundaries]).length === numDirections) {
+              console.log(rideBoundaries)
+              this.drawBoundaries(start, this.state[rideBoundaries], rideType);
+              // this.changeFormState();
             }
           });
       } else {

@@ -9,9 +9,9 @@ export const drawBoundaries = function(currentPos, boundaries, rideType) {
     boundariesArray.push(boundaries[i]);
   }
 
-  if (this.state.newBoundary[rideType]) {
-    this.state.newBoundary[rideType].setMap(null);
-  }
+  // if (this.state.newBoundary[rideType]) {
+  //   this.state.newBoundary[rideType].setMap(null);
+  // }
 
   const color = {
     lyft: '#f7a0ff',

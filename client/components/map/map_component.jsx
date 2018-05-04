@@ -29,6 +29,7 @@ class Map extends React.Component {
     this.geocodeLocation = this.geocodeLocation.bind(this);
     this.clearOverlay = this.clearOverlay.bind(this);
     this.getBoundaries = AlgorithmLogic.getBoundaries.bind(this);
+    this.rideEstimate = AlgorithmLogic.rideEstimate.bind(this);
   }
 
   componentDidMount() {
@@ -93,7 +94,6 @@ class Map extends React.Component {
     const newPosition = centerMarker.getPosition();
     this.geocodeLocation(newPosition);
     this.centerMap(newPosition)
-    // this.redrawBoundaries();
   }
 
   centerMap(locationLatLng) {
@@ -170,6 +170,7 @@ class Map extends React.Component {
         <UserInputForm
           currentAddress={this.state.userAddress}
           centerMap={this.centerMap}
+          getBoundaries={this.getBoundaries}
           drawBoundaries={this.drawBoundaries}
           clearOverlay={this.clearOverlay}
           newMarker={this.newMarker}

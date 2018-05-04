@@ -27,8 +27,8 @@ class UserInputForm extends React.Component {
     this.getRideType = this.getRideType.bind(this);
 
     this.parseAddressToLatLng = LatLongTool.parseAddressToLatLng.bind(this);
-    this.getBoundaries = AlgorithmLogic.getBoundaries.bind(this);
-    this.rideEstimate = AlgorithmLogic.rideEstimate.bind(this);
+    // this.getBoundaries = AlgorithmLogic.getBoundaries.bind(this);
+    // this.rideEstimate = AlgorithmLogic.rideEstimate.bind(this);
 
     this.changeFormState = this.changeFormState.bind(this);
     this.validate = this.validate.bind(this);
@@ -146,7 +146,7 @@ class UserInputForm extends React.Component {
             ref="btn"
             onClick={this.submitForm}></button>
         </form>
-        {rideSelection}
+      
       </React.Fragment>
     );
   }

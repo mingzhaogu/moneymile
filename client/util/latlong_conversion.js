@@ -8,7 +8,12 @@ export const parseAddressToLatLng = function(address, callback) {
       );
       this.props.centerMap(addressLatLng);
       this.setState({ addressLatLng }, () => {
-        this.getBoundaries();
+        const dollarInput = this.state.dollarInput
+        const userLocation = this.state.addressLatLng
+        const type = this.state.rideType
+        this.props.getBoundaries(dollarInput, userLocation, 'lyft')
+        this.props.getBoundaries(dollarInput, userLocation, 'lyft_line')
+        this.props.getBoundaries(dollarInput, userLocation, 'lyft_plus') ;
       });
     }
   });
