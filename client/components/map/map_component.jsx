@@ -32,6 +32,10 @@ class Map extends React.Component {
     this.rideEstimate = AlgorithmLogic.rideEstimate.bind(this);
   }
 
+  componentDidUpdate(){
+    console.log(this.state)
+  }
+
   componentDidMount() {
     this.initializeMap();
     this.setState({ status: 'FETCHING CURRENT LOCATION' });
@@ -85,7 +89,7 @@ class Map extends React.Component {
     this.state.newBoundary[rideType].setMap(null);
 
     const currentBoundaries = this.state.newBoundary;
-    delete currentBoundaries[rideType];
+    // delete currentBoundaries[rideType];
     this.setState({ newBoundary: currentBoundaries })
   }
 
@@ -186,6 +190,7 @@ class Map extends React.Component {
       <div className="map-component">
         <div ref="renderedMap" id="map-container" />
         {form}
+        
       </div>
     );
   }

@@ -10,23 +10,11 @@ export const getBoundaries = function(dollarInput, userLocation, type) {
   const rideType = type;
   let directions = [];
 
-  for (let i = 0; i < 360; i += 45) {
+  for (let i = 0; i < 360; i += 20) {
     directions.push(i);
   }
 
   const googleGeometry = google.maps.geometry.spherical;
-
-  // async.eachOf(directions, (direction, index, callback) => {
-  //   const endLatLng = new googleGeometry.computeOffset(currentLatLng, defaultRadiusInMeters, direction);
-  //   this.rideEstimate(currentLatLng, endLatLng, amount, stdDev, index, directions.length, direction, [], 'lyft');
-  //   callback(null);
-  // });
-  //
-  // async.eachOf(directions, (direction, index, callback) => {
-  //   const endLatLng = new googleGeometry.computeOffset(currentLatLng, defaultRadiusInMeters, direction);
-  //   this.rideEstimate(currentLatLng, endLatLng, amount, stdDev, index, directions.length, direction, [], 'lyft_plus');
-  //   callback(null);
-  // });
 
   async.eachOf(directions, (direction, index, callback) => {
     const endLatLng = new googleGeometry.computeOffset(currentLatLng, defaultRadiusInMeters, direction);

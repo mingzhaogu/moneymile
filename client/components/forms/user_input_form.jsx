@@ -3,6 +3,7 @@ import NavBar from '../ui/nav';
 import UserRideSelection from '../user/user_ride_selection';
 import * as LatLongTool from '../../util/latlong_conversion';
 import * as AlgorithmLogic from '../../util/algorithm_logic';
+import async from 'async';
 
 class UserInputForm extends React.Component {
   constructor(props) {
@@ -25,7 +26,7 @@ class UserInputForm extends React.Component {
     this.updateInput = this.updateInput.bind(this);
     this.submitForm = this.submitForm.bind(this);
     this.getRideType = this.getRideType.bind(this);
-
+    this.beginSearch = this.beginSearch.bind(this);
     this.parseAddressToLatLng = LatLongTool.parseAddressToLatLng.bind(this);
     // this.getBoundaries = AlgorithmLogic.getBoundaries.bind(this);
     // this.rideEstimate = AlgorithmLogic.rideEstimate.bind(this);
@@ -47,11 +48,17 @@ class UserInputForm extends React.Component {
   submitForm(e) {
     e.preventDefault();
     this.refs.btn.setAttribute("disabled", "disabled");
+    this.setState({ formSubmitted: true, boundaries: []})
+    this.parseAddressToLatLng(this.state.addressInput, this.beginSearch);
+  }
 
-    this.setState({ formSubmitted: true, boundaries: []}, () => {
-      this.parseAddressToLatLng(this.state.addressInput,
-        (res) => this.centerMap(res));
-    });
+  beginSearch(){
+    const dollarInput = this.state.dollarInput
+    const userLocation = this.state.addressLatLng
+    this.props.getBoundaries(dollarInput, userLocation, 'lyft');
+    this.props.getBoundaries(dollarInput, userLocation, 'lyft_line');
+    this.props.getBoundaries(dollarInput, userLocation, 'lyft_plus');
+    this.changeFormState()
   }
 
   updateInput(field) {
@@ -146,7 +153,7 @@ class UserInputForm extends React.Component {
             ref="btn"
             onClick={this.submitForm}></button>
         </form>
-      
+
       </React.Fragment>
     );
   }
