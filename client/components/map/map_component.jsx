@@ -6,6 +6,7 @@ import FetchLocationForm from '../forms/fetch_location';
 import MapStyle from './map_style';
 import * as MapTools from '../../util/cartographic_tools';
 import * as AlgorithmLogic from '../../util/algorithm_logic';
+import UserRideSelection from '../user/user_ride_selection';
 
 class Map extends React.Component {
   constructor(props) {
@@ -17,7 +18,8 @@ class Map extends React.Component {
       userLocation: null,
       userAddress: null,
       status: '',
-      newBoundary: {}
+      newBoundary: {},
+
     };
 
     this.getUserLocation = this.getUserLocation.bind(this);
@@ -114,10 +116,15 @@ class Map extends React.Component {
     if (this.state.newBoundary.lyft_line) {
       this.clearOverlay("lyft_line");
     }
+
+    let elements = document.getElementsByClassName('selected');
+    while(elements.length > 0){
+      elements[0].classList.remove('selected');
+    }
   }
 
   redrawBoundaries() {
-    console.log("asdf", Object.keys(this.state.newBoundary));
+    // console.log("asdf", Object.keys(this.state.newBoundary));
     Object.keys(this.state.newBoundary).forEach((rideType) => {
       this.getBoundaries(this.state.userLocation, rideType)
     })
@@ -165,13 +172,13 @@ class Map extends React.Component {
 
   render() {
     let form;
+    let rideSelection;
     if (this.state.userAddress) {
       form = (
         <UserInputForm
           currentAddress={this.state.userAddress}
           centerMap={this.centerMap}
           drawBoundaries={this.drawBoundaries}
-          clearOverlay={this.clearOverlay}
           newMarker={this.newMarker}
           map={this.map}
           selectedRideTypes={Object.keys(this.state.newBoundary)}
@@ -185,6 +192,7 @@ class Map extends React.Component {
       <div className="map-component">
         <div ref="renderedMap" id="map-container" />
         {form}
+
       </div>
     );
   }

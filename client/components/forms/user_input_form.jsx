@@ -15,7 +15,6 @@ class UserInputForm extends React.Component {
       formSubmitted: false,
       boundaries: [],
       rideType: 'lyft',
-
       // touched: {
       //   dollarInput: false,
       //   addressInput: false,
@@ -59,7 +58,6 @@ class UserInputForm extends React.Component {
   }
 
   getRideType(type) {
-    console.log("getting");
     this.setState({ rideType: type, boundaries: [] },
       () => { this.parseAddressToLatLng(this.state.addressInput); }
     );
