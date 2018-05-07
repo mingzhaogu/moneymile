@@ -11,7 +11,7 @@ class UserRideSelection extends React.Component {
   }
 
   updateType(type) {
-    console.log("selectedRideTypes", this.props.selectedRideTypes);
+    // console.log("selectedRideTypes", this.props.selectedRideTypes);
     return (e) => {
       // if (this.state.selected.includes(type)) {
       if (this.props.selectedRideTypes.includes(type)) {

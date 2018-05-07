@@ -15,7 +15,7 @@ export const drawBoundaries = function (currentPos, boundaries, rideType) {
     let direction = 360 / numBoundaries * index;
 
     let newRideType = rideType;
-    console.log("rideType", rideType);
+    // console.log("rideType", rideType);
     recalculateBoundary(currentPos, boundary, this.map, direction, res => {
 
       recalculatedBoundaries[index] = res;

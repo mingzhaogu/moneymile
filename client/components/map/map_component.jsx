@@ -124,7 +124,6 @@ class Map extends React.Component {
   }
 
   redrawBoundaries() {
-    // console.log("asdf", Object.keys(this.state.newBoundary));
     Object.keys(this.state.newBoundary).forEach((rideType) => {
       this.getBoundaries(this.state.userLocation, rideType)
     })
