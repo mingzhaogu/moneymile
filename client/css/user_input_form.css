@@ -112,6 +112,11 @@ button:disabled{
   .user-input-form {
     max-width: 375px;
   }
+
+  .submit {
+    width: 30px;
+    height: 30px;
+  }
 }
 
 /* ipad */

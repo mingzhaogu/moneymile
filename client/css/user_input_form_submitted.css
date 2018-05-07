@@ -88,7 +88,9 @@
   }
 
   #submitted.submit {
+    padding-left: 10px;
+    margin-top: 5px;
     width: 45px;
-    height: 33px;
+    height: 34px;
   }
 }

@@ -11,7 +11,7 @@ class UserRideSelection extends React.Component {
   }
 
   updateType(type) {
-    console.log("selectedRideTypes", this.props.selectedRideTypes);
+    // console.log("selectedRideTypes", this.props.selectedRideTypes);
     return (e) => {
       // if (this.state.selected.includes(type)) {
       if (this.props.selectedRideTypes.includes(type)) {
@@ -32,7 +32,7 @@ class UserRideSelection extends React.Component {
   render() {
     return (
       <ul className="user_ride_selection">
-        <li className="selected" onClick={this.updateType("lyft")}>
+        <li id="default-select" className="selected" onClick={this.updateType("lyft")}>
           <img className="car-icon" src="https://i.imgur.com/1PtENWQ.png"/>
           <p>Lyft</p>
         </li>

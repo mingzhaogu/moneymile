@@ -15,10 +15,6 @@ class UserInputForm extends React.Component {
       formSubmitted: false,
       boundaries: [],
       rideType: 'lyft',
-      // touched: {
-      //   dollarInput: false,
-      //   addressInput: false,
-      // },
     };
 
     this.updateInput = this.updateInput.bind(this);
@@ -46,6 +42,19 @@ class UserInputForm extends React.Component {
   submitForm(e) {
     e.preventDefault();
     this.refs.btn.setAttribute("disabled", "disabled");
+
+    let elements = document.getElementsByClassName('selected');
+    while(elements.length > 0) {
+      elements[0].classList.remove('selected');
+    }
+
+    if (this.state.formSubmitted) {
+      this.props.resetMap();
+      this.setState({ rideType: 'lyft', boundaries: [] }, () => {
+        let dft = document.getElementById('default-select');
+        dft.classList.add("selected");
+      });
+    }
 
     this.setState({ formSubmitted: true, boundaries: []}, () => {
       this.parseAddressToLatLng(this.state.addressInput,
