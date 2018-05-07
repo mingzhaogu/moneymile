@@ -31,6 +31,7 @@ class Map extends React.Component {
     this.geocodeLocation = this.geocodeLocation.bind(this);
     this.clearOverlay = this.clearOverlay.bind(this);
     this.getBoundaries = AlgorithmLogic.getBoundaries.bind(this);
+    this.resetMap = this.resetMap.bind(this);
   }
 
   componentDidMount() {
@@ -177,6 +178,7 @@ class Map extends React.Component {
         <UserInputForm
           currentAddress={this.state.userAddress}
           centerMap={this.centerMap}
+          resetMap={this.resetMap}
           drawBoundaries={this.drawBoundaries}
           newMarker={this.newMarker}
           map={this.map}

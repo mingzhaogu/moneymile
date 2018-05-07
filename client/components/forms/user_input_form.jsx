@@ -47,10 +47,13 @@ class UserInputForm extends React.Component {
     while(elements.length > 0) {
       elements[0].classList.remove('selected');
     }
-    
+
     if (this.state.formSubmitted) {
-      let dft = document.getElementById('default-select');
-      dft.classList.add("selected");
+      this.props.resetMap();
+      this.setState({ rideType: 'lyft', boundaries: [] }, () => {
+        let dft = document.getElementById('default-select');
+        dft.classList.add("selected");
+      });
     }
 
     this.setState({ formSubmitted: true, boundaries: []}, () => {
