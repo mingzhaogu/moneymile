@@ -32,7 +32,7 @@ class UserRideSelection extends React.Component {
   render() {
     return (
       <ul className="user_ride_selection">
-        <li className="selected" onClick={this.updateType("lyft")}>
+        <li id="default-select" className="selected" onClick={this.updateType("lyft")}>
           <img className="car-icon" src="https://i.imgur.com/1PtENWQ.png"/>
           <p>Lyft</p>
         </li>
