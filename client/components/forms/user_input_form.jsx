@@ -129,7 +129,6 @@ class UserInputForm extends React.Component {
               max="500"
               onChange={this.updateInput("dollarInput")}
             />
-
           </div>
 
           <div id={formName}

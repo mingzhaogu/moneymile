@@ -1,83 +1,51 @@
-## Background and Overview
-Our project will provide users with a map overlay displaying possible distances they can travel given specific dollar amount inputted into Lyft. We have confirmed that Lyft will allow for 10,000 API calls a minute to their [Ride Estimates endpoint](https://developer.lyft.com/reference#availability-ride-estimates).
+<h1>Table of Contents</h1>
+<p>
+  <a href="#Introduction">Introduction</a> •
+  <a href="#Features">Features</a> •
+  <a href="#Technologies">Technologies</a> •
+  <a href="#how-to-use">How To Use</a> •
+  <a href="#future-directions">Future Directions</a>
+</p>
 
-## Functionality and MVP
-- Accepts User Inputs:
-  - User location (pre-pulls from GPS)
-  - Dollar amount
-  - Design distance per inputted dollar amount algorithm
-  - return outer bound
-- Displays travel boundaries
-  - Build custom Google map that provides visual representation of how “far dollar will go”
-- Lyft OAuth login
-  - Provide increased levels of predictive accuracy
-- Outer Travel Boundary Algorithm
-  - Computes max distance from epicenter user can travel, based upon user $$ input
+<h2>Introduction</h2>
 
-## Technologies and Technical Challenges
-- MongoDB
-- Express
-- Node.js
-- React
-- Google Maps API
-- Google Geometry API
-- Lyft API
-- Uber API (possibly for small price tweaks)
-- **Challenges:** learning MERN Stack, establishing a working/feasible algorithm
-- **Backend:** Node.js/Express
-- **Frontend:** React/Javascript
+Welcome to MoneyMile, a Lyft API ride estimates application.  The project will provide users a map matrix representing possible distances they can travel given a dollar amount and ride type selection.  Users will be able to view between Lyft, Lyft Plus, and Lyft Line ride types.
 
-## Demo
-![demo](https://i.imgur.com/oaEE9mB.gif)
+<h2>Features</h2>
 
-## UX
-### Wireframe
-![LoginPage](https://i.imgur.com/GVRbdna.png)
+* Algorithmic calculation for map matrix based on user dollar input and ride type selection
+* Interactive map to update, modify, and calculate distance boundaries  
+* Lyft API integration for ride estimates and ride types
+* Responsive UI/UX design
+* Snap to land algorithm to ensure bounds are displayed within land constraints
 
-### Frontend Interface
-- We will first implement calls to Lyft to gather ride request data to construct a distance matrix using [insert what we using here]
-  - Array of valid destination lat/long → google.maps.geometry.encoding → Google Maps Distance Matrix API
-- We will give users the option to login as guest or using a Lyft login for more accurate pricing data.
-- Users will have the ability to allow our application to use their current location or manually input a location to be used in our distance algorithm.
-- Users will input a dollar amount into an input field for distance algorithm calculations.
+<img width="600" height="400" alt="userform" src="https://i.imgur.com/aY8X7DH.jpg">
 
-### Backend Interface
-- Our backend will be using a Node.js server to make asynchronous requests to the Lyft API to gather pricing data
-- We will be using the pricing data to construct an algorithm used to create markers which will be utilized to construct a distance matrix using [insert what we using here]
-- We will be using Lyft API for user credentials to establish currentUser
 
-## Project Flowchart
-![](https://i.imgur.com/ycITzwL.png)
+<img width="600" height="400" alt="userform" src="https://i.imgur.com/VgIgqKa.png">
 
-## Timeline
-### Things Accomplished Over the Weekend
-- [x] Set up MERN stack framework
-- [x] Researched Lyft and Uber API and identified request limitations
-- [x] Researched MongoDB database collections and NoSQL databases
-- [x] Researched Google APIs, and which ones we will need to use
-- [x] Familiarize ourselves with Git workflow
+<h2>Technologies</h2>
 
-### Group Members & Work Breakdown
-- first weekend
-  - [x] set up git repo
-  - [x] complete project proposal
-- Monday, 4/23
-  - [x] Lyft auth
-  - [x] backend pass array of coordinate pair objects to frontend
-  - [x] frontend assume get array of obj pairs, render map
-  - [x] routes finished
-- Tuesday, 4/24
-  - [x] algorithm finished
-- Wed, 4/25
-  - [x] build user input form
-- Thurs, 4/26
-  - [x] build map
-  - [x] build map overlay
-- Fri, 4/27
-  - *last day to seek help from TAs*
-- Sat, 4/28
-  - [x] app should be almost, if not already, fully-functional
-- Sun, 4/29
-  - [x] testing
-- Mon, 4/30
-  - project due
+* Lyft API
+* React.js
+* Node.js
+* Google Maps API
+* Google Static Map API
+* Google Geometry API
+* Express Framework
+
+<h2>How To Use</h2>
+
+* Allow fetching of current user location
+* Input dollar amount into calculation form
+* Allow processing time to calculate matrix boundaries
+* Use toolbar to toggle boundary matrices for different ride types
+
+
+
+<h2>Future Directions</h2>
+The current state of the application only allows a visual representation of possible distances given a dollar amount. There are various applications and API's available that can give our application more features including but not limited to the following:
+* Closest restaurants within matrix proximity using Yelp API
+* Making Lyft ride ride requests directly from the application
+* Incorporate Uber API to compare ride estimates
+* Allowing users to change standard deviations to change accuracy based on preference
