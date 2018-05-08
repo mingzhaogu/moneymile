@@ -1,0 +1,34 @@
+#loading {
+  opacity: 0.5;
+  background-color: black;
+  position:fixed;
+  width:100%;
+  height:100%;
+  top:0px;
+  left:0px;
+  z-index: 999;
+}
+
+#loading-text {
+  opacity: 1.0;
+  font-family: 'Source Code Pro', monospace;
+  font-size: 16px;
+  color: #e247ed;
+  font-weight: 600;
+  text-align: center;
+  z-index: 1000;
+}
+
+@media only screen and (min-width: 375px) {
+  #loading-text {
+    font-size: 16px;
+    margin-top: 30vh;
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  #loading-text {
+    font-size: 45px;
+    margin-top: 30vh;
+  }
+}

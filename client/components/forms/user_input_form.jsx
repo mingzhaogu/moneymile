@@ -41,6 +41,7 @@ class UserInputForm extends React.Component {
 
   submitForm(e) {
     e.preventDefault();
+    this.props.loadingMount();
     this.refs.btn.setAttribute("disabled", "disabled");
 
     let elements = document.getElementsByClassName('selected');
@@ -56,7 +57,7 @@ class UserInputForm extends React.Component {
       });
     }
 
-    this.setState({ formSubmitted: true, boundaries: []}, () => {
+    this.setState({formSubmitted: true, boundaries: []}, () => {
       this.parseAddressToLatLng(this.state.addressInput,
         (res) => this.centerMap(res));
     });
@@ -67,6 +68,7 @@ class UserInputForm extends React.Component {
   }
 
   getRideType(type) {
+    this.props.loadingMount();
     this.setState({ rideType: type, boundaries: [] },
       () => { this.parseAddressToLatLng(this.state.addressInput); }
     );
@@ -88,7 +90,6 @@ class UserInputForm extends React.Component {
 
   render() {
     if (!this.props.currentAddress) return null;
-
     const isEnabled = this.validate();
 
     let navBar = <div></div>;
