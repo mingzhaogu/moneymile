@@ -179,6 +179,7 @@ class Map extends React.Component {
           currentAddress={this.state.userAddress}
           centerMap={this.centerMap}
           resetMap={this.resetMap}
+          clearOverlay={this.clearOverlay}
           drawBoundaries={this.drawBoundaries}
           newMarker={this.newMarker}
           map={this.map}
