@@ -19,10 +19,10 @@ Welcome to MoneyMile, a Lyft API ride estimates application.  The project will p
 * Responsive UI/UX design
 * Snap to land algorithm to ensure bounds are displayed within land constraints
 
+<img width="600" height="400" alt="userform" src="https://i.imgur.com/VgIgqKa.png">
+
 <img width="600" height="400" alt="userform" src="https://i.imgur.com/aY8X7DH.jpg">
 
-
-<img width="600" height="400" alt="userform" src="https://i.imgur.com/VgIgqKa.png">
 
 <h2>Technologies</h2>
 
@@ -34,6 +34,7 @@ Welcome to MoneyMile, a Lyft API ride estimates application.  The project will p
 * Google Geometry API
 * Express Framework
 
+
 <h2>How To Use</h2>
 
 * Allow fetching of current user location
@@ -42,9 +43,9 @@ Welcome to MoneyMile, a Lyft API ride estimates application.  The project will p
 * Use toolbar to toggle boundary matrices for different ride types
 
 
-
 <h2>Future Directions</h2>
 The current state of the application only allows a visual representation of possible distances given a dollar amount. There are various applications and API's available that can give our application more features including but not limited to the following:
+
 * Closest restaurants within matrix proximity using Yelp API
 * Making Lyft ride ride requests directly from the application
 * Incorporate Uber API to compare ride estimates
