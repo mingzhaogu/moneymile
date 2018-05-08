@@ -96,6 +96,7 @@ class UserInputForm extends React.Component {
     let formName;
     let formClassName;
     let rideSelection;
+    let infoContainer;
     if (this.state.formSubmitted) {
       formName = "submitted";
       formClassName = "user-submitted-form";
@@ -104,11 +105,18 @@ class UserInputForm extends React.Component {
         getRideType={this.getRideType}
         clearOverlay={this.props.clearOverlay}
         selectedRideTypes={this.props.selectedRideTypes} />;
+      infoContainer = "";
     } else {
       navBar = <NavBar />;
       formName = "";
       formClassName = "user-input-form";
+      infoContainer =
+        <div className="info-container">
+          <p>Welcome to MoneyMile, a Lyft API ride estimates application.  Input a dollar amount between $10 - $400 into the form above and we'll calculate
+            a matrix showing how far you can go in your next Lyft ride request!</p>
+        </div>;
     }
+
 
     return (
       <React.Fragment>
@@ -151,9 +159,12 @@ class UserInputForm extends React.Component {
             disabled={!isEnabled}
             className="submit"
             ref="btn"
-            onClick={this.submitForm}></button>
+            onClick={this.submitForm}>
+          </button>
+          {infoContainer}
         </form>
         {rideSelection}
+
       </React.Fragment>
     );
   }
