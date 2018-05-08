@@ -91,13 +91,13 @@ form div {
   margin-top: 15px;
 }
 
-/* .input-error {
-  background-color: rgba(68, 31, 84, 0.2);
-  border: none;
+.info-container {
+  font-family: 'Source Code Pro', monospace;
+  color: #e247ed;
+  font-size: 12px;
   text-align: center;
-  width: 100%;
-  color: white;
-} */
+  line-height: 2.0;
+}
 
 button:disabled{
   opacity: 0.2;
@@ -117,10 +117,19 @@ button:disabled{
     width: 30px;
     height: 30px;
   }
+
+  .info-container {
+    font-size: 12px;
+  }
 }
 
 /* ipad */
 @media only screen and (min-width: 768px) {
+
+  .info-container {
+    font-size: 14px;
+  }
+
   .user-input-form {
     min-width: 520px;
     font-size: 34px;
@@ -158,44 +167,3 @@ button:disabled{
   }
 
 }
-
-
-/* @media (min-width: 340px) {
-  form {
-    font-size: 22px;
-  }
-
-  .dollar-input,
-  .address-input {
-    font-size: 18px;
-  }
-
-  .user-submitted-form {
-    font-size: 14px;
-  }
-
-  #submitted.dollar-input,
-  #submitted.address-input {
-    font-size: 14px;
-  }
-}
-
-@media (min-width: 370px) {
-  form {
-    font-size: 24px;
-  }
-
-  .dollar-input,
-  .address-input {
-    font-size: 20px;
-  }
-
-  .user-submitted-form {
-    font-size: 14px;
-  }
-
-  #submitted.dollar-input,
-  #submitted.address-input {
-    font-size: 14px;
-  }
-} */
