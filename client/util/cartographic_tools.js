@@ -45,7 +45,7 @@ export const drawBoundaries = function (currentPos, boundaries, rideType) {
 
           let newBoundary = this.state.newBoundary;
           newBoundary[rideType] = bermudaPolygon;
-          this.setState({ newBoundary });
+          this.setState({ newBoundary, loading: false });
 
           const bounds = new google.maps.LatLngBounds();
           recalculatedBoundaries.forEach(coord => bounds.extend(coord));

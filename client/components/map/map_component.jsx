@@ -19,7 +19,7 @@ class Map extends React.Component {
       userAddress: null,
       status: '',
       newBoundary: {},
-
+      loading: false
     };
 
     this.getUserLocation = this.getUserLocation.bind(this);
@@ -32,12 +32,17 @@ class Map extends React.Component {
     this.clearOverlay = this.clearOverlay.bind(this);
     this.getBoundaries = AlgorithmLogic.getBoundaries.bind(this);
     this.resetMap = this.resetMap.bind(this);
+    this.loadingMount = this.loadingMount.bind(this);
   }
 
   componentDidMount() {
     this.initializeMap();
     this.setState({ status: 'FETCHING CURRENT LOCATION' });
     this.getUserLocation();
+  }
+
+  loadingMount() {
+    this.setState({loading: true});
   }
 
   initializeMap() {
@@ -96,7 +101,6 @@ class Map extends React.Component {
     const newPosition = centerMarker.getPosition();
     this.geocodeLocation(newPosition);
     this.centerMap(newPosition)
-    // this.redrawBoundaries();
   }
 
   centerMap(locationLatLng) {
@@ -171,6 +175,15 @@ class Map extends React.Component {
   }
 
   render() {
+    let loading;
+    if (this.state.loading) {
+      loading = <div id="loading">
+                  <p id="loading-text">CALCULATING DISTANCE</p>
+                </div>;
+    } else {
+      loading = "";
+    }
+
     let form;
     let rideSelection;
     if (this.state.userAddress) {
@@ -183,6 +196,7 @@ class Map extends React.Component {
           drawBoundaries={this.drawBoundaries}
           newMarker={this.newMarker}
           map={this.map}
+          loadingMount={this.loadingMount}
           selectedRideTypes={Object.keys(this.state.newBoundary)}
         />
       );
@@ -193,8 +207,8 @@ class Map extends React.Component {
     return (
       <div className="map-component">
         <div ref="renderedMap" id="map-container" />
+        {loading}
         {form}
-
       </div>
     );
   }

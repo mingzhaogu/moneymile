@@ -6,5 +6,6 @@
 @import 'user_input_form.css';
 @import 'user_input_form_submitted.css';
 @import 'user_ride_selection.css';
+@import 'loading.css';
 
 /* do we need root/index.css? */
