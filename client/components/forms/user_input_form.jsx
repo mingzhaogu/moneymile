@@ -112,8 +112,8 @@ class UserInputForm extends React.Component {
       formClassName = "user-input-form";
       infoContainer =
         <div className="info-container">
-          <p>Welcome to MoneyMile, a Lyft API ride estimates application.  Input a dollar amount between $10 - $400 into the form above and we'll calculate
-            a matrix showing how far you can go in your next Lyft ride request!</p>
+          <p>Welcome to MoneyMile, a Lyft API ride estimates application. Enter a dollar amount between $10 - $400 into the form above and we'll calculate
+            a matrix displaying how far you can go in your next Lyft ride request!</p>
         </div>;
     }
 
