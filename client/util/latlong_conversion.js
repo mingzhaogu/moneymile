@@ -10,6 +10,8 @@ export const parseAddressToLatLng = function(address, callback) {
       this.setState({ addressLatLng }, () => {
         this.getBoundaries();
       });
+    } else {
+      alert('Geocode was not successful for the following reason: ' + status);
     }
   });
 };
