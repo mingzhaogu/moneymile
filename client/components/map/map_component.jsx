@@ -150,7 +150,7 @@ class Map extends React.Component {
       this.setState({ status: "SORRY, COULDN'T FIND YOU..." });
       setTimeout(
         function() {
-          this.setState({ userAddress: '' });
+          this.setState({ userAddress: ' ' });
         }.bind(this),
         3000
       );
