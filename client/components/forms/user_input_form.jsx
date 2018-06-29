@@ -41,26 +41,41 @@ class UserInputForm extends React.Component {
 
   submitForm(e) {
     e.preventDefault();
-    this.props.loadingMount();
-    this.refs.btn.setAttribute("disabled", "disabled");
+    const address = this.parseAddressToLatLng(this.state.addressInput);
+    console.log(address)
 
-    let elements = document.getElementsByClassName('selected');
-    while(elements.length > 0) {
-      elements[0].classList.remove('selected');
-    }
+    if (address) {
+      this.props.loadingMount();
+      this.refs.btn.setAttribute("disabled", "disabled");
 
-    if (this.state.formSubmitted) {
-      this.props.resetMap();
-      this.setState({ rideType: 'lyft', boundaries: [] }, () => {
-        let dft = document.getElementById('default-select');
-        dft.classList.add("selected");
+      let elements = document.getElementsByClassName('selected');
+      while(elements.length > 0) {
+        elements[0].classList.remove('selected');
+      }
+
+      if (this.state.formSubmitted) {
+        this.props.resetMap();
+        this.setState({ rideType: 'lyft', boundaries: [] }, () => {
+          let dft = document.getElementById('default-select');
+          dft.classList.add("selected");
+        });
+      }
+
+      this.setState({
+        formSubmitted: true,
+        boundaries: [],
+        addressLatLng: address
+      }, () => {
+        this.props.centerMap(address);
+        this.getBoundaries();
+      })
+    } else {
+      console.log("yo")
+      this.setState({
+        addressLatLng: '',
+        formSubmitted: false
       });
     }
-
-    this.setState({formSubmitted: true, boundaries: []}, () => {
-      this.parseAddressToLatLng(this.state.addressInput,
-        (res) => this.centerMap(res));
-    });
   }
 
   updateInput(field) {
@@ -68,10 +83,16 @@ class UserInputForm extends React.Component {
   }
 
   getRideType(type) {
+    const address = parseAddressToLatLng(this.state.addressInput);
     this.props.loadingMount();
-    this.setState({ rideType: type, boundaries: [] },
-      () => { this.parseAddressToLatLng(this.state.addressInput); }
-    );
+    this.setState({
+      rideType: type,
+      boundaries: [],
+      addressLatLng: address
+    }, () => {
+      this.props.centerMap(address);
+      this.getBoundaries();
+    });
   }
 
   validateDollar(amt) {
