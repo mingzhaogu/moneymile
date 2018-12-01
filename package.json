@@ -5,6 +5,7 @@
   "dependencies": {
     "axios": "^0.18.0",
     "babel-cli": "^6.26.0",
+    "babel-polyfill": "^6.26.0",
     "dotenv": "^5.0.1",
     "dotenv-webpack": "^1.5.5",
     "ejs": "^2.5.9",
