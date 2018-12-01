@@ -9,6 +9,10 @@ import * as AlgorithmLogic from '../../util/algorithm_logic';
 import UserRideSelection from '../user/user_ride_selection';
 
 class Map extends React.Component {
+  static rideTypes = [
+    'lyft', 'lyft_plus', 'lyft_line'
+  ]
+
   constructor(props) {
     super(props);
     this.directionsServiceObject = new google.maps.DirectionsService();
@@ -103,15 +107,11 @@ class Map extends React.Component {
   }
 
   resetMap = () => {
-    if (this.state.newBoundary.lyft) {
-      this.clearOverlay("lyft");
-    }
-    if (this.state.newBoundary.lyft_plus) {
-      this.clearOverlay("lyft_plus");
-    }
-    if (this.state.newBoundary.lyft_line) {
-      this.clearOverlay("lyft_line");
-    }
+    rideTypes.map(type => {
+      if (this.state.newBoundary[type]) {
+        this.clearOverlay(type);
+      }
+    });
 
     let elements = document.getElementsByClassName('selected');
     while(elements.length > 0){
@@ -166,17 +166,13 @@ class Map extends React.Component {
   }
 
   render() {
-    let loading;
+    let form, loading, rideSelection;
     if (this.state.loading) {
       loading = <div id="loading">
                   <p id="loading-text">CALCULATING DISTANCE</p>
                 </div>;
-    } else {
-      loading = "";
-    }
+    };
 
-    let form;
-    let rideSelection;
     if (this.state.userAddress) {
       form = (
         <UserInputForm
