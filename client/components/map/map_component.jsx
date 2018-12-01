@@ -22,8 +22,17 @@ class Map extends React.Component {
       loading: false
     };
 
+    this.getUserLocation = this.getUserLocation.bind(this);
+    this.initializeMap = this.initializeMap.bind(this);
+    this.centerMap = this.centerMap.bind(this);
     this.drawBoundaries = MapTools.drawBoundaries.bind(this);
+    this.newMarker = this.newMarker.bind(this);
+    this.resetMarkerPositionOnClick = this.resetMarkerPositionOnClick.bind(this);
+    this.geocodeLocation = this.geocodeLocation.bind(this);
+    this.clearOverlay = this.clearOverlay.bind(this);
     this.getBoundaries = AlgorithmLogic.getBoundaries.bind(this);
+    this.resetMap = this.resetMap.bind(this);
+    this.loadingMount = this.loadingMount.bind(this);
   }
 
   componentDidMount() {
@@ -32,11 +41,11 @@ class Map extends React.Component {
     this.getUserLocation();
   }
 
-  loadingMount = () => {
-    this.setState({ loading: true });
+  loadingMount() {
+    this.setState({loading: true});
   }
 
-  initializeMap = () => {
+  initializeMap() {
     const sfCenter = { lat: 37.773972, lng: -122.431297 };
     const center = this.state.userLocation || sfCenter;
 
@@ -68,7 +77,7 @@ class Map extends React.Component {
     });
   }
 
-  geocodeLocation = (latLngObject) => {
+  geocodeLocation(latLngObject) {
     const geocoder = new google.maps.Geocoder();
     geocoder.geocode({ location: latLngObject }, (results, status) => {
       if (status === 'OK') {
@@ -79,7 +88,7 @@ class Map extends React.Component {
     });
   }
 
-  clearOverlay = rideType => {
+  clearOverlay(rideType) {
     this.state.newBoundary[rideType].setMap(null);
 
     const currentBoundaries = this.state.newBoundary;
@@ -87,14 +96,14 @@ class Map extends React.Component {
     this.setState({ newBoundary: currentBoundaries })
   }
 
-  resetMarkerPositionOnClick = centerMarker => {
+  resetMarkerPositionOnClick(centerMarker) {
     this.resetMap();
     const newPosition = centerMarker.getPosition();
     this.geocodeLocation(newPosition);
     this.centerMap(newPosition)
   }
 
-  centerMap = locationLatLng => {
+  centerMap(locationLatLng) {
     this.map.setCenter(locationLatLng);
     this.setState({
       userLocation: locationLatLng
@@ -102,7 +111,7 @@ class Map extends React.Component {
     this.marker.setPosition(locationLatLng);
   }
 
-  resetMap = () => {
+  resetMap() {
     if (this.state.newBoundary.lyft) {
       this.clearOverlay("lyft");
     }
@@ -125,7 +134,7 @@ class Map extends React.Component {
     })
   }
 
-  getUserLocation = () => {
+  getUserLocation() {
     const successCallback = position => {
       const parsedLocation = {
         lat: position.coords.latitude,
@@ -153,7 +162,7 @@ class Map extends React.Component {
     });
   }
 
-  newMarker = pos => {
+  newMarker(pos) {
     new google.maps.Marker({
       position: pos,
       map: this.map,
