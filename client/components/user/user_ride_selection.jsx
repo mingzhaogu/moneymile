@@ -7,10 +7,9 @@ class UserRideSelection extends React.Component {
     //   selected: ["lyft"]
     // };
 
-    this.updateType = this.updateType.bind(this);
   }
 
-  updateType(type) {
+  updateType = (type) => {
     // console.log("selectedRideTypes", this.props.selectedRideTypes);
     return (e) => {
       // if (this.state.selected.includes(type)) {
