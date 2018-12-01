@@ -17,29 +17,22 @@ class UserInputForm extends React.Component {
       rideType: 'lyft',
     };
 
-    this.updateInput = this.updateInput.bind(this);
-    this.submitForm = this.submitForm.bind(this);
-    this.getRideType = this.getRideType.bind(this);
-
     this.parseAddressToLatLng = LatLongTool.parseAddressToLatLng.bind(this);
     this.getBoundaries = AlgorithmLogic.getBoundaries.bind(this);
     this.rideEstimate = AlgorithmLogic.rideEstimate.bind(this);
-
-    this.changeFormState = this.changeFormState.bind(this);
-    this.validate = this.validate.bind(this);
   }
 
-  componentWillReceiveProps(newProps){
+  componentWillReceiveProps(newProps) {
     if (this.props.currentAddress !== newProps.currentAddress) {
       this.setState({addressInput: newProps.currentAddress});
     }
   }
 
-  changeFormState() {
+  changeFormState = () => {
     this.refs.btn.removeAttribute("disabled");
   }
 
-  submitForm(e) {
+  submitForm = e => {
     e.preventDefault();
     this.props.loadingMount();
     this.refs.btn.setAttribute("disabled", "disabled");
@@ -63,24 +56,24 @@ class UserInputForm extends React.Component {
     });
   }
 
-  updateInput(field) {
+  updateInput = field => {
     return (e) => { this.setState({ [field]: e.target.value }); };
   }
 
-  getRideType(type) {
+  getRideType = type => {
     this.props.loadingMount();
     this.setState({ rideType: type, boundaries: [] },
       () => { this.parseAddressToLatLng(this.state.addressInput); }
     );
   }
 
-  validateDollar(amt) {
+  validateDollar = amt => {
     const regex  = /^\$?[0-9]+(\.[0-9][0-9])?$/;
     const bound = (amt >= 9.99 && amt <= 400);
     return (regex.test(amt) && bound) ? true : false;
   }
 
-  validate() {
+  validate = () => {
     const { dollarInput, addressInput } = this.state;
     let checkValidDollar = this.validateDollar(dollarInput);
     return (
