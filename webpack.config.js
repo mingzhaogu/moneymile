@@ -1,6 +1,8 @@
 const path = require('path');
 const webpack = require('webpack');
 const Dotenv = require('dotenv-webpack');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+
 
 module.exports = {
   entry: ['babel-polyfill', './client/index.js'],
@@ -28,6 +30,9 @@ module.exports = {
     new Dotenv({
       path: './.env',
       systemvars: true
+    }),
+    new webpack.DefinePlugin({
+    'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development')
     })
   ],
   node: {

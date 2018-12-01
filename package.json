@@ -5,7 +5,6 @@
   "dependencies": {
     "axios": "^0.18.0",
     "babel-cli": "^6.26.0",
-    "babel-polyfill": "^6.26.0",
     "dotenv": "^5.0.1",
     "dotenv-webpack": "^1.5.5",
     "ejs": "^2.5.9",
@@ -23,7 +22,7 @@
     "webpack": "webpack",
     "build": "webpack --watch",
     "nodemon": "nodemon --exec babel-node -- bin/www",
-    "start": "npm run webpack && nodemon --exec babel-node -- bin/www"
+    "start": "webpack && nodemon --exec babel-node -- bin/www"
   },
   "devDependencies": {
     "@babel/core": "^7.1.6",
@@ -31,6 +30,10 @@
     "@babel/preset-env": "^7.1.6",
     "@babel/preset-react": "^7.0.0",
     "babel-loader": "^8.0.4",
+    "envify": "^4.1.0",
+    "uglify-js": "^3.4.9",
+    "uglifyify": "^5.0.1",
+    "uglifyjs-webpack-plugin": "^2.0.1",
     "webpack": "^3.12.0"
   }
 }
