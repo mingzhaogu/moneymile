@@ -1,20 +1,8 @@
-.fetch-location-form {
-  margin-top: 10vh;
-  padding: 10px;
-  font-family: 'Source Code Pro', monospace;
-  font-size: 20px;
-  position: absolute;
+.fetch-location {
   height: 20vh;
-  width: 90vw;
-  background-color: rgba(0, 0, 0, 0.8);
-  /* border: 1px solid white; */
-  text-align: center;
-  z-index: 1;
-}
-
-.wait-text {
-  font-size: 12px;
-  color: #e247ed;
+  width: 70vw;
+  padding: 10px;
+  background-color: rgba(0, 0, 0, 1);
 }
 
 .fetch-location-img {
@@ -22,15 +10,27 @@
   height: 40px;
 }
 
+.status, .wait-text {
+  padding: 10px 0;
+}
+
+.status {
+  font-size: 28px;
+}
+
+.wait-text {
+  font-size: 24px;
+}
+
 /* iphone 6/7/8 */
 @media only screen and (min-width: 375px) {
-  .fetch-location-form {
+  .fetch-location {
     max-width: 375px;
   }
 }
 
 @media only screen and (min-width: 768px) {
-  .fetch-location-form {
+  .fetch-location {
     min-width: 520px;
     font-size: 30px;
   }
