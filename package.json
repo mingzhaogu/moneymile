@@ -1,6 +1,6 @@
 {
   "name": "moneymile",
-  "version": "0.1.0",
+  "version": "1.0",
   "private": true,
   "dependencies": {
     "axios": "^0.18.0",
@@ -23,7 +23,7 @@
     "webpack": "webpack",
     "build": "webpack --watch",
     "nodemon": "nodemon --exec babel-node -- bin/www",
-    "start": "npm run webpack && nodemon --exec babel-node -- bin/www"
+    "start": "webpack && nodemon --exec babel-node -- bin/www"
   },
   "devDependencies": {
     "@babel/core": "^7.1.6",
@@ -32,5 +32,10 @@
     "@babel/preset-react": "^7.0.0",
     "babel-loader": "^8.0.4",
     "webpack": "^3.12.0"
-  }
+  },
+  "description": "lyft app",
+  "main": "./client/index.js",
+  "repository": "https://github.com/mingzhaogu/moneymile.git",
+  "author": "Jonathan Lau",
+  "license": "MIT"
 }
