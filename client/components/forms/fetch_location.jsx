@@ -1,5 +1,6 @@
-import React from "react"
-import NavBar from "../ui/nav"
+import React, { Fragment } from 'react';
+import NavBar from '../ui/nav';
+import { Loading } from '../_reusables/loading';
 
 class FetchLocationForm extends React.Component {
   constructor(props) {
@@ -7,21 +8,16 @@ class FetchLocationForm extends React.Component {
   }
 
   render() {
-    const status = this.props.currentStatus
+    const { currentStatus } = this.props;
 
-    return (
-      <React.Fragment>
+    return <Fragment>
         <NavBar />
-        <form className="fetch-location-form">
-          <img
-            className="fetch-location-img"
-            src="https://i.imgur.com/P0CmA6f.png"
-          />
-          {status}
+        <Loading customClasses="fetch-location">
+          <img className="fetch-location-img" src="https://i.imgur.com/P0CmA6f.png" />
+          <p className="status">{currentStatus}</p>
           <p className="wait-text">Please wait...</p>
-        </form>
-      </React.Fragment>
-    )
+        </Loading>
+      </Fragment>;
   }
 }
 
