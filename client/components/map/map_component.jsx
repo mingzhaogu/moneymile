@@ -1,140 +1,135 @@
-import React from 'react';
+import React from "react"
 
 import NavBar from '../ui/nav';
 import UserInputForm from '../forms/user_input_form';
 import FetchLocationForm from '../forms/fetch_location';
 import MapStyle from './map_style';
+import { Loading } from '../_reusables/loading';
 import * as MapTools from '../../util/cartographic_tools';
 import * as AlgorithmLogic from '../../util/algorithm_logic';
 import UserRideSelection from '../user/user_ride_selection';
 
 class Map extends React.Component {
+  static rideTypes = ["lyft", "lyft_plus", "lyft_line"];
+
   constructor(props) {
-    super(props);
-    this.directionsServiceObject = new google.maps.DirectionsService();
-    this.directionsRenderer = new google.maps.DirectionsRenderer();
+    super(props)
+    this.directionsServiceObject = new google.maps.DirectionsService()
+    this.directionsRenderer = new google.maps.DirectionsRenderer()
 
     this.state = {
       userLocation: null,
       userAddress: null,
-      status: '',
+      status: "",
       newBoundary: {},
       loading: false
-    };
+    }
 
-    this.getUserLocation = this.getUserLocation.bind(this);
-    this.initializeMap = this.initializeMap.bind(this);
-    this.centerMap = this.centerMap.bind(this);
-    this.drawBoundaries = MapTools.drawBoundaries.bind(this);
-    this.newMarker = this.newMarker.bind(this);
-    this.resetMarkerPositionOnClick = this.resetMarkerPositionOnClick.bind(this);
-    this.geocodeLocation = this.geocodeLocation.bind(this);
-    this.clearOverlay = this.clearOverlay.bind(this);
-    this.getBoundaries = AlgorithmLogic.getBoundaries.bind(this);
-    this.resetMap = this.resetMap.bind(this);
-    this.loadingMount = this.loadingMount.bind(this);
+    this.drawBoundaries = MapTools.drawBoundaries.bind(this)
+    this.getBoundaries = AlgorithmLogic.getBoundaries.bind(this)
   }
 
   componentDidMount() {
     this.initializeMap();
-    this.setState({ status: 'FETCHING CURRENT LOCATION' });
+    this.setState({ status: "FETCHING CURRENT LOCATION" });
     this.getUserLocation();
   }
 
-  loadingMount() {
-    this.setState({loading: true});
-  }
+  loadingMount = () => {
+    this.setState({ loading: true });
+  };
 
-  initializeMap() {
-    const sfCenter = { lat: 37.773972, lng: -122.431297 };
-    const center = this.state.userLocation || sfCenter;
+  mapOptions = center => ({
+    center: center,
+    zoom: 13,
+    zoomControl: false,
+    mapTypeControl: false,
+    scaleControl: false,
+    streetViewControl: false,
+    rotateControl: false,
+    fullscreenControl: false,
+    styles: MapStyle
+  });
 
-    const mapOptions = {
-      center: center,
-      zoom: 13,
-      zoomControl: false,
-      mapTypeControl: false,
-      scaleControl: false,
-      streetViewControl: false,
-      rotateControl: false,
-      fullscreenControl: false,
-      styles: MapStyle
-    };
+  initializeMap = () => {
+    const sfCenter = { lat: 37.773972, lng: -122.431297 }
+    const center = this.state.userLocation || sfCenter
 
-    this.map = new google.maps.Map(this.refs.renderedMap, mapOptions);
+    this.map = new google.maps.Map(
+      this.refs.renderedMap,
+      this.mapOptions(center)
+    );
+
     this.marker = new google.maps.Marker({
       position: center,
       map: this.map,
       draggable: true
     });
 
-
-    this.marker.addListener('dragend', () => this.resetMarkerPositionOnClick(this.marker));
-    this.marker.addListener('click', () => this.resetMarkerPositionOnClick(this.marker))
-    this.map.addListener('click', e => {
-      this.marker.setPosition(e.latLng);
+    this.marker.addListener("dragend", () =>
       this.resetMarkerPositionOnClick(this.marker)
+    );
+    this.marker.addListener("click", () =>
+      this.resetMarkerPositionOnClick(this.marker)
+    );
+    this.map.addListener("click", e => {
+      this.marker.setPosition(e.latLng);
+      this.resetMarkerPositionOnClick(this.marker);
     });
-  }
+  };
 
-  geocodeLocation(latLngObject) {
+  geocodeLocation = latLngObject => {
     const geocoder = new google.maps.Geocoder();
     geocoder.geocode({ location: latLngObject }, (results, status) => {
-      if (status === 'OK') {
-        this.setState(
-          { userAddress: results[0].formatted_address },
-        );
+      if (status === "OK") {
+        this.setState({ userAddress: results[0].formatted_address });
       }
     });
-  }
+  };
 
-  clearOverlay(rideType) {
-    this.state.newBoundary[rideType].setMap(null);
+  clearOverlay = rideType => {
+    this.state.newBoundary[rideType].setMap(null)
 
     const currentBoundaries = this.state.newBoundary;
     delete currentBoundaries[rideType];
-    this.setState({ newBoundary: currentBoundaries })
-  }
+    this.setState({ newBoundary: currentBoundaries });
+  };
 
-  resetMarkerPositionOnClick(centerMarker) {
+  resetMarkerPositionOnClick = centerMarker => {
     this.resetMap();
     const newPosition = centerMarker.getPosition();
     this.geocodeLocation(newPosition);
-    this.centerMap(newPosition)
-  }
+    this.centerMap(newPosition);
+  };
 
-  centerMap(locationLatLng) {
-    this.map.setCenter(locationLatLng);
+  centerMap = locationLatLng => {
+    this.map.setCenter(locationLatLng)
     this.setState({
       userLocation: locationLatLng
     });
     this.marker.setPosition(locationLatLng);
-  }
+  };
 
-  resetMap() {
-    if (this.state.newBoundary.lyft) {
-      this.clearOverlay("lyft");
-    }
-    if (this.state.newBoundary.lyft_plus) {
-      this.clearOverlay("lyft_plus");
-    }
-    if (this.state.newBoundary.lyft_line) {
-      this.clearOverlay("lyft_line");
-    }
+  resetMap = () => {
+    rideTypes.map(type => {
+      if (this.state.newBoundary[type]) {
+        this.clearOverlay(type)
+      }
+    })
 
-    let elements = document.getElementsByClassName('selected');
-    while(elements.length > 0){
-      elements[0].classList.remove('selected');
+    let elements = document.getElementsByClassName("selected");
+    while (elements.length > 0) {
+      elements[0].classList.remove("selected");
     }
-  }
+  };
 
   redrawBoundaries() {
-    Object.keys(this.state.newBoundary).forEach((rideType) => {
-      this.getBoundaries(this.state.userLocation, rideType)
-    })
+    Object.keys(this.state.newBoundary).forEach(rideType => {
+      this.getBoundaries(this.state.userLocation, rideType);
+    });
   }
 
-  getUserLocation() {
+  getUserLocation = () => {
     const successCallback = position => {
       const parsedLocation = {
         lat: position.coords.latitude,
@@ -142,27 +137,27 @@ class Map extends React.Component {
       };
       this.setState({ userLocation: parsedLocation });
       this.geocodeLocation(parsedLocation);
-      this.marker.setPosition(parsedLocation)
-      this.centerMap(parsedLocation)
+      this.marker.setPosition(parsedLocation);
+      this.centerMap(parsedLocation);
     };
 
     const errorCallback = error => {
-      this.setState({ status: "SORRY, COULDN'T FIND YOU..." });
+      this.setState({ status: "SORRY, COULDN'T FIND YOU..." })
       setTimeout(
         function() {
-          this.setState({ userAddress: ' ' });
+          this.setState({ userAddress: " " });
         }.bind(this),
         3000
-      );
-    };
+      )
+    }
 
     navigator.geolocation.getCurrentPosition(successCallback, errorCallback, {
       timeout: 10000,
       enableHighAccuracy: true
     });
-  }
+  };
 
-  newMarker(pos) {
+  newMarker = pos => {
     new google.maps.Marker({
       position: pos,
       map: this.map,
@@ -172,20 +167,18 @@ class Map extends React.Component {
         scaledSize: new google.maps.Size(20, 20)
       }
     });
-  }
+  };
 
   render() {
-    let loading;
+    let form, loading, rideSelection
     if (this.state.loading) {
-      loading = <div id="loading">
-                  <p id="loading-text">CALCULATING DISTANCE</p>
-                </div>;
-    } else {
-      loading = "";
+      loading = (
+        <Loading>
+          <p id="loading-text">CALCULATING DISTANCE</p>
+        </Loading>
+      );
     }
 
-    let form;
-    let rideSelection;
     if (this.state.userAddress) {
       form = (
         <UserInputForm
@@ -199,9 +192,9 @@ class Map extends React.Component {
           loadingMount={this.loadingMount}
           selectedRideTypes={Object.keys(this.state.newBoundary)}
         />
-      );
+      )
     } else {
-      form = <FetchLocationForm currentStatus={this.state.status} />;
+      form = <FetchLocationForm currentStatus={this.state.status} />
     }
 
     return (
@@ -210,8 +203,8 @@ class Map extends React.Component {
         {loading}
         {form}
       </div>
-    );
+    )
   }
 }
 
-export default Map;
+export default Map

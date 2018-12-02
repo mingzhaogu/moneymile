@@ -1,4 +1,4 @@
-#loading {
+#loading-overlay {
   opacity: 0.5;
   background-color: black;
   position: fixed;
@@ -6,27 +6,29 @@
   height: 100%;
   top: 0px;
   left: 0px;
-  z-index: 999;
+  z-index: 10;
 }
 
-#loading-text {
+.loading-content {
+  margin: 0 auto;
   font-family: 'Source Code Pro', monospace;
   font-size: 16px;
   color: #e247ed;
   font-weight: 600;
   text-align: center;
-  z-index: 1000;
+  align-content: center;
+  z-index: 11;
 }
 
 @media only screen and (min-width: 375px) {
-  #loading-text {
+  .loading-content {
     font-size: 16px;
     margin-top: 30vh;
   }
 }
 
 @media only screen and (min-width: 768px) {
-  #loading-text {
+  .loading-content {
     font-size: 45px;
     margin-top: 30vh;
   }

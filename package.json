@@ -1,28 +1,50 @@
 {
   "name": "moneymile",
-  "version": "0.1.0",
+  "version": "1.0",
   "private": true,
   "dependencies": {
     "axios": "^0.18.0",
     "babel-cli": "^6.26.0",
-    "babel-preset-es2015": "^6.24.1",
+    "babel-polyfill": "^6.26.0",
     "dotenv": "^5.0.1",
     "dotenv-webpack": "^1.5.5",
     "ejs": "^2.5.9",
     "lyft-node": "0.0.5",
     "mongoose": "^5.0.15",
-    "nodemon": "^1.17.3",
+    "nodemon": "^1.18.7",
     "react": "^16.3.2",
     "react-bootstrap": "^0.32.1",
     "react-dom": "^16.3.2",
     "react-modal": "^3.4.2",
     "react-router-dom": "^4.2.2",
-    "react-scripts": "1.1.4"
+    "react-scripts": "^2.1.1"
   },
   "scripts": {
-    "webpack": "webpack",
+    "lint": "eslint --ignore-pattern !.eslintrc.js .eslintrc.js *.js",
+    "lint-fix": "yarn lint --fix && yarn prettier-fix",
+    "prettier": "prettier --list-different --no-semi './**/*.{js,jsx}' './**/*.css **/*.json'",
+    "prettier-fix": "prettier --write --no-semi './**/*.{js,jsx}' './**/*.css **/*.json'",
     "build": "webpack --watch",
     "nodemon": "nodemon --exec babel-node -- bin/www",
-    "start": "npm run webpack && nodemon --exec babel-node -- bin/www"
-  }
+    "start": "webpack && nodemon --exec babel-node -- bin/www"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.1.6",
+    "@babel/plugin-proposal-class-properties": "^7.1.0",
+    "@babel/preset-env": "^7.1.6",
+    "@babel/preset-react": "^7.0.0",
+    "babel-eslint": "8",
+    "babel-loader": "^8.0.4",
+    "eslint": "4.x",
+    "eslint-config-prettier": "^3.3.0",
+    "eslint-plugin-prettier": "^3.0.0",
+    "eslint-plugin-react": "^7.11.1",
+    "prettier": "^1.15.3",
+    "webpack": "^3.12.0"
+  },
+  "description": "lyft app",
+  "main": "./client/index.js",
+  "repository": "https://github.com/mingzhaogu/moneymile.git",
+  "author": "Jonathan Lau",
+  "license": "MIT"
 }

@@ -1,12 +1,12 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import axios from 'axios';
+import React from "react"
+import ReactDOM from "react-dom"
+import axios from "axios"
 
-import Map from './map/map_component';
+import Map from "./map/map_component"
 
 export default class App extends React.Component {
   constructor(props) {
-    super(props);
+    super(props)
   }
 
   render() {
@@ -14,6 +14,6 @@ export default class App extends React.Component {
       <React.Fragment>
         <Map />
       </React.Fragment>
-    );
+    )
   }
 }

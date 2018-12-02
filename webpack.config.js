@@ -1,38 +1,40 @@
-const path = require('path');
-const webpack = require('webpack');
-const Dotenv = require('dotenv-webpack');
+const path = require("path")
+const Dotenv = require("dotenv-webpack")
 
 module.exports = {
-  entry: './client/index.js',
+  entry: ["babel-polyfill", "./client/index.js"],
   output: {
-    path: path.join(__dirname, 'client'),
-    filename: 'bundle.js'
+    path: path.join(__dirname, "client"),
+    filename: "bundle.js"
   },
   module: {
-    loaders: [{
-      test: /.jsx?$/,
-      loader: 'babel-loader',
-      exclude: /node_modules/,
-      query: {
-        presets: ['es2015', 'react']
+    loaders: [
+      {
+        test: /.jsx?$/,
+        loader: "babel-loader",
+        exclude: /node_modules/,
+        query: {
+          presets: ["@babel/env", "@babel/react"],
+          plugins: ["@babel/proposal-class-properties"]
+        }
+      },
+      {
+        test: /\.css$/,
+        loader: "style-loader!css-loader"
       }
-    },
-    {
-      test: /\.css$/,
-      loader: "style-loader!css-loader"
-    }]
+    ]
   },
-  target:'web',
+  target: "web",
   plugins: [
     new Dotenv({
-      path: './.env',
+      path: "./.env",
       systemvars: true
     })
   ],
   node: {
-    fs: 'empty'
+    fs: "empty"
   },
   resolve: {
     extensions: [".js", ".jsx", "*"]
   }
-};
+}
