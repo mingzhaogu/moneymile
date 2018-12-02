@@ -20,7 +20,10 @@
     "react-scripts": "^2.1.1"
   },
   "scripts": {
-    "webpack": "webpack",
+    "lint": "eslint --ignore-pattern !.eslintrc.js .eslintrc.js *.js",
+    "lint-fix": "yarn lint --fix && yarn prettier-fix",
+    "prettier": "prettier --list-different --no-semi './**/*.{js,jsx}' './**/*.css **/*.json'",
+    "prettier-fix": "prettier --write --no-semi './**/*.{js,jsx}' './**/*.css **/*.json'",
     "build": "webpack --watch",
     "nodemon": "nodemon --exec babel-node -- bin/www",
     "start": "webpack && nodemon --exec babel-node -- bin/www"
@@ -30,7 +33,13 @@
     "@babel/plugin-proposal-class-properties": "^7.1.0",
     "@babel/preset-env": "^7.1.6",
     "@babel/preset-react": "^7.0.0",
+    "babel-eslint": "8",
     "babel-loader": "^8.0.4",
+    "eslint": "4.x",
+    "eslint-config-prettier": "^3.3.0",
+    "eslint-plugin-prettier": "^3.0.0",
+    "eslint-plugin-react": "^7.11.1",
+    "prettier": "^1.15.3",
     "webpack": "^3.12.0"
   },
   "description": "lyft app",
